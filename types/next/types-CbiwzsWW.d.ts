@@ -1,34 +1,31 @@
-import * as react0 from 'react'
-import { FC, ReactNode } from 'react'
+import * as react3 from "react";
+import { FC, ReactNode } from "react";
 
 //#region lib/utils/src/callback.d.ts
 declare namespace callback_d_exports {
-	export { asap, debounce, noop }
+  export { asap, debounce, noop };
 }
-declare function debounce<F extends (...args: any[]) => any>(
-	func: F,
-	timeout: number,
-): (...args: Parameters<F>) => Promise<unknown>
+declare function debounce<F extends (...args: any[]) => any>(func: F, timeout: number): (...args: Parameters<F>) => Promise<unknown>;
 /**
  * A function that runs the callback as soon as possible.
  * @param cb The callback to run.
  */
-declare const asap: (cb: (...args: any[]) => any) => void
-declare const noop: () => void
+declare const asap: (cb: (...args: any[]) => any) => void;
+declare const noop: () => void;
 declare namespace error_d_exports {
-	export { getCurrentStack, getErrorStack }
+  export { getCurrentStack, getErrorStack };
 }
-declare function getErrorStack(e: unknown): string | undefined
-declare function getCurrentStack(): string
+declare function getErrorStack(e: unknown): string | undefined;
+declare function getCurrentStack(): string;
 declare namespace object_d_exports {
-	export { defineLazyProperties, defineLazyProperty, isObject, mergeDeep }
+  export { defineLazyProperties, defineLazyProperty, isObject, mergeDeep };
 }
 /**
  * Simple check if to see if value is an object.
  *
  * @param val The value to check.
  */
-declare function isObject(val: any): val is AnyObject
+declare function isObject(val: any): val is AnyObject;
 /**
  * Deep merge two objects.
  *
@@ -37,7 +34,7 @@ declare function isObject(val: any): val is AnyObject
  *
  * @returns The merged target.
  */
-declare function mergeDeep(target: AnyObject, source: AnyObject): AnyObject
+declare function mergeDeep(target: AnyObject, source: AnyObject): AnyObject;
 /**
  * Define a lazy property on an object that will be loaded when accessed.
  *
@@ -46,11 +43,7 @@ declare function mergeDeep(target: AnyObject, source: AnyObject): AnyObject
  * @param loader The function that will be called to load the property value when accessed.
  * @return The target object with the lazy property defined.
  */
-declare function defineLazyProperty<T extends object, K extends keyof T>(
-	target: T,
-	property: K,
-	loader: () => T[K],
-): T
+declare function defineLazyProperty<T extends object, K extends keyof T>(target: T, property: K, loader: () => T[K]): T;
 /**
  * Define multiple lazy properties on an object that will be loaded when accessed.
  *
@@ -58,30 +51,15 @@ declare function defineLazyProperty<T extends object, K extends keyof T>(
  * @param loaders An object where each key is a property name and the value is a function that returns the property value when accessed.
  * @returns The target object with the lazy properties defined.
  */
-declare function defineLazyProperties<T extends object>(
-	target: T,
-	loaders: Partial<Record<keyof T, () => T[keyof T]>>,
-): T
+declare function defineLazyProperties<T extends object>(target: T, loaders: Partial<Record<keyof T, () => T[keyof T]>>): T;
 declare namespace promise_d_exports {
-	export { allSettled, sleep, sleepReject }
+  export { allSettled, sleep, sleepReject };
 }
-declare function allSettled(
-	promises: Promise<any>[],
-): Promise<PromiseSettledResult<any>[]>
-declare function sleep(ms: number): Promise<void>
-declare function sleepReject(ms: number, msg?: string): Promise<void>
+declare function allSettled(promises: Promise<any>[]): Promise<PromiseSettledResult<any>[]>;
+declare function sleep(ms: number): Promise<void>;
+declare function sleepReject(ms: number, msg?: string): Promise<void>;
 declare namespace proxy_d_exports {
-	export {
-		DestructureOptions,
-		DestructureResult,
-		ProxifyOptions,
-		destructure,
-		getProxyTarget,
-		isProxified,
-		isProxy,
-		proxify,
-		unproxify,
-	}
+  export { DestructureOptions, DestructureResult, ProxifyOptions, destructure, getProxyTarget, isProxified, isProxy, proxify, unproxify };
 }
 /**
  * This patch allows us to store instances of Proxy, so we can check whether a value is created using Proxy or not.
@@ -92,38 +70,38 @@ declare namespace proxy_d_exports {
  *
  * @param obj The object to check
  */
-declare function isProxy(obj: object): boolean
+declare function isProxy(obj: object): boolean;
 /**
  * Returns whether the object is a proxified value.
  *
  * @param obj The object to check
  */
-declare function isProxified(obj: object): boolean
+declare function isProxified(obj: object): boolean;
 /**
  * Returns the target of the proxy.
  *
  * @param obj The proxy
  * @returns The target of the proxy
  */
-declare function getProxyTarget(obj: object): object | undefined
+declare function getProxyTarget(obj: object): object | undefined;
 interface ProxifyOptions {
-	/**
-	 * The hint for the proxified value.
-	 *
-	 * @default function () {}
-	 */
-	hint?: object
-	/**
-	 * Whether the proxified value should be cached.
-	 */
-	cache?: boolean
-	/**
-	 * For methods of the proxified value, whether to bind the `this` context to the proxified value.
-	 * The original reference of this method will NOT be retained. To get the original method, use `getProxyTarget` on the method.
-	 *
-	 * @default false
-	 */
-	bindMethods?: boolean
+  /**
+   * The hint for the proxified value.
+   *
+   * @default function () {}
+   */
+  hint?: object;
+  /**
+   * Whether the proxified value should be cached.
+   */
+  cache?: boolean;
+  /**
+   * For methods of the proxified value, whether to bind the `this` context to the proxified value.
+   * The original reference of this method will NOT be retained. To get the original method, use `getProxyTarget` on the method.
+   *
+   * @default false
+   */
+  bindMethods?: boolean;
 }
 /**
  * Proxify a value.
@@ -148,7 +126,7 @@ interface ProxifyOptions {
  * console.log(proxified) // { value: 0.123 }
  * ```
  */
-declare function proxify<T>(signal: () => T, options?: ProxifyOptions): T
+declare function proxify<T>(signal: () => T, options?: ProxifyOptions): T;
 /**
  * Get the value of a proxified value at the current moment.
  * Returns the same value if not a proxified value.
@@ -176,11 +154,9 @@ declare function proxify<T>(signal: () => T, options?: ProxifyOptions): T
  * console.log(proxified) // { value: 0.123 }
  * ```
  */
-declare function unproxify<T extends object>(proxified: T): T
-type DestructureOptions<T extends object> = { [K in keyof T]?: ProxifyOptions }
-type DestructureResult<T extends object, O extends DestructureOptions<T>> = {
-	[K in keyof T]: O[K] extends ProxifyOptions ? T[K] : never
-}
+declare function unproxify<T extends object>(proxified: T): T;
+type DestructureOptions<T extends object> = { [K in keyof T]?: ProxifyOptions };
+type DestructureResult<T extends object, O extends DestructureOptions<T>> = { [K in keyof T]: O[K] extends ProxifyOptions ? T[K] : never };
 /**
  * Destructure a proxified value.
  *
@@ -208,86 +184,46 @@ type DestructureResult<T extends object, O extends DestructureOptions<T>> = {
  * z // TypeError: Cannot destructure and proxify null (reading 'z')
  * ```
  */
-declare function destructure<
-	T extends object,
-	const O extends DestructureOptions<T>,
->(proxified: T, options?: O): DestructureResult<T, O>
+declare function destructure<T extends object, const O extends DestructureOptions<T>>(proxified: T, options?: O): DestructureResult<T, O>;
 declare namespace tree_d_exports {
-	export { FindInTreeOptions, SearchFilter, SearchTree, findInTree }
+  export { FindInTreeOptions, SearchFilter, SearchTree, findInTree };
 }
-type SearchTree = Record<string, any>
-type SearchFilter = (tree: SearchTree) => boolean
+type SearchTree = Record<string, any>;
+type SearchFilter = (tree: SearchTree) => boolean;
 interface FindInTreeOptions {
-	/**
-	 * A set of keys to search for in the tree.
-	 */
-	walkable?: Set<string>
-	/**
-	 * A set of keys to ignore when searching the tree.
-	 */
-	ignore?: Set<string>
-	/**
-	 * The maximum depth to search in the tree.
-	 *
-	 * @default 100
-	 */
-	maxDepth?: number
+  /**
+   * A set of keys to search for in the tree.
+   */
+  walkable?: Set<string>;
+  /**
+   * A set of keys to ignore when searching the tree.
+   */
+  ignore?: Set<string>;
+  /**
+   * The maximum depth to search in the tree.
+   *
+   * @default 100
+   */
+  maxDepth?: number;
 }
-declare function findInTree<F extends SearchFilter>(
-	tree: SearchTree,
-	filter: F,
-	opts?: FindInTreeOptions,
-): ExtractPredicate<F> | undefined
+declare function findInTree<F extends SearchFilter>(tree: SearchTree, filter: F, opts?: FindInTreeOptions): ExtractPredicate<F> | undefined;
 declare namespace react_d_exports {
-	export { findInReactFiber, useIsFirstRender, useReRender }
+  export { findInReactFiber, useIsFirstRender, useReRender };
 }
-declare function useIsFirstRender(): boolean
-declare function useReRender(): react0.ActionDispatch<[]>
-declare function findInReactFiber<F extends SearchFilter>(
-	fiber: Extract<ReactNode, object>,
-	filter: F,
-): ExtractPredicate<F> | undefined
+declare function useIsFirstRender(): boolean;
+declare function useReRender(): react3.ActionDispatch<[]>;
+declare function findInReactFiber<F extends SearchFilter>(fiber: Extract<ReactNode, object>, filter: F): ExtractPredicate<F> | undefined;
 declare namespace filters_d_exports {
-	export {
-		ByName,
-		ByProps,
-		BySingleProp,
-		ComparableDependencyMap,
-		Every,
-		Filter,
-		FilterGenerator,
-		FilterResult,
-		IsFilterWithExports,
-		ModuleStateAware,
-		PreferExports,
-		Some,
-		WithoutProps,
-		byDependencies,
-		byName,
-		byProps,
-		bySingleProp,
-		createFilterGenerator,
-		every,
-		moduleStateAware,
-		preferExports,
-		some,
-		withoutProps,
-	}
+  export { ByName, ByProps, BySingleProp, ComparableDependencyMap, Every, Filter, FilterGenerator, FilterResult, IsFilterWithExports, ModuleStateAware, PreferExports, Some, WithoutProps, byDependencies, byName, byProps, bySingleProp, createFilterGenerator, every, moduleStateAware, preferExports, some, withoutProps };
 }
-type FilterResult<F> = F extends Filter<infer R, boolean> ? R : never
-type IsFilterWithExports<F> = F extends Filter<any, infer WE> ? WE : never
+type FilterResult<F> = F extends Filter<infer R, boolean> ? R : never;
+type IsFilterWithExports<F> = F extends Filter<any, infer WE> ? WE : never;
 interface Filter<_Inferable = any, WithExports extends boolean = boolean> {
-	(
-		...args: If<
-			WithExports,
-			[id: Metro.ModuleID, exports: Metro.ModuleExports],
-			[id: Metro.ModuleID, exports?: never]
-		>
-	): boolean
-	key: string
+  (...args: If<WithExports, [id: Metro.ModuleID, exports: Metro.ModuleExports], [id: Metro.ModuleID, exports?: never]>): boolean;
+  key: string;
 }
 interface FilterGenerator<G extends (...args: any[]) => Filter> extends G {
-	keyFor: (args: Parameters<G>) => string
+  keyFor: (args: Parameters<G>) => string;
 }
 /**
  * Create a filter generator.
@@ -309,24 +245,9 @@ interface FilterGenerator<G extends (...args: any[]) => Filter> extends G {
  *
  * @see {@link byProps} for an example on custom-typed filters.
  */
-declare function createFilterGenerator<A extends any[]>(
-	filter: (
-		args: A,
-		id: Metro.ModuleID,
-		exports: Metro.ModuleExports,
-	) => boolean,
-	keyFor: (args: A) => string,
-): FilterGenerator<(...args: A) => Filter<any, true>>
-declare function createFilterGenerator<A extends any[]>(
-	filter: (args: A, id: Metro.ModuleID) => boolean,
-	keyFor: (args: A) => string,
-): FilterGenerator<(...args: A) => Filter<any, false>>
-type ByProps = FilterGenerator<
-	<T extends Record<string, any> = Record<string, any>>(
-		prop: keyof T,
-		...props: Array<keyof T>
-	) => Filter<T, true>
->
+declare function createFilterGenerator<A extends any[]>(filter: (args: A, id: Metro.ModuleID, exports: Metro.ModuleExports) => boolean, keyFor: (args: A) => string): FilterGenerator<(...args: A) => Filter<any, true>>;
+declare function createFilterGenerator<A extends any[]>(filter: (args: A, id: Metro.ModuleID) => boolean, keyFor: (args: A) => string): FilterGenerator<(...args: A) => Filter<any, false>>;
+type ByProps = FilterGenerator<(<T extends Record<string, any> = Record<string, any>>(prop: keyof T, ...props: Array<keyof T>) => Filter<T, true>)>;
 /**
  * Filter modules by their exports having all of the specified properties.
  *
@@ -339,23 +260,16 @@ type ByProps = FilterGenerator<
  * // const React: typeof import('react')
  * ```
  */
-declare const byProps: ByProps
-type WithoutProps = FilterGenerator<
-	<T extends Record<string, any>>(
-		prop: string,
-		...props: string[]
-	) => Filter<T, true>
->
+declare const byProps: ByProps;
+type WithoutProps = FilterGenerator<(<T extends Record<string, any>>(prop: string, ...props: string[]) => Filter<T, true>)>;
 /**
  * Filter modules by their exports having none of the specified properties.
  *
  * @param prop The property to check for.
  * @param props More properties to check for (optional).
  */
-declare const withoutProps: WithoutProps
-type BySingleProp = FilterGenerator<
-	<T extends Record<string, any>>(prop: keyof T) => Filter<T, true>
->
+declare const withoutProps: WithoutProps;
+type BySingleProp = FilterGenerator<(<T extends Record<string, any>>(prop: keyof T) => Filter<T, true>)>;
 /**
  * Filter modules by their exports having only the specified property.
  *
@@ -367,10 +281,8 @@ type BySingleProp = FilterGenerator<
  * // const FormSwitchModule: { FormSwitch: any }
  * ```
  */
-declare const bySingleProp: BySingleProp
-type ByName = FilterGenerator<
-	<T extends object = object>(name: string) => Filter<T, true>
->
+declare const bySingleProp: BySingleProp;
+type ByName = FilterGenerator<(<T extends object = object>(name: string) => Filter<T, true>)>;
 /**
  * Filter modules by their exports having the specified name.
  *
@@ -401,18 +313,15 @@ type ByName = FilterGenerator<
  * const [SomeClass] = lookupModule(byName<{ new(param: string): SomeClass }>('SomeClass'))
  * // const SomeClass: { new(): SomeClass, name: 'SomeClass' }
  */
-declare const byName: ByName
-interface ComparableDependencyMap
-	extends Array<Metro.ModuleID | number | undefined | ComparableDependencyMap> {
-	l?: boolean
-	r?: number
+declare const byName: ByName;
+interface ComparableDependencyMap extends Array<Metro.ModuleID | number | undefined | ComparableDependencyMap> {
+  l?: boolean;
+  r?: number;
 }
-type ByDependencies = FilterGenerator<
-	<T>(deps: ComparableDependencyMap) => Filter<T, false>
-> & {
-	loose: typeof loose
-	relative: typeof relative
-}
+type ByDependencies = FilterGenerator<(<T>(deps: ComparableDependencyMap) => Filter<T, false>)> & {
+  loose: typeof loose;
+  relative: typeof relative;
+};
 /**
  * Filter modules by their dependency map.
  *
@@ -445,7 +354,7 @@ type ByDependencies = FilterGenerator<
  * const [SomeOtherModule] = lookupModule(byDependencies(loose([4])))
  * ```
  */
-declare const byDependencies: ByDependencies
+declare const byDependencies: ByDependencies;
 /**
  * Make this set of comparable dependencies as loose.
  *
@@ -455,42 +364,22 @@ declare const byDependencies: ByDependencies
  * @param deps The dependency map to make loose. This permanently modifies the array.
  * @returns The modified dependency map.
  */
-declare function loose(deps: ComparableDependencyMap): ComparableDependencyMap
+declare function loose(deps: ComparableDependencyMap): ComparableDependencyMap;
 /**
  * Marks this dependency to compare relatively to the module ID being compared.
  *
  * @param id The dependency ID to mark as relative.
  * @param root Marks this dependency to compare relatively to the root (returning) module ID being compared. Useful for nested comparisons where you want to compare by the root module ID instead of the parent's module ID of the nested dependency.
  */
-declare function relative(id: Metro.ModuleID, root?: boolean): number
+declare function relative(id: Metro.ModuleID, root?: boolean): number;
 declare namespace relative {
-	var withDependencies: (
-		deps: ComparableDependencyMap,
-		id: Metro.ModuleID,
-		root?: boolean,
-	) => ComparableDependencyMap
+  var withDependencies: (deps: ComparableDependencyMap, id: Metro.ModuleID, root?: boolean) => ComparableDependencyMap;
 }
 type Every = FilterGenerator<{
-	<F1 extends Filter, F2 extends Filter>(
-		f1: F1,
-		f2: F2,
-	): Filter<
-		FilterResult<F1> & FilterResult<F2>,
-		LogicalOr<IsFilterWithExports<F1>, IsFilterWithExports<F2>>
-	>
-	<F1 extends Filter, F2 extends Filter, F3 extends Filter>(
-		f1: F1,
-		f2: F2,
-		f3: F3,
-	): Filter<
-		FilterResult<F1> & FilterResult<F2> & FilterResult<F3>,
-		LogicalOr<
-			LogicalOr<IsFilterWithExports<F1>, IsFilterWithExports<F2>>,
-			IsFilterWithExports<F3>
-		>
-	>
-	(...filters: Filter[]): Filter
-}>
+  <F1 extends Filter, F2 extends Filter>(f1: F1, f2: F2): Filter<FilterResult<F1> & FilterResult<F2>, LogicalOr<IsFilterWithExports<F1>, IsFilterWithExports<F2>>>;
+  <F1 extends Filter, F2 extends Filter, F3 extends Filter>(f1: F1, f2: F2, f3: F3): Filter<FilterResult<F1> & FilterResult<F2> & FilterResult<F3>, LogicalOr<LogicalOr<IsFilterWithExports<F1>, IsFilterWithExports<F2>>, IsFilterWithExports<F3>>>;
+  (...filters: Filter[]): Filter;
+}>;
 /**
  * Combines multiple filters into one, returning true if **every** filter matches.
  *
@@ -505,25 +394,12 @@ type Every = FilterGenerator<{
  * ))
  * ```
  */
-declare const every: Every
+declare const every: Every;
 type Some = FilterGenerator<{
-	<F1 extends Filter, F2 extends Filter>(
-		f1: F1,
-		f2: F2,
-	): Filter<
-		FilterResult<F1> | FilterResult<F2>,
-		IsFilterWithExports<F1> | IsFilterWithExports<F2>
-	>
-	<F1 extends Filter, F2 extends Filter, F3 extends Filter>(
-		f1: F1,
-		f2: F2,
-		f3: F3,
-	): Filter<
-		FilterResult<F1> | FilterResult<F2> | FilterResult<F3>,
-		IsFilterWithExports<F1> | IsFilterWithExports<F2> | IsFilterWithExports<F3>
-	>
-	(...filters: Filter[]): Filter
-}>
+  <F1 extends Filter, F2 extends Filter>(f1: F1, f2: F2): Filter<FilterResult<F1> | FilterResult<F2>, IsFilterWithExports<F1> | IsFilterWithExports<F2>>;
+  <F1 extends Filter, F2 extends Filter, F3 extends Filter>(f1: F1, f2: F2, f3: F3): Filter<FilterResult<F1> | FilterResult<F2> | FilterResult<F3>, IsFilterWithExports<F1> | IsFilterWithExports<F2> | IsFilterWithExports<F3>>;
+  (...filters: Filter[]): Filter;
+}>;
 /**
  * Combines multiple filters into one, returning true if **some** filters match.
  *
@@ -538,14 +414,8 @@ type Some = FilterGenerator<{
  * ))
  * ```
  */
-declare const some: Some
-type ModuleStateAware = FilterGenerator<
-	<IF extends Filter>(
-		initializedFilter: IF,
-		uninitializedFilter: Filter<any, false>,
-		strict?: boolean,
-	) => Filter<FilterResult<IF>, false>
->
+declare const some: Some;
+type ModuleStateAware = FilterGenerator<(<IF extends Filter>(initializedFilter: IF, uninitializedFilter: Filter<any, false>, strict?: boolean) => Filter<FilterResult<IF>, false>)>;
 /**
  * Filter modules depending on their initialized state. **Initialized modules with bad exports are skipped.**
  *
@@ -563,14 +433,8 @@ type ModuleStateAware = FilterGenerator<
  * ))
  * ```
  */
-declare const moduleStateAware: ModuleStateAware
-type PreferExports = FilterGenerator<
-	<WEF extends Filter>(
-		withExportsFilter: WEF,
-		exportslessFilter: Filter<any, false>,
-		strict?: boolean,
-	) => Filter<FilterResult<WEF>, false>
->
+declare const moduleStateAware: ModuleStateAware;
+type PreferExports = FilterGenerator<(<WEF extends Filter>(withExportsFilter: WEF, exportslessFilter: Filter<any, false>, strict?: boolean) => Filter<FilterResult<WEF>, false>)>;
 /**
  * Filter modules depending on if their exports are available and filterable.
  *
@@ -592,20 +456,11 @@ type PreferExports = FilterGenerator<
  * ))
  * ```
  */
-declare const preferExports: PreferExports
+declare const preferExports: PreferExports;
 declare namespace discord_d_exports {
-	export {
-		ByGeneratedIconComponent,
-		byGeneratedIconComponent,
-		lookupGeneratedIconComponent,
-	}
+  export { ByGeneratedIconComponent, byGeneratedIconComponent, lookupGeneratedIconComponent };
 }
-type ByGeneratedIconComponent = FilterGenerator<
-	<N extends string>(
-		name: N,
-		...assets: string[]
-	) => Filter<{ [K in N]: FC<any> }>
->
+type ByGeneratedIconComponent = FilterGenerator<(<N extends string>(name: N, ...assets: string[]) => Filter<{ [K in N]: FC<any> }>)>;
 /**
  * Filter by icon component name and asset names.
  *
@@ -639,45 +494,41 @@ type ByGeneratedIconComponent = FilterGenerator<
  * )
  * ```
  */
-declare const byGeneratedIconComponent: ByGeneratedIconComponent
+declare const byGeneratedIconComponent: ByGeneratedIconComponent;
 /**
  * Looks up a generated icon component by its name and asset names.
  *
  * @param names The component name, then the asset names if the component has multiple assets.
  * @returns The icon component, or `undefined` if it could not be found.
  */
-declare function lookupGeneratedIconComponent<N extends string>(
-	...names: [N, ...string[]]
-): FC<any> | undefined
+declare function lookupGeneratedIconComponent<N extends string>(...names: [N, ...string[]]): FC<any> | undefined;
 //#endregion
 //#region lib/utils/src/types.d.ts
-type Nullish = null | undefined
-type If<T, Then, Else> = T extends true ? Then : Else
-type AnyObject = Record<any, any>
-type LogicalOr<T1, T2> = T1 extends true ? true : T2 extends true ? true : false
-type DeepPartial<T> = {
-	[K in keyof T]?: T[K] extends AnyObject ? DeepPartial<T[K]> : T[K]
-}
-type ExtractPredicate<T> = T extends (arg: any) => arg is infer R ? R : never
+type Nullish = null | undefined;
+type If<T, Then, Else> = T extends true ? Then : Else;
+type AnyObject = Record<any, any>;
+type LogicalOr<T1, T2> = T1 extends true ? true : T2 extends true ? true : false;
+type DeepPartial<T> = { [K in keyof T]?: T[K] extends AnyObject ? DeepPartial<T[K]> : T[K] };
+type ExtractPredicate<T> = T extends ((arg: any) => arg is infer R) ? R : never;
 interface PreInitPluginApiUtils {
-	callback: typeof callback_d_exports
-	error: typeof error_d_exports
-	object: typeof object_d_exports
-	promise: typeof promise_d_exports
-	proxy: typeof proxy_d_exports
-	tree: typeof tree_d_exports
+  callback: typeof callback_d_exports;
+  error: typeof error_d_exports;
+  object: typeof object_d_exports;
+  promise: typeof promise_d_exports;
+  proxy: typeof proxy_d_exports;
+  tree: typeof tree_d_exports;
 }
 interface PluginApiUtils extends PreInitPluginApiUtils {
-	react: typeof react_d_exports
-	discord: typeof discord_d_exports
+  react: typeof react_d_exports;
+  discord: typeof discord_d_exports;
 }
 declare module '@revenge-mod/plugins/types' {
-	interface UnscopedPreInitPluginApi {
-		utils: PreInitPluginApiUtils
-	}
-	interface UnscopedInitPluginApi {
-		utils: PluginApiUtils
-	}
+  interface UnscopedPreInitPluginApi {
+    utils: PreInitPluginApiUtils;
+  }
+  interface UnscopedInitPluginApi {
+    utils: PluginApiUtils;
+  }
 }
 //#endregion
 //#region lib/modules/src/types.d.ts
@@ -687,115 +538,64 @@ declare module '@revenge-mod/plugins/types' {
  * @see {@link https://github.com/facebook/metro/blob/main/packages/metro-runtime/src/polyfills/require.js}
  */
 declare namespace Metro {
-	type DependencyMap = Array<ModuleID>
-	type FactoryFn = (
-		global: object,
-		require: RequireFn,
-		metroImportDefault: RequireFn,
-		metroImportAll: RequireFn,
-		moduleObject: Module,
-		exports: ModuleExports,
-		dependencyMap: DependencyMap,
-	) => void
-	type ModuleID = number
-	interface ModuleDefinition<Initialized = boolean> {
-		/**
-		 * Dependencies of this module (set to `undefined` once the module is initialized)
-		 */
-		dependencyMap: If<Initialized, undefined, DependencyMap>
-		/**
-		 * Error that occurred during initialization
-		 */
-		error?: any
-		/**
-		 * Factory function that initializes the module
-		 */
-		factory: If<Initialized, undefined, FactoryFn>
-		/**
-		 * Whether an error occurred during initialization
-		 */
-		hasError: boolean
-		importedAll: ModuleExports
-		importedDefault: ModuleExports
-		/**
-		 * Whether factory has been successfully called
-		 * */
-		isInitialized: boolean
-		publicModule: ModuleExports
-	}
-	type Module = {
-		id?: ModuleID
-		exports: ModuleExports
-	}
-	type ModuleList = Map<ModuleID, ModuleDefinition>
-	type RequireFn = (id: ModuleID) => ModuleExports
-	type DefineFn = (
-		factory: FactoryFn,
-		moduleId: ModuleID,
-		dependencyMap: DependencyMap,
-	) => void
-	type ClearFn = () => ModuleList
-	interface Require extends RequireFn {
-		importDefault: RequireFn
-		importAll: RequireFn
-	}
-	type ModuleExports = any
+  type DependencyMap = Array<ModuleID>;
+  type FactoryFn = (global: object, require: RequireFn, metroImportDefault: RequireFn, metroImportAll: RequireFn, moduleObject: Module, exports: ModuleExports, dependencyMap: DependencyMap) => void;
+  type ModuleID = number;
+  interface ModuleDefinition<Initialized = boolean> {
+    /**
+     * Dependencies of this module (set to `undefined` once the module is initialized)
+     */
+    dependencyMap: If<Initialized, undefined, DependencyMap>;
+    /**
+     * Error that occurred during initialization
+     */
+    error?: any;
+    /**
+     * Factory function that initializes the module
+     */
+    factory: If<Initialized, undefined, FactoryFn>;
+    /**
+     * Whether an error occurred during initialization
+     */
+    hasError: boolean;
+    importedAll: ModuleExports;
+    importedDefault: ModuleExports;
+    /**
+     * Whether factory has been successfully called
+     * */
+    isInitialized: boolean;
+    publicModule: ModuleExports;
+  }
+  type Module = {
+    id?: ModuleID;
+    exports: ModuleExports;
+  };
+  type ModuleList = Map<ModuleID, ModuleDefinition>;
+  type RequireFn = (id: ModuleID) => ModuleExports;
+  type DefineFn = (factory: FactoryFn, moduleId: ModuleID, dependencyMap: DependencyMap) => void;
+  type ClearFn = () => ModuleList;
+  interface Require extends RequireFn {
+    importDefault: RequireFn;
+    importAll: RequireFn;
+  }
+  type ModuleExports = any;
 }
 declare namespace RevengeMetro {
-	type ModuleDefinition<Initialized = boolean> = {
-		flags: number
-		module: Metro.Module
-		factory: If<Initialized, undefined, () => void>
-		importedDefault?: Metro.ModuleExports
-		importedAll?: Metro.ModuleExports
-		error?: If<Initialized, undefined, any>
-	}
-	type ModuleList = Map<Metro.ModuleID, ModuleDefinition>
+  type ModuleDefinition<Initialized = boolean> = {
+    flags: number;
+    module: Metro.Module;
+    factory: If<Initialized, undefined, () => void>;
+    importedDefault?: Metro.ModuleExports;
+    importedAll?: Metro.ModuleExports;
+    error?: If<Initialized, undefined, any>;
+  };
+  type ModuleList = Map<Metro.ModuleID, ModuleDefinition>;
 }
 /**
  * Maybe the default export matched instead of the namespace, because you're using `options.returnNamespace`.
  */
-type MaybeDefaultExportMatched<T> =
-	| T
-	| {
-			default: T
-	  }
+type MaybeDefaultExportMatched<T> = T | {
+  default: T;
+};
 //#endregion
-export {
-	AnyObject,
-	ByName,
-	ByProps,
-	BySingleProp,
-	ComparableDependencyMap,
-	DeepPartial,
-	Every,
-	ExtractPredicate,
-	Filter,
-	FilterGenerator,
-	FilterResult,
-	If,
-	IsFilterWithExports,
-	LogicalOr,
-	MaybeDefaultExportMatched,
-	Metro,
-	ModuleStateAware,
-	Nullish,
-	PluginApiUtils,
-	PreInitPluginApiUtils,
-	PreferExports,
-	RevengeMetro,
-	Some,
-	WithoutProps,
-	byDependencies,
-	byName,
-	byProps,
-	bySingleProp,
-	createFilterGenerator,
-	every,
-	filters_d_exports,
-	moduleStateAware,
-	preferExports,
-	some,
-	withoutProps,
-}
-//# sourceMappingURL=types-cJK__Kwg.d.ts.map
+export { AnyObject, ByName, ByProps, BySingleProp, ComparableDependencyMap, DeepPartial, Every, ExtractPredicate, Filter, FilterGenerator, FilterResult, If, IsFilterWithExports, LogicalOr, MaybeDefaultExportMatched, Metro, ModuleStateAware, Nullish, PluginApiUtils, PreInitPluginApiUtils, PreferExports, RevengeMetro, Some, WithoutProps, byDependencies, byName, byProps, bySingleProp, createFilterGenerator, every, filters_d_exports, moduleStateAware, preferExports, some, withoutProps };

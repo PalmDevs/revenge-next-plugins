@@ -20,7 +20,7 @@
 			"@revenge-mod/plugins/_": ["./types/next-plugins-internal"],
 			"@revenge-mod/*": ["./types/next/lib/*"]
 		},
-		"types": ["./types/next/types", "./types/next/modules", "react-native/types/index"]
+		"types": ["./types/next/types", "./types/next/modules", "./node_modules/react-native/types/index"]
 	},
 	"include": ["plugins", "types"]
 }
