@@ -1,0 +1,25 @@
+{
+	"name": "@palmdevs/revenge-plugins",
+	"type": "module",
+	"private": true,
+	"devDependencies": {
+		"@biomejs/biome": "^2.1.3",
+		"@types/bun": "latest",
+		"react": "^19.1.1",
+		"react-native": "^0.80.2"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"overrides": {
+		"@react-native/community-cli-plugin": "npm:dry-uninstall",
+		"@react-native/codegen": "npm:dry-uninstall",
+		"babel-jest": "npm:dry-uninstall",
+		"babel-plugin-syntax-hermes-parser": "npm:dry-uninstall",
+		"jsc-android": "npm:dry-uninstall",
+		"react-devtools-core": "npm:dry-uninstall",
+		"recyclerlistview": "npm:dry-uninstall",
+		"react-native-gesture-handler": "npm:dry-uninstall",
+		"react-native-screens": "npm:dry-uninstall"
+	}
+}

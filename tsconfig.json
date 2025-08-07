@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+    // Features
+    "lib": ["ESNext"],
+    "module": "ESNext",
+    "target": "ES2015",
+    // Bundler
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    // Type checking
+    "strict": true,
+    "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noPropertyAccessFromIndexSignature": false,
+		"paths": {
+			"@revenge-mod/plugins/_": ["./types/next-plugins-internal"],
+			"@revenge-mod/*": ["./types/next/lib/*"]
+		},
+		"types": ["./types/next/types", "./types/next/modules", "react-native/types/index"]
+	},
+	"include": ["plugins", "types"]
+}
