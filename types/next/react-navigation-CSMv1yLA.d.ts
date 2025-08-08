@@ -16,4 +16,4 @@ declare global {
   }
 }
 //#endregion
-export { ReactNavigationParamList, react_navigation_d_exports };
+export { ReactNavigationNative, ReactNavigationParamList, ReactNavigationStack, react_navigation_d_exports };

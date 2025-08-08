@@ -92,7 +92,7 @@ function flashbang(onFlashed: () => void) {
 
 function forceLightTheme() {
 	unproxify(Constants)
-
+	
 	// actions/UserSettingsActionCreators.tsx
 	const [UserSettingsActionCreators] = lookupModule(
 		preferExports(

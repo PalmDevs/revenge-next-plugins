@@ -1,22 +1,11 @@
-import * as react3 from "react";
+import { callback_d_exports } from "./callback-CpIFpq3_.js";
+import { error_d_exports } from "./error-D0foBB4e.js";
+import { promise_d_exports } from "./promise-DVfFbAlR.js";
+import { proxy_d_exports } from "./proxy-DDf0OBup.js";
+import * as react4 from "react";
 import { FC, ReactNode } from "react";
 
-//#region lib/utils/src/callback.d.ts
-declare namespace callback_d_exports {
-  export { asap, debounce, noop };
-}
-declare function debounce<F extends (...args: any[]) => any>(func: F, timeout: number): (...args: Parameters<F>) => Promise<unknown>;
-/**
- * A function that runs the callback as soon as possible.
- * @param cb The callback to run.
- */
-declare const asap: (cb: (...args: any[]) => any) => void;
-declare const noop: () => void;
-declare namespace error_d_exports {
-  export { getCurrentStack, getErrorStack };
-}
-declare function getErrorStack(e: unknown): string | undefined;
-declare function getCurrentStack(): string;
+//#region lib/utils/src/object.d.ts
 declare namespace object_d_exports {
   export { defineLazyProperties, defineLazyProperty, isObject, mergeDeep };
 }
@@ -52,139 +41,6 @@ declare function defineLazyProperty<T extends object, K extends keyof T>(target:
  * @returns The target object with the lazy properties defined.
  */
 declare function defineLazyProperties<T extends object>(target: T, loaders: Partial<Record<keyof T, () => T[keyof T]>>): T;
-declare namespace promise_d_exports {
-  export { allSettled, sleep, sleepReject };
-}
-declare function allSettled(promises: Promise<any>[]): Promise<PromiseSettledResult<any>[]>;
-declare function sleep(ms: number): Promise<void>;
-declare function sleepReject(ms: number, msg?: string): Promise<void>;
-declare namespace proxy_d_exports {
-  export { DestructureOptions, DestructureResult, ProxifyOptions, destructure, getProxyTarget, isProxified, isProxy, proxify, unproxify };
-}
-/**
- * This patch allows us to store instances of Proxy, so we can check whether a value is created using Proxy or not.
- * This is especially useful for blacklisting exports that cannot be patched.
- */
-/**
- * Returns whether the object is a proxy.
- *
- * @param obj The object to check
- */
-declare function isProxy(obj: object): boolean;
-/**
- * Returns whether the object is a proxified value.
- *
- * @param obj The object to check
- */
-declare function isProxified(obj: object): boolean;
-/**
- * Returns the target of the proxy.
- *
- * @param obj The proxy
- * @returns The target of the proxy
- */
-declare function getProxyTarget(obj: object): object | undefined;
-interface ProxifyOptions {
-  /**
-   * The hint for the proxified value.
-   *
-   * @default function () {}
-   */
-  hint?: object;
-  /**
-   * Whether the proxified value should be cached.
-   */
-  cache?: boolean;
-  /**
-   * For methods of the proxified value, whether to bind the `this` context to the proxified value.
-   * The original reference of this method will NOT be retained. To get the original method, use `getProxyTarget` on the method.
-   *
-   * @default false
-   */
-  bindMethods?: boolean;
-}
-/**
- * Proxify a value.
- *
- * @param signal The signal to use to get the value.
- * @param options The options to use for the proxified value.
- * @returns A proxified value that will be updated when the signal is updated.
- *
- * @example Without cache
- * ```ts
- * const proxified = proxify(() => ({ value: Math.random() }), { hint: {} })
- * console.log(proxified) // { value: 0.123 }
- * console.log(proxified.value) // 0.456
- * console.log(proxified) // { value: 0.789 }
- * ```
- *
- * @example With cache
- * ```ts
- * const proxified = proxify(() => ({ value: Math.random() }), { hint: {}, cache: true })
- * console.log(proxified) // { value: 0.123 }
- * console.log(proxified.value) // 0.123
- * console.log(proxified) // { value: 0.123 }
- * ```
- */
-declare function proxify<T>(signal: () => T, options?: ProxifyOptions): T;
-/**
- * Get the value of a proxified value at the current moment.
- * Returns the same value if not a proxified value.
- *
- * @see {@link proxify} for more documentation.
- *
- * @param proxified The proxified value.
- * @returns The unproxified value, or the value if it's not a proxified value.
- *
- * @example Without cache
- * ```ts
- * const proxified = proxify(() => ({ value: Math.random() }), { hint: {} })
- * const x = unproxify(proxified)
- * console.log(x) // { value: 0.123 }
- * console.log(x.value) // 0.123
- * console.log(proxified) // { value: 0.456 }
- * ```
- *
- * @example With cache
- * ```ts
- * const proxified = proxify(() => ({ value: Math.random() }), { hint: {}, cache: true })
- * const x = unproxify(proxified)
- * console.log(x) // { value: 0.123 }
- * console.log(x.value) // 0.123
- * console.log(proxified) // { value: 0.123 }
- * ```
- */
-declare function unproxify<T extends object>(proxified: T): T;
-type DestructureOptions<T extends object> = { [K in keyof T]?: ProxifyOptions };
-type DestructureResult<T extends object, O extends DestructureOptions<T>> = { [K in keyof T]: O[K] extends ProxifyOptions ? T[K] : never };
-/**
- * Destructure a proxified value.
- *
- * @param proxified The proxified value.
- * @param options The options to use for the destructured value.
- *
- * @see {@link proxify} for more documentation.
- *
- * @throws {TypeError} If the value is not a proxifiable value (primitives).
- *
- * @example
- * ```ts
- * // cache is not turned on, so each access will call the signal again
- * const { x, y } = destructure(
- *   proxify(() => ({ x: Math.random(), y: [Math.random()], z: null })),
- *   { hint: {} }
- * )
- *
- * // Non-nullish primitives are not proxifiable
- * x // TypeError: Cannot destructure and proxify a primitive (reading 'x')
- *
- * y // [0.123]
- * y // [0.456]
- *
- * z // TypeError: Cannot destructure and proxify null (reading 'z')
- * ```
- */
-declare function destructure<T extends object, const O extends DestructureOptions<T>>(proxified: T, options?: O): DestructureResult<T, O>;
 declare namespace tree_d_exports {
   export { FindInTreeOptions, SearchFilter, SearchTree, findInTree };
 }
@@ -211,7 +67,7 @@ declare namespace react_d_exports {
   export { findInReactFiber, useIsFirstRender, useReRender };
 }
 declare function useIsFirstRender(): boolean;
-declare function useReRender(): react3.ActionDispatch<[]>;
+declare function useReRender(): react4.ActionDispatch<[]>;
 declare function findInReactFiber<F extends SearchFilter>(fiber: Extract<ReactNode, object>, filter: F): ExtractPredicate<F> | undefined;
 declare namespace filters_d_exports {
   export { ByName, ByProps, BySingleProp, ComparableDependencyMap, Every, Filter, FilterGenerator, FilterResult, IsFilterWithExports, ModuleStateAware, PreferExports, Some, WithoutProps, byDependencies, byName, byProps, bySingleProp, createFilterGenerator, every, moduleStateAware, preferExports, some, withoutProps };
@@ -598,4 +454,4 @@ type MaybeDefaultExportMatched<T> = T | {
   default: T;
 };
 //#endregion
-export { AnyObject, ByName, ByProps, BySingleProp, ComparableDependencyMap, DeepPartial, Every, ExtractPredicate, Filter, FilterGenerator, FilterResult, If, IsFilterWithExports, LogicalOr, MaybeDefaultExportMatched, Metro, ModuleStateAware, Nullish, PluginApiUtils, PreInitPluginApiUtils, PreferExports, RevengeMetro, Some, WithoutProps, byDependencies, byName, byProps, bySingleProp, createFilterGenerator, every, filters_d_exports, moduleStateAware, preferExports, some, withoutProps };
+export { AnyObject, ByGeneratedIconComponent, ByName, ByProps, BySingleProp, ComparableDependencyMap, DeepPartial, Every, ExtractPredicate, Filter, FilterGenerator, FilterResult, FindInTreeOptions, If, IsFilterWithExports, LogicalOr, MaybeDefaultExportMatched, Metro, ModuleStateAware, Nullish, PluginApiUtils, PreInitPluginApiUtils, PreferExports, RevengeMetro, SearchFilter, SearchTree, Some, WithoutProps, byDependencies, byGeneratedIconComponent, byName, byProps, bySingleProp, createFilterGenerator, defineLazyProperties, defineLazyProperty, every, filters_d_exports, findInReactFiber, findInTree, isObject, lookupGeneratedIconComponent, mergeDeep, moduleStateAware, preferExports, some, useIsFirstRender, useReRender, withoutProps };

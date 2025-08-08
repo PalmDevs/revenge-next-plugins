@@ -1,30 +1,17 @@
-import "../../types-CbiwzsWW.js";
-import "../../react-navigation-wYcO9zPQ.js";
-import { DiscordModules } from "../../index-BWBPNZ8p.js";
-import * as react1 from "react";
+import "../../callback-CpIFpq3_.js";
+import "../../error-D0foBB4e.js";
+import "../../types-FBMSiw9W.js";
+import "../../promise-DVfFbAlR.js";
+import "../../proxy-DDf0OBup.js";
+import "../../react-navigation-CSMv1yLA.js";
+import "../../native-CVD6eq_A.js";
+import "../../index-BpPUM9Sc.js";
+import "../../main_tabs_v2-Zeuz7W44.js";
+import { FormSwitch } from "../../FormSwitch-DtChmE8J.js";
+import { Page } from "../../Page-nvYDSV5e.js";
+import { SearchInput } from "../../SearchInput-CAM7_iDJ.js";
+import { TableRowAssetIcon } from "../../TableRowAssetIcon-I8QIsqeh.js";
 
-//#region lib/components/src/FormSwitch.d.ts
-/**
- * A switch component that is styled to match Discord's configuration
- */
-declare function FormSwitch(props: DiscordModules.Components.FormSwitchProps): react1.JSX.Element;
-//#endregion
-//#region lib/components/src/Page.d.ts
-declare function Page(props: DiscordModules.Components.StackProps): react1.JSX.Element;
-//#endregion
-//#region lib/components/src/SearchInput.d.ts
-declare function SearchInput(props: DiscordModules.Components.TextInputProps): react1.JSX.Element;
-//#endregion
-//#region lib/components/src/TableRowAssetIcon.d.ts
-declare function TableRowAssetIcon(props: TableRowAssetIconProps): react1.JSX.Element;
-type TableRowAssetIconProps = Omit<DiscordModules.Components.TableRowIconProps, 'source'> & ({
-  name: string;
-  id?: never;
-} | {
-  name?: never;
-  id: number;
-});
-//#endregion
 //#region lib/components/src/types.d.ts
 interface PluginApiComponents {
   FormSwitch: typeof FormSwitch;

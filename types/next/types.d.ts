@@ -1,107 +1,23 @@
-import { Metro } from "./types-CbiwzsWW.js";
-import "./types-C9P3gb7i.js";
-import "./types-BFUIRDrT.js";
-import "./types-BVCIFTZV.js";
-import { PluginApiExtensionsOptions, PluginManifest, PluginOptions } from "./types-DjnoEG1R.js";
-import { ImageProps, ScrollViewProps, TextProps, ViewProps } from "react-native";
+import "./callback-CpIFpq3_.js";
+import "./error-D0foBB4e.js";
+import "./types-FBMSiw9W.js";
+import "./promise-DVfFbAlR.js";
+import "./proxy-DDf0OBup.js";
+import "./types-DO7UBwuZ.js";
+import "./get-Dm7VH1uv.js";
+import "./utils-Dw6W4H0f.js";
+import "./types-lpbdl-Nj.js";
+import "./types-CgtlrOLe.js";
+import "./index-DZIu-mqb.js";
+import "./native-9ohn70wl.js";
+import "./types-BaCw_5MD.js";
+import "./index-BWkGKUjt.js";
+import "./constants-CWLrXOUh.js";
+import { PluginApiExtensionsOptions, PluginManifest, PluginOptions } from "./types-Bswkk-vr.js";
+import "./index-Ds7GD7FS.js";
+import "./index-BvGdZGaU.js";
+import "./index-D0OKqWF5.js";
 
-//#region lib/types/types.d.ts
-
-/// REACT NATIVE COMPONENTS
-declare module 'react' {
-  namespace JSX {
-    interface IntrinsicElements {
-      // TODO(PalmDevs): more intrinsic elements?
-      RCTView: ViewProps;
-      RCTImage: ImageProps;
-      RCTScrollView: ScrollViewProps;
-      RCTText: TextProps;
-    }
-  }
-}
-
-/// HERMES
-
-declare global {
-  function setTimeout(cb: (...args: unknown[]) => unknown, timeout?: number): number;
-  /**
-   * Calls the garbage collector
-   */
-  function gc(): void;
-  interface HermesInternalObject {
-    getRuntimeProperties(): Record<string, string>;
-    // biome-ignore lint/complexity/noBannedTypes: You can pass any function here
-    getFunctionLocation(fn: Function): {
-      fileName: string;
-      lineNumber: number;
-      columnNumber: number;
-      segmentID: number;
-      virtualOffset: number;
-      isNative: boolean;
-    };
-  }
-}
-
-/// HERMES PROMISES
-
-declare global {
-  // biome-ignore lint/correctness/noUnusedVariables: Type parameter names must match
-  interface Promise<T> {
-    /// PROMISE POLYFILLS FROM: https://github.com/then/promise
-    /// AND: https://github.com/facebook/hermes/blob/main/lib/InternalBytecode/01-Promise.js
-    _h: 0 | 1 | 2;
-    /**
-     * The resolved value of the promise, if it has been resolved.
-     */
-    _j: any;
-  }
-  type HermesPromiseRejectionHandler = (promise: Promise<any>, error: any) => void;
-  interface PromiseConstructor {
-    _m: HermesPromiseRejectionHandler;
-  }
-}
-
-/// REACT DEVTOOLS
-
-declare global {
-  var __REACT_DEVTOOLS_GLOBAL_HOOK__: unknown | undefined;
-  var __REACT_DEVTOOLS__: {
-    version: number;
-    exports: {
-      connectToDevTools(opts: {
-        host?: string;
-        port?: number;
-        websocket?: WebSocket;
-      }): void;
-    };
-  } | undefined;
-}
-
-/// METRO
-
-declare global {
-  var __METRO_GLOBAL_PREFIX__: '';
-  var __d: Metro.DefineFn;
-  var __r: Metro.RequireFn & {
-    importDefault: Metro.ImportDefaultFn;
-    importAll: Metro.ImportAllFn;
-  };
-  var __c: Metro.ClearFn;
-}
-
-/// REACT NATIVE
-
-declare global {
-  var nativeModuleProxy: Record<string, unknown>;
-  var __turboModuleProxy: ((name: string) => unknown) | undefined;
-  function nativeLoggingHook(str: string, level: number): void;
-  function alert(message: unknown): void;
-  var nativePerformanceNow: typeof performance.now;
-  var performance: {
-    now(): number;
-  };
-}
-//#endregion
 //#region types/lib.d.ts
 declare global {
   export function plugin<O extends PluginApiExtensionsOptions>(manifest: PluginManifest, options: PluginOptions<O>): void;

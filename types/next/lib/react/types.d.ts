@@ -1,2 +1,2 @@
-import { ReactNative, RunApplicationCallback } from "../../types-C9P3gb7i.js";
+import { ReactNative, RunApplicationCallback } from "../../types-lpbdl-Nj.js";
 export { ReactNative, RunApplicationCallback };
