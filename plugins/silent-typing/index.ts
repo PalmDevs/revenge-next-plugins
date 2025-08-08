@@ -5,7 +5,7 @@ import { noop } from '@revenge-mod/utils/callback'
 
 registerPlugin(
 	{
-		id: 'revenge.silent-typing',
+		id: 'palmdevs.silent-typing',
 		name: 'Silent Typing',
 		description: 'Disables the typing indicator when you type.',
 		author: 'Palm',
