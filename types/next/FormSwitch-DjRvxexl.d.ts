@@ -1,4 +1,4 @@
-import { DiscordModules } from "./index-BpPUM9Sc.js";
+import { DiscordModules } from "./index-D1mXLc1I.js";
 import * as react0 from "react";
 
 //#region lib/components/src/FormSwitch.d.ts

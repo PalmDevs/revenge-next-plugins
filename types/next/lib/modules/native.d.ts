@@ -1,2 +1,2 @@
-import { getNativeModule } from "../../native-9ohn70wl.js";
+import { getNativeModule } from "../../native-DyvCsXCB.js";
 export { getNativeModule };

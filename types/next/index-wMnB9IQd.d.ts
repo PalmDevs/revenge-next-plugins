@@ -1,4 +1,4 @@
-import { RunApplicationCallback } from "./types-lpbdl-Nj.js";
+import { RunApplicationCallback } from "./types-D-OD8n69.js";
 
 //#region lib/react/src/native/index.d.ts
 declare namespace index_d_exports {

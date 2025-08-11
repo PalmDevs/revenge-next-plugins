@@ -2,7 +2,7 @@ import { callback_d_exports } from "./callback-CpIFpq3_.js";
 import { error_d_exports } from "./error-D0foBB4e.js";
 import { promise_d_exports } from "./promise-DVfFbAlR.js";
 import { proxy_d_exports } from "./proxy-DDf0OBup.js";
-import * as react4 from "react";
+import * as react2 from "react";
 import { FC, ReactNode } from "react";
 
 //#region lib/utils/src/object.d.ts
@@ -67,8 +67,75 @@ declare namespace react_d_exports {
   export { findInReactFiber, useIsFirstRender, useReRender };
 }
 declare function useIsFirstRender(): boolean;
-declare function useReRender(): react4.ActionDispatch<[]>;
+declare function useReRender(): react2.ActionDispatch<[]>;
 declare function findInReactFiber<F extends SearchFilter>(fiber: Extract<ReactNode, object>, filter: F): ExtractPredicate<F> | undefined;
+//#endregion
+//#region lib/modules/src/types.d.ts
+/**
+ * Metro is a bundler for React Native.
+ *
+ * @see {@link https://github.com/facebook/metro/blob/main/packages/metro-runtime/src/polyfills/require.js}
+ */
+declare namespace Metro {
+  type DependencyMap = Array<ModuleID>;
+  type FactoryFn = (global: object, require: RequireFn, metroImportDefault: RequireFn, metroImportAll: RequireFn, moduleObject: Module, exports: ModuleExports, dependencyMap: DependencyMap) => void;
+  type ModuleID = number;
+  interface ModuleDefinition<Initialized = boolean> {
+    /**
+     * Dependencies of this module (set to `undefined` once the module is initialized)
+     */
+    dependencyMap: If<Initialized, undefined, DependencyMap>;
+    /**
+     * Error that occurred during initialization
+     */
+    error?: any;
+    /**
+     * Factory function that initializes the module
+     */
+    factory: If<Initialized, undefined, FactoryFn>;
+    /**
+     * Whether an error occurred during initialization
+     */
+    hasError: boolean;
+    importedAll: ModuleExports;
+    importedDefault: ModuleExports;
+    /**
+     * Whether factory has been successfully called
+     * */
+    isInitialized: boolean;
+    publicModule: ModuleExports;
+  }
+  type Module = {
+    id?: ModuleID;
+    exports: ModuleExports;
+  };
+  type ModuleList = Map<ModuleID, ModuleDefinition>;
+  type RequireFn = (id: ModuleID) => ModuleExports;
+  type DefineFn = (factory: FactoryFn, moduleId: ModuleID, dependencyMap: DependencyMap) => void;
+  type ClearFn = () => ModuleList;
+  interface Require extends RequireFn {
+    importDefault: RequireFn;
+    importAll: RequireFn;
+  }
+  type ModuleExports = any;
+}
+declare namespace RevengeMetro {
+  type ModuleDefinition<Initialized = boolean> = {
+    flags: number;
+    module: Metro.Module;
+    factory: If<Initialized, undefined, () => void>;
+    importedDefault?: Metro.ModuleExports;
+    importedAll?: Metro.ModuleExports;
+    error?: If<Initialized, undefined, any>;
+  };
+  type ModuleList = Map<Metro.ModuleID, ModuleDefinition>;
+}
+/**
+ * Maybe the default export matched instead of the namespace, because you're using `options.returnNamespace`.
+ */
+type MaybeDefaultExportMatched<T> = T | {
+  default: T;
+};
 declare namespace filters_d_exports {
   export { ByName, ByProps, BySingleProp, ComparableDependencyMap, Every, Filter, FilterGenerator, FilterResult, IsFilterWithExports, ModuleStateAware, PreferExports, Some, WithoutProps, byDependencies, byName, byProps, bySingleProp, createFilterGenerator, every, moduleStateAware, preferExports, some, withoutProps };
 }
@@ -386,72 +453,5 @@ declare module '@revenge-mod/plugins/types' {
     utils: PluginApiUtils;
   }
 }
-//#endregion
-//#region lib/modules/src/types.d.ts
-/**
- * Metro is a bundler for React Native.
- *
- * @see {@link https://github.com/facebook/metro/blob/main/packages/metro-runtime/src/polyfills/require.js}
- */
-declare namespace Metro {
-  type DependencyMap = Array<ModuleID>;
-  type FactoryFn = (global: object, require: RequireFn, metroImportDefault: RequireFn, metroImportAll: RequireFn, moduleObject: Module, exports: ModuleExports, dependencyMap: DependencyMap) => void;
-  type ModuleID = number;
-  interface ModuleDefinition<Initialized = boolean> {
-    /**
-     * Dependencies of this module (set to `undefined` once the module is initialized)
-     */
-    dependencyMap: If<Initialized, undefined, DependencyMap>;
-    /**
-     * Error that occurred during initialization
-     */
-    error?: any;
-    /**
-     * Factory function that initializes the module
-     */
-    factory: If<Initialized, undefined, FactoryFn>;
-    /**
-     * Whether an error occurred during initialization
-     */
-    hasError: boolean;
-    importedAll: ModuleExports;
-    importedDefault: ModuleExports;
-    /**
-     * Whether factory has been successfully called
-     * */
-    isInitialized: boolean;
-    publicModule: ModuleExports;
-  }
-  type Module = {
-    id?: ModuleID;
-    exports: ModuleExports;
-  };
-  type ModuleList = Map<ModuleID, ModuleDefinition>;
-  type RequireFn = (id: ModuleID) => ModuleExports;
-  type DefineFn = (factory: FactoryFn, moduleId: ModuleID, dependencyMap: DependencyMap) => void;
-  type ClearFn = () => ModuleList;
-  interface Require extends RequireFn {
-    importDefault: RequireFn;
-    importAll: RequireFn;
-  }
-  type ModuleExports = any;
-}
-declare namespace RevengeMetro {
-  type ModuleDefinition<Initialized = boolean> = {
-    flags: number;
-    module: Metro.Module;
-    factory: If<Initialized, undefined, () => void>;
-    importedDefault?: Metro.ModuleExports;
-    importedAll?: Metro.ModuleExports;
-    error?: If<Initialized, undefined, any>;
-  };
-  type ModuleList = Map<Metro.ModuleID, ModuleDefinition>;
-}
-/**
- * Maybe the default export matched instead of the namespace, because you're using `options.returnNamespace`.
- */
-type MaybeDefaultExportMatched<T> = T | {
-  default: T;
-};
 //#endregion
 export { AnyObject, ByGeneratedIconComponent, ByName, ByProps, BySingleProp, ComparableDependencyMap, DeepPartial, Every, ExtractPredicate, Filter, FilterGenerator, FilterResult, FindInTreeOptions, If, IsFilterWithExports, LogicalOr, MaybeDefaultExportMatched, Metro, ModuleStateAware, Nullish, PluginApiUtils, PreInitPluginApiUtils, PreferExports, RevengeMetro, SearchFilter, SearchTree, Some, WithoutProps, byDependencies, byGeneratedIconComponent, byName, byProps, bySingleProp, createFilterGenerator, defineLazyProperties, defineLazyProperty, every, filters_d_exports, findInReactFiber, findInTree, isObject, lookupGeneratedIconComponent, mergeDeep, moduleStateAware, preferExports, some, useIsFirstRender, useReRender, withoutProps };

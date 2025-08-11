@@ -1,10 +1,10 @@
 import "../../callback-CpIFpq3_.js";
 import "../../error-D0foBB4e.js";
-import "../../types-FBMSiw9W.js";
+import "../../types-Cp614Xl1.js";
 import "../../promise-DVfFbAlR.js";
 import "../../proxy-DDf0OBup.js";
-import "../../react-navigation-CSMv1yLA.js";
-import { DiscordNativeModules } from "../../native-CVD6eq_A.js";
-import { DiscordModules, PluginApiDiscord } from "../../index-BpPUM9Sc.js";
-import "../../main_tabs_v2-Zeuz7W44.js";
+import "../../react-navigation-CFKUOIMk.js";
+import { DiscordNativeModules } from "../../native-jnzY-GTF.js";
+import { DiscordModules, PluginApiDiscord } from "../../index-D1mXLc1I.js";
+import "../../main_tabs_v2-DyBLGFxX.js";
 export { DiscordModules, DiscordNativeModules, PluginApiDiscord };

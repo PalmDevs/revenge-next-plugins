@@ -1,11 +1,11 @@
-import { Filter, FilterGenerator, Metro } from "./types-FBMSiw9W.js";
-import { ReactNavigationParamList } from "./react-navigation-CSMv1yLA.js";
-import { native_d_exports } from "./native-CVD6eq_A.js";
-import { main_tabs_v2_d_exports } from "./main_tabs_v2-Zeuz7W44.js";
+import { Filter, FilterGenerator, Metro } from "./types-Cp614Xl1.js";
+import { ReactNavigationParamList } from "./react-navigation-CFKUOIMk.js";
+import { native_d_exports } from "./native-jnzY-GTF.js";
+import { main_tabs_v2_d_exports } from "./main_tabs_v2-DyBLGFxX.js";
 import { ComponentProps, ComponentType, FC, ReactElement, ReactNode, RefAttributes, RefObject } from "react";
-import { ImageSourcePropType, ImageStyle, PressableProps, StyleProp, TextInputProps as TextInputProps$1, TextProps as TextProps$1, TextStyle, View, ViewProps, ViewStyle } from "react-native";
 import { EventEmitter } from "node:events";
 import { StackScreenProps } from "@react-navigation/stack";
+import { ImageSourcePropType, ImageStyle, PressableProps, StyleProp, TextInputProps as TextInputProps$1, TextProps as TextProps$1, TextStyle, View, ViewProps, ViewStyle } from "react-native";
 
 //#region lib/discord/src/actions.d.ts
 declare namespace actions_d_exports {
@@ -15,38 +15,56 @@ declare let ActionSheetActionCreators: DiscordModules.Actions.ActionSheetActionC
 declare let AlertActionCreators: DiscordModules.Actions.AlertActionCreators;
 declare let ToastActionCreators: DiscordModules.Actions.ToastActionCreators;
 //#endregion
+//#region lib/discord/src/flux/dispatcher.d.ts
+type FluxEventDispatchPatch<T extends object = object> = (payload: DiscordModules.Flux.DispatcherPayload & T) => (DiscordModules.Flux.DispatcherPayload & T) | undefined | void;
+/**
+ * Registers a patch for all Flux events.
+ *
+ * @see {@link onFluxEventDispatched} for more details.
+ *
+ * @param patch The patch function to apply when any Flux event is dispatched.
+ * @returns A function that can be used to remove the patch.
+ */
+declare function onAnyFluxEventDispatched(patch: FluxEventDispatchPatch): () => void;
+/**
+ * Registers a patch for a specific Flux event type.
+ * @param type The type of the Flux event to patch.
+ * @param patch The patch function to apply when the event is dispatched.
+ * @returns A function that can be used to remove the patch.
+ *
+ * @example Blocking the disptach
+ * ```ts
+ * // Returning falsy values will prevent the event from being dispatched.
+ * onFluxEventDispatched('TYPING_START', () => {})
+ * ```
+ *
+ * @example Modifying the payload
+ * ```ts
+ * onFluxEventDispatched('TYPING_START', payload => {
+ *   // Send the typing event to this channel instead.
+ *   payload.channelId = '123456789012345678'
+ *   // Make sure to return the modified payload!
+ *   return payload
+ * })
+ * ```
+ *
+ * @example Reading and passing through the payload
+ * ```ts
+ * onFluxEventDispatched('TYPING_START', payload => {
+ *   console.log('Typing started:', payload)
+ *   // Do nothing, just return the payload.
+ *   return payload
+ * })
+ * ```
+ */
+declare function onFluxEventDispatched<T extends object = object>(type: DiscordModules.Flux.DispatcherPayload['type'], patch: FluxEventDispatchPatch<T>): () => void;
+//#endregion
 //#region lib/discord/src/preinit.d.ts
 declare const AppStartPerformance$1: DiscordModules.AppStartPerformance;
-declare namespace flux_d_exports$1 {
-  export { ByStore, ByStoreName, Dispatcher, DispatcherModuleId, Stores, byStore, byStoreName, getStore };
+declare namespace flux_d_exports {
+  export { Dispatcher, DispatcherModuleId };
 }
 declare const Dispatcher: DiscordModules.Flux.Dispatcher, DispatcherModuleId: number;
-/**
- * A proxy object that allows you to access Flux stores by their name, including uninitialized stores.
- *
- * Use `Reflect.ownKeys()` on this proxy to get a list of all initialized stores.
- *
- * @see {@link getStore} for a way to get stores lazily.
- */
-declare const Stores: Record<string, DiscordModules.Flux.Store<object>>;
-/**
- * Gets a Flux store by its name, and calls the provided callback with the store.
- *
- * @param name The name of the store to get.
- * @param callback A callback that will be called with the store once it is found.
- * @returns A function that can be used to cancel the wait for the store.
- */
-declare function getStore<T>(name: string, callback: (store: DiscordModules.Flux.Store<T>) => void): () => void;
-type ByStore = FilterGenerator<(<T>() => Filter<DiscordModules.Flux.Store<T>, boolean>)>;
-/**
- * A dynamic filter that matches all Flux stores.
- */
-declare const byStore: ByStore;
-type ByStoreName = FilterGenerator<(<T>(name: string) => Filter<DiscordModules.Flux.Store<T>, true>)>;
-/**
- * A with-exports filter that matches a Flux store by its name.
- */
-declare const byStoreName: ByStoreName;
 declare namespace utils_d_exports {
   export { TypedEventEmitter$1 as TypedEventEmitter };
 }
@@ -55,7 +73,7 @@ declare namespace utils_d_exports {
  */
 declare let TypedEventEmitter$1: typeof DiscordModules.Utils.TypedEventEmitter;
 declare namespace index_d_exports {
-  export { AppStartPerformance$1 as AppStartPerformance, Constants$1 as Constants, ConstantsModuleId, Logger$1 as Logger, LoggerModuleId, Tokens, TokensModuleId, flux_d_exports$1 as flux, utils_d_exports as utils };
+  export { AppStartPerformance$1 as AppStartPerformance, Constants$1 as Constants, ConstantsModuleId, Logger$1 as Logger, LoggerModuleId, Tokens, TokensModuleId, flux_d_exports as flux, utils_d_exports as utils };
 }
 declare const Logger$1: typeof DiscordModules.Logger, LoggerModuleId: number;
 declare const Tokens: any, TokensModuleId: number;
@@ -108,52 +126,38 @@ interface Design {
   TextField: DiscordModules.Components.TextField;
   TextInput: DiscordModules.Components.TextInput;
 }
-declare namespace flux_d_exports {
-  export { FluxEventDispatchPatch, onAnyFluxEventDispatched, onFluxEventDispatched };
-}
-type FluxEventDispatchPatch = (payload: DiscordModules.Flux.DispatcherPayload) => DiscordModules.Flux.DispatcherPayload | undefined | void;
+//#endregion
+//#region lib/discord/src/flux/stores.d.ts
 /**
- * Registers a patch for all Flux events.
+ * A proxy that allows you to access Flux stores by their name, including uninitialized stores.
  *
- * @see {@link onFluxEventDispatched} for more details.
+ * Use `Reflect.ownKeys()` on this proxy to get a list of all initialized stores.
  *
- * @param patch The patch function to apply when any Flux event is dispatched.
- * @returns A function that can be used to remove the patch.
+ * @see {@link getStore} for a way to get stores lazily.
  */
-declare function onAnyFluxEventDispatched(patch: FluxEventDispatchPatch): () => void;
+declare const Stores: Record<string, DiscordModules.Flux.Store<object>>;
 /**
- * Registers a patch for a specific Flux event type.
- * @param type The type of the Flux event to patch.
- * @param patch The patch function to apply when the event is dispatched.
- * @returns A function that can be used to remove the patch.
+ * Gets a Flux store by its name, and calls the provided callback with the store.
  *
- * @example Blocking the disptach
- * ```ts
- * // Returning falsy values will prevent the event from being dispatched.
- * onFluxEventDispatched('TYPING_START', () => {})
- * ```
- *
- * @example Modifying the payload
- * ```ts
- * onFluxEventDispatched('TYPING_START', payload => {
- *   // Send the typing event to this channel instead.
- *   payload.channelId = '123456789012345678'
- *   // Make sure to return the modified payload!
- *   return payload
- * })
- * ```
- *
- * @example Reading and passing through the payload
- * ```ts
- * onFluxEventDispatched('TYPING_START', payload => {
- *   console.log('Typing started:', payload)
- *   // Do nothing, just return the payload.
- *   return payload
- * })
- * ```
+ * @param name The name of the store to get.
+ * @param callback A callback that will be called with the store once it is found.
+ * @returns A function that can be used to cancel the wait for the store.
  */
-declare function onFluxEventDispatched(type: DiscordModules.Flux.DispatcherPayload['type'], patch: FluxEventDispatchPatch): () => void;
+declare function getStore<T>(name: string, callback: (store: DiscordModules.Flux.Store<T>) => void): () => void;
+type ByStore = FilterGenerator<(<T>() => Filter<DiscordModules.Flux.Store<T>, boolean>)>;
+/**
+ * A dynamic filter that matches all Flux stores.
+ */
+declare const byStore: ByStore;
+type ByStoreName = FilterGenerator<(<T>(name: string) => Filter<DiscordModules.Flux.Store<T>, true>)>;
+/**
+ * A with-exports filter that matches a Flux store by its name.
+ */
+declare const byStoreName: ByStoreName;
 declare namespace index_d_exports$1 {
+  export { ByStore, ByStoreName, FluxEventDispatchPatch, Stores, byStore, byStoreName, getStore, onAnyFluxEventDispatched, onFluxEventDispatched };
+}
+declare namespace index_d_exports$2 {
   export { SettingsItem, SettingsModulesLoadedSubscription, SettingsSection, addSettingsItemToSection, isSettingsModulesLoaded, onSettingsModulesLoaded, refreshSettingsNavigator, refreshSettingsOverviewScreen, registerSettingsItem, registerSettingsItems, registerSettingsSection };
 }
 type SettingsItem = DiscordModules.Modules.Settings.SettingsItem;
@@ -231,13 +235,11 @@ declare namespace PluginApiDiscord {
   type Actions = typeof actions_d_exports;
   type Common = typeof index_d_exports;
   type Design = typeof design_d_exports;
-  type Flux = typeof flux_d_exports;
+  type Flux = typeof index_d_exports$1;
   type Native = typeof native_d_exports;
   interface Modules {
     mainTabsV2: typeof main_tabs_v2_d_exports;
-    settings: typeof index_d_exports$1 & {
-      renderer: typeof renderer_d_exports;
-    };
+    settings: typeof index_d_exports$2 & typeof renderer_d_exports;
   }
 }
 declare module '@revenge-mod/plugins/types' {
@@ -684,4 +686,4 @@ declare namespace DiscordModules {
   }
 }
 //#endregion
-export { ActionSheetActionCreators, AlertActionCreators, AppStartPerformance$1 as AppStartPerformance, ByStore, ByStoreName, Constants$1 as Constants, ConstantsModuleId, Design, DiscordModules, Dispatcher, DispatcherModuleId, FluxEventDispatchPatch, FormSwitch, Logger$1 as Logger, LoggerModuleId, PluginApiDiscord, SettingListRenderer, SettingsItem, SettingsModulesLoadedSubscription, SettingsSection, Stores, ToastActionCreators, Tokens, TokensModuleId, TypedEventEmitter$1 as TypedEventEmitter, addSettingsItemToSection, byStore, byStoreName, flux_d_exports$1 as flux_d_exports, getStore, isSettingsModulesLoaded, onAnyFluxEventDispatched, onFluxEventDispatched, onSettingsModulesLoaded, refreshSettingsNavigator, refreshSettingsOverviewScreen, registerSettingsItem, registerSettingsItems, registerSettingsSection, utils_d_exports };
+export { ActionSheetActionCreators, AlertActionCreators, AppStartPerformance$1 as AppStartPerformance, ByStore, ByStoreName, Constants$1 as Constants, ConstantsModuleId, Design, DiscordModules, Dispatcher, DispatcherModuleId, FluxEventDispatchPatch, FormSwitch, Logger$1 as Logger, LoggerModuleId, PluginApiDiscord, SettingListRenderer, SettingsItem, SettingsModulesLoadedSubscription, SettingsSection, Stores, ToastActionCreators, Tokens, TokensModuleId, TypedEventEmitter$1 as TypedEventEmitter, addSettingsItemToSection, byStore, byStoreName, flux_d_exports, getStore, isSettingsModulesLoaded, onAnyFluxEventDispatched, onFluxEventDispatched, onSettingsModulesLoaded, refreshSettingsNavigator, refreshSettingsOverviewScreen, registerSettingsItem, registerSettingsItems, registerSettingsSection, utils_d_exports };

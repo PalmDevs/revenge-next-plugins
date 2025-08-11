@@ -1,4 +1,4 @@
-import { AfterHook, BeforeHook, InsteadHook, UnknownFunction, UnpatchFunction } from "./types-BaCw_5MD.js";
+import { AfterHook, BeforeHook, InsteadHook, UnknownFunction, UnpatchFunction } from "./types-BwbmL3IL.js";
 
 //#region lib/patcher/src/hooks/after.d.ts
 

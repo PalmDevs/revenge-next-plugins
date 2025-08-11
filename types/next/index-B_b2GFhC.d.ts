@@ -1,9 +1,6 @@
-import { AnyObject, DeepPartial } from "./types-FBMSiw9W.js";
+import { AnyObject, DeepPartial } from "./types-Cp614Xl1.js";
 
 //#region lib/storage/src/index.d.ts
-declare namespace index_d_exports {
-  export { Storage, StorageDirectory, StorageOptions, StorageSubscription, UseStorageFilter, getStorage };
-}
 type StorageSubscription<T extends AnyObject = AnyObject> = (v: DeepPartial<T>) => void;
 declare function Storage<T extends AnyObject>(this: Storage<T>, path: string, options?: StorageOptions<T>): void;
 /**
@@ -68,6 +65,12 @@ interface Storage<T extends AnyObject> {
    */
   use(filter?: UseStorageFilter<T>): T | undefined;
   /**
+   * Subscribe to storage updates. The callback will be called with what was called in `Storage#set`.
+   * @param callback The callback to call when the storage is updated.
+   * @returns A function to unsubscribe.
+   */
+  subscribe(callback: StorageSubscription<T>): () => void;
+  /**
    * Get the storage.
    */
   get(): Promise<T>;
@@ -88,4 +91,4 @@ interface Storage<T extends AnyObject> {
 }
 type StorageDirectory = 'cache' | 'documents';
 //#endregion
-export { Storage, StorageDirectory, StorageOptions, StorageSubscription, UseStorageFilter, getStorage, index_d_exports };
+export { Storage, StorageDirectory, StorageOptions, StorageSubscription, UseStorageFilter, getStorage };

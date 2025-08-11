@@ -1,8 +1,24 @@
-import { Metro } from "./types-FBMSiw9W.js";
+import "./callback-CpIFpq3_.js";
+import "./error-D0foBB4e.js";
+import { Metro } from "./types-Cp614Xl1.js";
+import "./promise-DVfFbAlR.js";
+import "./proxy-DDf0OBup.js";
+import "./get-CYr5UUWr.js";
+import "./utils-Ct3efe6s.js";
+import "./types-D-OD8n69.js";
+import "./types-CHrPZm8H.js";
+import "./index-TB3Bhfb_.js";
+import "./native-DyvCsXCB.js";
+import "./types-BwbmL3IL.js";
+import "./index-Ct3qDCb_.js";
+import "./constants-NMvHIMl8.js";
+import { PluginApiExtensionsOptions, PluginManifest, PluginOptions } from "./types-DDU7hsMa.js";
+import "./index-BTPKjoF0.js";
+import "./index-Bh48FrSP.js";
+import "./index-wMnB9IQd.js";
 import { ImageProps, ScrollViewProps, TextProps, ViewProps } from "react-native";
 
-//#region lib/types/types.d.ts
-
+//#region types/globals.d.ts
 /// REACT NATIVE COMPONENTS
 declare module 'react' {
   namespace JSX {
@@ -19,6 +35,7 @@ declare module 'react' {
 /// HERMES
 
 declare global {
+  const HermesInternal: HermesInternalObject;
   function setTimeout(cb: (...args: unknown[]) => unknown, timeout?: number): number;
   /**
    * Calls the garbage collector
@@ -96,4 +113,9 @@ declare global {
   var performance: {
     now(): number;
   };
+}
+//#endregion
+//#region types/globals.consumers.d.ts
+declare global {
+  export function plugin<O extends PluginApiExtensionsOptions>(manifest: PluginManifest, options: PluginOptions<O>): void;
 }
