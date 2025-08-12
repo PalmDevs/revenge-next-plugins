@@ -23,8 +23,8 @@ interface BasicUser {
 
 registerPlugin<{ storage: Settings }>(
     {
-        name: 'Hide Blocked and Ignored Messages',
-        id: 'palmdevs.hide-blocked-and-ignored-messages',
+        name: 'Hide Blocked Messages',
+        id: 'palmdevs.hide-blocked-messages',
         author: 'Palm',
         description:
             'Hides messages from blocked or ignored users, and optionally removes replies to them.',
