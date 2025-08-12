@@ -2,6 +2,7 @@ import { getModule, lookupModule } from '@revenge-mod/modules/finders'
 import { createFilterGenerator } from '@revenge-mod/modules/finders/filters'
 import { after, before } from '@revenge-mod/patcher'
 import { registerPlugin } from '@revenge-mod/plugins/_'
+import { PluginFlags } from '@revenge-mod/plugins/constants'
 import { findInReactFiber } from '@revenge-mod/utils/react'
 import { SettingsComponent } from './settings'
 import type {
@@ -97,10 +98,10 @@ registerPlugin<{ storage: Settings }>(
                                 if (!node) return tree
 
                                 const {
-                                    props: { items },
+                                    props: {
+                                        items: [item],
+                                    },
                                 } = node
-
-                                const item = items[0]!
 
                                 if (item.sendVoiceMessageEnabled)
                                     item.sendVoiceMessageEnabled =
@@ -172,6 +173,7 @@ registerPlugin<{ storage: Settings }>(
         },
         SettingsComponent,
     },
+    PluginFlags.Enabled,
     0,
 )
 

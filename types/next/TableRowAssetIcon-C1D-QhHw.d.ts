@@ -1,4 +1,4 @@
-import { DiscordModules } from "./index-D1mXLc1I.js";
+import { DiscordModules } from "./index-C7nrTgKF.js";
 import * as react1 from "react";
 
 //#region lib/components/src/TableRowAssetIcon.d.ts

@@ -1,4 +1,4 @@
-import { DiscordModules } from "./index-D1mXLc1I.js";
+import { DiscordModules } from "./index-C7nrTgKF.js";
 import * as react0 from "react";
 
 //#region lib/components/src/Page.d.ts

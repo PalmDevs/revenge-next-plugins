@@ -1,14 +1,14 @@
 import "../../callback-CpIFpq3_.js";
 import "../../error-D0foBB4e.js";
-import { AnyObject } from "../../types-Cp614Xl1.js";
+import { AnyObject } from "../../types-UvuTPXDD.js";
 import "../../promise-DVfFbAlR.js";
 import "../../proxy-DDf0OBup.js";
-import { Storage, StorageOptions } from "../../index-B_b2GFhC.js";
+import { Storage, StorageOptions, index_d_exports } from "../../index-BnaK0P5k.js";
 
 //#region lib/storage/src/types.d.ts
 declare module '@revenge-mod/plugins/types' {
   interface UnscopedPreInitPluginApi {
-    storage: typeof _0;
+    storage: typeof index_d_exports;
   }
   interface PluginApiExtensionsOptions {
     storage?: AnyObject;

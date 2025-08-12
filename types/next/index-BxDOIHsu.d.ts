@@ -1,4 +1,4 @@
-import { Filter, FilterResult, If, MaybeDefaultExportMatched, Metro, Nullish } from "./types-Cp614Xl1.js";
+import { Filter, FilterResult, If, MaybeDefaultExportMatched, Metro, Nullish } from "./types-UvuTPXDD.js";
 
 //#region lib/modules/src/finders/_internal.d.ts
 interface RunFilterOptions {
@@ -25,9 +25,8 @@ type RunFilterReturnExportsOptions<ReturnNamespace extends boolean = boolean> = 
 }, {
   returnNamespace?: false;
 }>;
-declare namespace lookup_d_exports {
-  export { LookupModulesOptions, LookupModulesResult, lookupModule, lookupModuleByImportedPath, lookupModules };
-}
+//#endregion
+//#region lib/modules/src/finders/lookup.d.ts
 type LookupModulesOptionsWithAll<A extends boolean> = If<A, {
   /**
    * Whether to include all modules in the lookup, including blacklisted ones.
@@ -131,9 +130,8 @@ declare function lookupModule<F extends Filter, const O extends (F extends Filte
  * ```
  */
 declare function lookupModuleByImportedPath<T = any>(path: string): [exports: T, id: Metro.ModuleID] | [];
-declare namespace wait_d_exports {
-  export { BaseWaitForModulesOptions, WaitForModulesCallback, WaitForModulesOptions, WaitForModulesResult, WaitForModulesUnsubscribeFunction, waitForModuleByImportedPath, waitForModules };
-}
+//#endregion
+//#region lib/modules/src/finders/wait.d.ts
 interface BaseWaitForModulesOptions<All extends boolean = boolean> {
   /**
    * Whether to include all modules, including blacklisted ones.
@@ -202,9 +200,8 @@ declare function waitForModules<F extends (O extends WaitForModulesOptions<boole
  * ```
  */
 declare function waitForModuleByImportedPath<T = any>(path: string, callback: WaitForModulesCallback<T>, options?: BaseWaitForModulesOptions): WaitForModulesUnsubscribeFunction;
-declare namespace get_d_exports {
-  export { GetModuleCallback, GetModuleOptions, GetModuleResult, GetModuleUnsubscribeFunction, getModule, getModuleByImportedPath };
-}
+//#endregion
+//#region lib/modules/src/finders/get.d.ts
 type GetModuleOptions<ReturnNamespace extends boolean = boolean, Uninitialized extends boolean = boolean, All extends boolean = boolean> = WaitForModulesOptions<ReturnNamespace> & LookupModulesOptions<ReturnNamespace, Uninitialized, All, true> & {
   /**
    * The maximum number of modules to get.
@@ -259,5 +256,8 @@ declare function getModule<F extends Filter, const O extends (F extends Filter<a
  * ```
  */
 declare function getModuleByImportedPath<T>(path: string, callback: GetModuleCallback<T>): GetModuleUnsubscribeFunction;
+declare namespace index_d_exports {
+  export { BaseWaitForModulesOptions, GetModuleCallback, GetModuleOptions, GetModuleResult, GetModuleUnsubscribeFunction, LookupModulesOptions, LookupModulesResult, WaitForModulesCallback, WaitForModulesOptions, WaitForModulesResult, WaitForModulesUnsubscribeFunction, getModule, getModuleByImportedPath, lookupModule, lookupModuleByImportedPath, lookupModules, waitForModuleByImportedPath, waitForModules };
+}
 //#endregion
-export { BaseWaitForModulesOptions, GetModuleCallback, GetModuleOptions, GetModuleResult, GetModuleUnsubscribeFunction, LookupModulesOptions, LookupModulesResult, WaitForModulesCallback, WaitForModulesOptions, WaitForModulesResult, WaitForModulesUnsubscribeFunction, getModule, getModuleByImportedPath, get_d_exports, lookupModule, lookupModuleByImportedPath, lookupModules, lookup_d_exports, waitForModuleByImportedPath, waitForModules, wait_d_exports };
+export { BaseWaitForModulesOptions, GetModuleCallback, GetModuleOptions, GetModuleResult, GetModuleUnsubscribeFunction, LookupModulesOptions, LookupModulesResult, WaitForModulesCallback, WaitForModulesOptions, WaitForModulesResult, WaitForModulesUnsubscribeFunction, getModule, getModuleByImportedPath, index_d_exports, lookupModule, lookupModuleByImportedPath, lookupModules, waitForModuleByImportedPath, waitForModules };

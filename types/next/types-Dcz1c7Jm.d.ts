@@ -1,13 +1,13 @@
-import { filters_d_exports } from "./types-Cp614Xl1.js";
-import { get_d_exports, lookup_d_exports, wait_d_exports } from "./get-CYr5UUWr.js";
-import { index_d_exports, utils_d_exports } from "./utils-Ct3efe6s.js";
-import { index_d_exports as index_d_exports$1 } from "./index-TB3Bhfb_.js";
+import { filters_d_exports } from "./types-UvuTPXDD.js";
+import { index_d_exports, utils_d_exports } from "./utils-B7Ohk_0h.js";
+import { index_d_exports as index_d_exports$1 } from "./index-BRkBWpAv.js";
+import { index_d_exports as index_d_exports$2 } from "./index-BxDOIHsu.js";
 import { native_d_exports } from "./native-DyvCsXCB.js";
-import { index_d_exports as index_d_exports$2 } from "./index-Ct3qDCb_.js";
+import { index_d_exports as index_d_exports$3 } from "./index-Ct3qDCb_.js";
 import { constants_d_exports } from "./constants-NMvHIMl8.js";
-import { index_d_exports as index_d_exports$3 } from "./index-BTPKjoF0.js";
-import { index_d_exports as index_d_exports$4 } from "./index-Bh48FrSP.js";
-import { index_d_exports as index_d_exports$5 } from "./index-wMnB9IQd.js";
+import { index_d_exports as index_d_exports$4 } from "./index-D6TSyeB7.js";
+import { index_d_exports as index_d_exports$5 } from "./index-C1hfqro-.js";
+import { index_d_exports as index_d_exports$6 } from "./index-CL-hz3xa.js";
 import { FunctionComponent } from "react";
 
 //#region lib/plugins/src/apis/modules.d.ts
@@ -18,7 +18,7 @@ interface PluginApiModules {
 }
 type PluginApiModulesNative = typeof native_d_exports;
 type PluginApiModulesMetro = typeof utils_d_exports & typeof index_d_exports;
-type PluginApiModulesFinders = typeof get_d_exports & typeof lookup_d_exports & typeof wait_d_exports & {
+type PluginApiModulesFinders = typeof index_d_exports$2 & {
   filters: typeof filters_d_exports;
 };
 //#endregion
@@ -28,9 +28,9 @@ interface PluginApiPlugins {
 }
 //#endregion
 //#region lib/plugins/src/apis/react.d.ts
-type PluginApiReact = typeof index_d_exports$3 & {
-  jsxRuntime: typeof index_d_exports$4;
-  native: typeof index_d_exports$5;
+type PluginApiReact = typeof index_d_exports$4 & {
+  jsxRuntime: typeof index_d_exports$5;
+  native: typeof index_d_exports$6;
 };
 //#endregion
 //#region lib/plugins/src/types.d.ts
@@ -41,7 +41,7 @@ interface PluginApiExtensionsOptions {}
  */
 interface UnscopedPreInitPluginApi<O extends PluginApiExtensionsOptions = PluginApiExtensionsOptions> {
   modules: PluginApiModules;
-  patcher: typeof index_d_exports$2;
+  patcher: typeof index_d_exports$3;
   plugins: PluginApiPlugins;
   react: PluginApiReact;
 }

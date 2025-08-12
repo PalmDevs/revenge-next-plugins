@@ -1,5 +1,5 @@
-import { Metro } from "./types-Cp614Xl1.js";
-import * as react3 from "react";
+import { Metro } from "./types-UvuTPXDD.js";
+import * as react4 from "react";
 import * as react_native0 from "react-native";
 import * as react_jsx_runtime0 from "react/jsx-runtime";
 
@@ -10,7 +10,7 @@ declare namespace index_d_exports {
 declare let ReactModuleId: Metro.ModuleID;
 declare let ReactNativeModuleId: Metro.ModuleID;
 declare let ReactJSXRuntimeModuleId: Metro.ModuleID;
-declare let React: typeof react3;
+declare let React: typeof react4;
 declare let ReactNative: typeof react_native0;
 declare let ReactJSXRuntime: typeof react_jsx_runtime0;
 //#endregion

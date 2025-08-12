@@ -9,6 +9,6 @@ import type {
 export function registerPlugin<O extends PluginApiExtensionsOptions>(
     manifest: PluginManifest,
     options: PluginOptions<O>,
-    flags?: number,
-    iflags?: number,
+    flags: number,
+    iflags: number,
 ): PluginDependency

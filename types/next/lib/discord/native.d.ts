@@ -1,2 +1,2 @@
-import { BundleUpdaterManager, CacheModule, ClientInfoModule, DeviceModule, FileModule, ThemeModule } from "../../native-jnzY-GTF.js";
+import { BundleUpdaterManager, CacheModule, ClientInfoModule, DeviceModule, FileModule, ThemeModule } from "../../native-CIlY-M-l.js";
 export { BundleUpdaterManager, CacheModule, ClientInfoModule, DeviceModule, FileModule, ThemeModule };

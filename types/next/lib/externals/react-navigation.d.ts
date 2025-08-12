@@ -1,2 +1,2 @@
-import { ReactNavigationNative, ReactNavigationParamList, ReactNavigationStack } from "../../react-navigation-CFKUOIMk.js";
+import { ReactNavigationNative, ReactNavigationParamList, ReactNavigationStack } from "../../react-navigation-yw7PEll6.js";
 export { ReactNavigationNative, ReactNavigationParamList, ReactNavigationStack };

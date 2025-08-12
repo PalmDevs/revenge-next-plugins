@@ -1,4 +1,4 @@
-import { ReactJSXRuntime } from "./index-BTPKjoF0.js";
+import { ReactJSXRuntime } from "./index-D6TSyeB7.js";
 import { ElementType, JSX, Key, ReactElement } from "react";
 
 //#region lib/react/src/jsx-runtime/index.d.ts
