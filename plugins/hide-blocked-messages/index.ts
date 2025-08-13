@@ -1,8 +1,11 @@
-import { getStore, onFluxEventDispatched } from '@revenge-mod/discord/flux'
+import { Stores } from '@revenge-mod/discord/flux'
+import { getModule } from '@revenge-mod/modules/finders'
+import { byName } from '@revenge-mod/modules/finders/filters'
+import { instead } from '@revenge-mod/patcher'
 import { registerPlugin } from '@revenge-mod/plugins/_'
 import { PluginFlags } from '@revenge-mod/plugins/constants'
 import SettingsComponent from './settings'
-import type { FluxEventDispatchPatch } from '@revenge-mod/discord/flux'
+import type { DiscordModules } from '@revenge-mod/discord/types'
 
 export interface Settings {
     blocked: boolean
@@ -10,15 +13,38 @@ export interface Settings {
     replies: boolean
 }
 
-interface BasicMessage {
-    id: string
-    referenced_message?: BasicMessage
-    // Webhooks have no author
-    author?: BasicUser
-}
-
 interface BasicUser {
     id: string
+}
+
+interface BasicMessage {
+    id: string
+    authorId?: string
+    channelId: string
+    referencedMessage?: {
+        state: number
+        message?: BasicMessage
+    }
+}
+
+interface MessageRow {
+    type: number
+    content?: MessageRow[]
+    message?: BasicMessage
+}
+
+interface MessageStoreMessage {
+    // Webhooks have no author
+    author?: BasicUser
+    messageReference?: {
+        message_id: string
+    }
+}
+
+interface ChatManager {
+    prototype: {
+        createRow(row: MessageRow): void
+    }
 }
 
 registerPlugin<{ storage: Settings }>(
@@ -40,55 +66,89 @@ registerPlugin<{ storage: Settings }>(
             },
         },
         start({ cleanup, storage, plugin }) {
-            cleanup(
-                getStore<{
-                    isIgnoredForMessage(msg: BasicMessage): boolean
-                    isBlockedForMessage(msg: BasicMessage): boolean
-                }>('RelationshipStore', store => {
-                    const isFilteredMessage = (msg: BasicMessage) => {
-                        const { blocked, ignored } = storage.cache!
+            function patchChatManager(ChatManager: ChatManager) {
+                const RelationshipStore =
+                    Stores.RelationshipStore as DiscordModules.Flux.Store<{
+                        isIgnored(userId: string): boolean
+                        isBlocked(userId: string): boolean
+                    }>
 
-                        return (
-                            (blocked && store.isBlockedForMessage(msg)) ||
-                            (ignored && store.isIgnoredForMessage(msg))
-                        )
-                    }
+                const MessageStore =
+                    Stores.MessageStore as DiscordModules.Flux.Store<{
+                        getMessage(
+                            channelId: string,
+                            messageId: string,
+                        ): MessageStoreMessage | undefined
+                    }>
 
-                    const canHide = (msg: BasicMessage) =>
-                        isFilteredMessage(msg) ||
-                        (storage.cache!.replies &&
-                            msg.referenced_message &&
-                            isFilteredMessage(msg.referenced_message))
+                const canHide = (userId?: string) => {
+                    if (!userId) return false
 
-                    const dropHiddenMessages: FluxEventDispatchPatch<{
-                        // Sometimes these events don't have message data for some reason
-                        message?: BasicMessage
-                        channelId: string
-                    }> = event => {
-                        const { message } = event
-                        if (message && canHide(message)) return
-                        return event
-                    }
+                    const { blocked, ignored } = storage.cache!
 
-                    cleanup(
-                        // Initial message load
-                        onFluxEventDispatched<{
-                            messages: BasicMessage[]
-                        }>('LOAD_MESSAGES_SUCCESS', event => {
-                            event.messages = event.messages.filter(
-                                msg => !canHide(msg),
-                            )
-
-                            return event
-                        }),
-                        // New messages
-                        onFluxEventDispatched(
-                            'MESSAGE_CREATE',
-                            dropHiddenMessages,
-                        ),
+                    return (
+                        (blocked && RelationshipStore.isBlocked(userId)) ||
+                        (ignored && RelationshipStore.isIgnored(userId))
                     )
-                }),
+                }
+
+                // Doesn't need cleanup because we need to restart the plugin to apply changes anyway
+                instead(
+                    ChatManager.prototype,
+                    'createRow',
+                    function (args, orig) {
+                        const [{ type, message, content }] = args
+
+                        switch (type) {
+                            // Normal message row
+                            case 1: {
+                                // Do some checking so we don't hide false positives
+                                const { channelId, id, referencedMessage } =
+                                    message!
+
+                                if (
+                                    // We can hide replies
+                                    storage.cache!.replies &&
+                                    // And the referenced message is not loaded (0 = loaded, 1 = not loaded, 2 = deleted)
+                                    referencedMessage?.state === 1
+                                ) {
+                                    const reference = MessageStore.getMessage(
+                                        channelId,
+                                        // referenceId
+                                        MessageStore.getMessage(channelId, id)!
+                                            .messageReference!.message_id,
+                                    )
+
+                                    if (
+                                        reference?.author &&
+                                        canHide(reference.author.id)
+                                    )
+                                        return
+                                }
+
+                                break
+                            }
+                            // Blocked/Ignored row
+                            case 2: {
+                                // Why does this work?
+                                // - The generated row is either a blocked or ignored row, and will always have a message
+                                // - If they stack (2+ ignored/blocked messages), the row is of the same type, so we can just check the first message
+                                // - We already know that this user is blocked or ignored,
+                                //   so this is just a logic to avoid hiding the row if the user turns the respective setting off
+                                if (canHide(content![0]?.message?.authorId))
+                                    return
+                            }
+                        }
+
+                        return Reflect.apply(orig, this, args)
+                    },
+                )
+            }
+
+            cleanup(
+                getModule(byName<ChatManager>('ChatManager'), patchChatManager),
                 // If settings change, mark plugin as needing reload to apply changes
+                // We can potentially try to regenerate the rows, but that would be more complex, and probably not worth it
                 storage.subscribe(() => {
                     plugin.flags |= PluginFlags.ReloadRequired
                 }),
