@@ -112,11 +112,18 @@ registerPlugin<{ storage: Settings }>(
                                     // And the referenced message is not loaded (0 = loaded, 1 = not loaded, 2 = deleted)
                                     referencedMessage?.state === 1
                                 ) {
+                                    const referenceData =
+                                        MessageStore.getMessage(
+                                            channelId,
+                                            id,
+                                        )!.messageReference
+
+                                    if (!referenceData) break
+
                                     const reference = MessageStore.getMessage(
                                         channelId,
                                         // referenceId
-                                        MessageStore.getMessage(channelId, id)!
-                                            .messageReference!.message_id,
+                                        referenceData.message_id,
                                     )
 
                                     if (
