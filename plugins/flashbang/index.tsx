@@ -2,9 +2,8 @@ import { ToastActionCreators } from '@revenge-mod/discord/actions'
 import { Constants, ConstantsModuleId } from '@revenge-mod/discord/common'
 import { lookupModule } from '@revenge-mod/modules/finders'
 import {
-    byDependencies,
-    byProps,
-    preferExports,
+    withDependencies,
+    withProps,
 } from '@revenge-mod/modules/finders/filters'
 import { registerPlugin } from '@revenge-mod/plugins/_'
 import { PluginFlags } from '@revenge-mod/plugins/constants'
@@ -95,28 +94,26 @@ function forceLightTheme() {
 
     // actions/UserSettingsActionCreators.tsx
     const [UserSettingsActionCreators] = lookupModule(
-        preferExports(
-            byProps('updateTheme'),
-            byDependencies([
-                undefined,
-                undefined,
-                undefined,
+        withProps('updateTheme').and(
+            withDependencies([
+                null,
+                null,
+                null,
                 ConstantsModuleId,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
                 2,
             ]),
-            true,
         ),
         { uninitialized: true },
     )
 
     const [ThemeActionCreators] = lookupModule(
-        byProps<{
+        withProps<{
             setUseSystemTheme(v: boolean): void
             setThemeOverride(v: unknown): void
         }>('setThemeOverride'),

@@ -1,20 +1,20 @@
 import "./callback-CpIFpq3_.js";
 import "./error-D0foBB4e.js";
-import { Metro } from "./types-UvuTPXDD.js";
+import { Metro } from "./types-Bg9fFOmx.js";
 import "./promise-DVfFbAlR.js";
-import "./proxy-DDf0OBup.js";
-import "./utils-B7Ohk_0h.js";
+import "./proxy-BpNB6oQJ.js";
+import "./utils-CkliyEwG.js";
 import "./types-gnIxC4_N.js";
-import "./types-BBib54VW.js";
-import "./index-BRkBWpAv.js";
-import "./index-BxDOIHsu.js";
-import "./native-DyvCsXCB.js";
+import "./types-BrxtuUZ7.js";
+import "./index-vWf-d48s.js";
+import "./index-BakKIsu4.js";
+import "./index-lEQipRyq.js";
 import "./types-BwbmL3IL.js";
 import "./index-Ct3qDCb_.js";
 import "./constants-NMvHIMl8.js";
-import { PluginApiExtensionsOptions, PluginManifest, PluginOptions } from "./types-Dcz1c7Jm.js";
-import "./index-D6TSyeB7.js";
-import "./index-C1hfqro-.js";
+import { PluginApiExtensionsOptions, PluginManifest, PluginOptions } from "./types-Be0lE9EA.js";
+import "./index-DGNlbFhP.js";
+import "./index-CLGhORKx.js";
 import "./index-CL-hz3xa.js";
 import { ImageProps, ScrollViewProps, TextProps, ViewProps } from "react-native";
 
@@ -109,6 +109,7 @@ declare global {
   var __turboModuleProxy: ((name: string) => unknown) | undefined;
   function nativeLoggingHook(str: string, level: number): void;
   function alert(message: unknown): void;
+  function queueMicrotask(cb: () => void): void;
   var nativePerformanceNow: typeof performance.now;
   var performance: {
     now(): number;

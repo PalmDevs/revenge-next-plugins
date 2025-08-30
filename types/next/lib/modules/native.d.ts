@@ -1,2 +1,2 @@
-import { getNativeModule } from "../../native-DyvCsXCB.js";
-export { getNativeModule };
+import { BridgeInfo, MethodArgs, MethodName, MethodResult, Methods, callBridgeMethod, callBridgeMethodSync, getBridgeInfo, getNativeModule } from "../../index-lEQipRyq.js";
+export { BridgeInfo, MethodArgs, MethodName, MethodResult, Methods, callBridgeMethod, callBridgeMethodSync, getBridgeInfo, getNativeModule };

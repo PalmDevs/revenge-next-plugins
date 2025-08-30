@@ -1,4 +1,4 @@
-import { Filter, FilterResult, If, MaybeDefaultExportMatched, Metro, Nullish } from "./types-UvuTPXDD.js";
+import { Filter, FilterResult, If, MaybeDefaultExportMatched, Metro, Nullish } from "./types-Bg9fFOmx.js";
 
 //#region lib/modules/src/finders/_internal.d.ts
 interface RunFilterOptions {
@@ -79,13 +79,12 @@ type LookupModulesOptions<ReturnNamespace extends boolean = boolean, Uninitializ
 }> & If<All, LookupModulesOptionsWithAll<All> & { [K in keyof LookupModulesOptionsWithInitializedUninitialized<Uninitialized>]?: never }, LookupModulesOptionsWithInitializedUninitialized<Uninitialized> & { [K in keyof LookupModulesOptionsWithAll<All>]?: never }>;
 type LookupModulesResult<F extends Filter, O extends LookupModulesOptions> = [exports: O extends LookupModulesOptions<boolean, boolean, boolean, false> ? LookupFilterResult<F, O> | Nullish : LookupFilterResult<F, O>, id: Metro.ModuleID];
 type LookupFilterResult<F extends Filter, O extends LookupModulesOptions> = O extends RunFilterReturnExportsOptions<true> ? MaybeDefaultExportMatched<FilterResult<F>> : FilterResult<F>;
-declare const NotFoundResult: [];
+declare const NotFoundResult: readonly [];
 type LookupNotFoundResult = typeof NotFoundResult;
 /**
  * Lookup modules.
  *
- * You can lookup uninitialized modules by passing `options.uninitialized` when filtering via exportsless filters (eg. `byDependencies`).
- * Use the `moduleStateAware` helper to filter dynamically based on whether the module is initialized or not.
+ * You can lookup uninitialized modules by passing `options.uninitialized` when filtering via exportsless filters (eg. `withDependencies`).
  *
  * @param filter The filter to use.
  * @param options The options to use for the lookup.
@@ -93,13 +92,13 @@ type LookupNotFoundResult = typeof NotFoundResult;
  *
  * @example
  * ```ts
- * const lookup = lookupModules(byProps('x'))
+ * const lookup = lookupModules(withProps('x'))
  * // Log all module exports that has exports.x
- * for (const exports of lookup) console.log(exports)
+ * for (const [exports, id] of lookup) console.log(id, exports)
  * ```
  */
 declare function lookupModules<F extends Filter>(filter: F): Generator<LookupModulesResult<F, object>, undefined>;
-declare function lookupModules<F extends Filter, const O extends (F extends Filter<any, infer WE> ? If<WE, LookupModulesOptions<boolean, false, false>, LookupModulesOptions> : never)>(filter: F, options: O): Generator<LookupModulesResult<F, O>, undefined>;
+declare function lookupModules<F extends Filter, const O extends (F extends Filter<any, infer RE> ? If<RE, LookupModulesOptions<boolean, false, false>, LookupModulesOptions> : never)>(filter: F, options: O): Generator<LookupModulesResult<F, O>, undefined>;
 /**
  * Lookup a module. Skipping creating a `Generator`.
  *
@@ -111,11 +110,11 @@ declare function lookupModules<F extends Filter, const O extends (F extends Filt
  *
  * @example
  * ```ts
- * const React = lookupModule(byProps<typeof import('react')>('createElement'))
+ * const [React, ReactModuleId] = lookupModule(withProps<typeof import('react')>('createElement'))
  * ```
  */
 declare function lookupModule<F extends Filter>(filter: F): LookupModulesResult<F, object> | LookupNotFoundResult;
-declare function lookupModule<F extends Filter, const O extends (F extends Filter<any, infer WE> ? If<WE, LookupModulesOptions<boolean, false, false>, LookupModulesOptions> : never)>(filter: F, options: O): LookupModulesResult<F, O> | LookupNotFoundResult;
+declare function lookupModule<F extends Filter, const O extends (F extends Filter<any, infer RE> ? If<RE, LookupModulesOptions<boolean, false, false>, LookupModulesOptions> : never)>(filter: F, options: O): LookupModulesResult<F, O> | LookupNotFoundResult;
 /**
  * Lookup an initialized module by its imported path.
  *
@@ -126,10 +125,10 @@ declare function lookupModule<F extends Filter, const O extends (F extends Filte
  *
  * @example
  * ```ts
- * const [{ default: Logger }] = lookupModuleByImportedPath<{ default: typeof DiscordModules.Logger }>('modules/debug/Logger.tsx')
+ * const [{ default: Logger }] = lookupModuleWithImportedPath<{ default: typeof DiscordModules.Logger }>('modules/debug/Logger.tsx')
  * ```
  */
-declare function lookupModuleByImportedPath<T = any>(path: string): [exports: T, id: Metro.ModuleID] | [];
+declare function lookupModuleWithImportedPath<T = any>(path: string): [exports: T, id: Metro.ModuleID] | LookupNotFoundResult;
 //#endregion
 //#region lib/modules/src/finders/wait.d.ts
 interface BaseWaitForModulesOptions<All extends boolean = boolean> {
@@ -166,7 +165,7 @@ type WaitForModulesResult<F extends Filter, O extends WaitForModulesOptions> = O
  * @example
  * ```ts
  * const unsub = waitForModules(
- *   byName<typeof import('@shopify/flash-list')>('FlashList'),
+ *   withName<typeof import('@shopify/flash-list')>('FlashList'),
  *   // (exports: typeof import('@shopify/flash-list'), id: Metro.ModuleID) => any
  *   (exports, id) => {
  *     unsub()
@@ -191,7 +190,7 @@ declare function waitForModules<F extends (O extends WaitForModulesOptions<boole
  *
  * @example
  * ```ts
- * waitForModuleByImportedPath(
+ * waitForModuleWithImportedPath(
  *   'utils/PlatformUtils.tsx',
  *   (exports, id) => {
  *      // Do something with the module...
@@ -199,10 +198,10 @@ declare function waitForModules<F extends (O extends WaitForModulesOptions<boole
  * )
  * ```
  */
-declare function waitForModuleByImportedPath<T = any>(path: string, callback: WaitForModulesCallback<T>, options?: BaseWaitForModulesOptions): WaitForModulesUnsubscribeFunction;
+declare function waitForModuleWithImportedPath<T = any>(path: string, callback: WaitForModulesCallback<T>, options?: BaseWaitForModulesOptions): WaitForModulesUnsubscribeFunction;
 //#endregion
 //#region lib/modules/src/finders/get.d.ts
-type GetModuleOptions<ReturnNamespace extends boolean = boolean, Uninitialized extends boolean = boolean, All extends boolean = boolean> = WaitForModulesOptions<ReturnNamespace> & LookupModulesOptions<ReturnNamespace, Uninitialized, All, true> & {
+type GetModulesOptions<ReturnNamespace extends boolean = boolean, Uninitialized extends boolean = boolean, All extends boolean = boolean> = WaitForModulesOptions<ReturnNamespace> & LookupModulesOptions<ReturnNamespace, Uninitialized, All, true> & {
   /**
    * The maximum number of modules to get.
    *
@@ -210,9 +209,9 @@ type GetModuleOptions<ReturnNamespace extends boolean = boolean, Uninitialized e
    */
   max?: number;
 };
-type GetModuleResult<F extends Filter, O extends GetModuleOptions> = O extends RunFilterReturnExportsOptions<true> ? MaybeDefaultExportMatched<FilterResult<F>> : FilterResult<F>;
-type GetModuleCallback<T> = (exports: T, id: Metro.ModuleID) => any;
-type GetModuleUnsubscribeFunction = () => void;
+type GetModulesResult<F extends Filter, O extends GetModulesOptions> = O extends RunFilterReturnExportsOptions<true> ? MaybeDefaultExportMatched<FilterResult<F>> : FilterResult<F>;
+type GetModulesCallback<T> = (exports: T, id: Metro.ModuleID) => any;
+type GetModulesUnsubscribeFunction = () => void;
 /**
  * Get modules matching the filter.
  *
@@ -224,22 +223,22 @@ type GetModuleUnsubscribeFunction = () => void;
  *
  * @example
  * ```ts
- * getModule(byProps<typeof import('react')>('createElement'), React => {
+ * getModules(withProps<typeof import('react')>('createElement'), React => {
  *   // Immediately called because React is always initialized when plugins are loaded
  * })
  *
- * getModule(byProps<typeof import('@shopify/flash-list')>('FlashList'), FlashList => {
+ * getModules(withProps<typeof import('@shopify/flash-list')>('FlashList'), FlashList => {
  *   // Called when the module is initialized
  * })
  *
  * // Get multiple modules matching the filter
- * getModule(byProps<ReactNative.AssetsRegistry>('registerAsset'), AssetsRegistry => {
+ * getModules(withProps<ReactNative.AssetsRegistry>('registerAsset'), AssetsRegistry => {
  *   // Called 2 times, once for each module that matches the filter
  * }, { max: 2 })
  * ```
  */
-declare function getModule<F extends Filter>(filter: F, callback: GetModuleCallback<FilterResult<F>>): GetModuleUnsubscribeFunction;
-declare function getModule<F extends Filter, const O extends (F extends Filter<any, infer WE> ? If<WE, GetModuleOptions<boolean, boolean, false>, GetModuleOptions> : never)>(filter: F, callback: GetModuleCallback<FilterResult<F>>, options: O): GetModuleUnsubscribeFunction;
+declare function getModules<F extends Filter>(filter: F, callback: GetModulesCallback<FilterResult<F>>): GetModulesUnsubscribeFunction;
+declare function getModules<F extends Filter, const O extends (F extends Filter<any, infer RE> ? If<RE, GetModulesOptions<boolean, boolean, false>, GetModulesOptions> : never)>(filter: F, callback: GetModulesCallback<FilterResult<F>>, options: O): GetModulesUnsubscribeFunction;
 /**
  * Get a single module by its imported path.
  * Once a module is found, unsubscription happens automatically, since imported paths are unique.
@@ -250,14 +249,14 @@ declare function getModule<F extends Filter, const O extends (F extends Filter<a
  *
  * @example
  * ```ts
- * getModuleByImportedPath('modules/main_tabs_v2/native/settings/SettingsConstants.tsx', SettingsConstants => {
+ * getModuleWithImportedPath('modules/main_tabs_v2/native/settings/SettingsConstants.tsx', SettingsConstants => {
  *   console.log('Settings page opened') // Logs once the module is initialized
  * })
  * ```
  */
-declare function getModuleByImportedPath<T>(path: string, callback: GetModuleCallback<T>): GetModuleUnsubscribeFunction;
+declare function getModuleWithImportedPath<T>(path: string, callback: GetModulesCallback<T>): GetModulesUnsubscribeFunction;
 declare namespace index_d_exports {
-  export { BaseWaitForModulesOptions, GetModuleCallback, GetModuleOptions, GetModuleResult, GetModuleUnsubscribeFunction, LookupModulesOptions, LookupModulesResult, WaitForModulesCallback, WaitForModulesOptions, WaitForModulesResult, WaitForModulesUnsubscribeFunction, getModule, getModuleByImportedPath, lookupModule, lookupModuleByImportedPath, lookupModules, waitForModuleByImportedPath, waitForModules };
+  export { BaseWaitForModulesOptions, GetModulesCallback, GetModulesOptions, GetModulesResult, GetModulesUnsubscribeFunction, LookupModulesOptions, LookupModulesResult, WaitForModulesCallback, WaitForModulesOptions, WaitForModulesResult, WaitForModulesUnsubscribeFunction, getModuleWithImportedPath, getModules, lookupModule, lookupModuleWithImportedPath, lookupModules, waitForModuleWithImportedPath, waitForModules };
 }
 //#endregion
-export { BaseWaitForModulesOptions, GetModuleCallback, GetModuleOptions, GetModuleResult, GetModuleUnsubscribeFunction, LookupModulesOptions, LookupModulesResult, WaitForModulesCallback, WaitForModulesOptions, WaitForModulesResult, WaitForModulesUnsubscribeFunction, getModule, getModuleByImportedPath, index_d_exports, lookupModule, lookupModuleByImportedPath, lookupModules, waitForModuleByImportedPath, waitForModules };
+export { BaseWaitForModulesOptions, GetModulesCallback, GetModulesOptions, GetModulesResult, GetModulesUnsubscribeFunction, LookupModulesOptions, LookupModulesResult, WaitForModulesCallback, WaitForModulesOptions, WaitForModulesResult, WaitForModulesUnsubscribeFunction, getModuleWithImportedPath, getModules, index_d_exports, lookupModule, lookupModuleWithImportedPath, lookupModules, waitForModuleWithImportedPath, waitForModules };

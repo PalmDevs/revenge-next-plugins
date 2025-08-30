@@ -1,25 +1,48 @@
-import { filters_d_exports } from "./types-UvuTPXDD.js";
-import { index_d_exports, utils_d_exports } from "./utils-B7Ohk_0h.js";
-import { index_d_exports as index_d_exports$1 } from "./index-BRkBWpAv.js";
-import { index_d_exports as index_d_exports$2 } from "./index-BxDOIHsu.js";
-import { native_d_exports } from "./native-DyvCsXCB.js";
-import { index_d_exports as index_d_exports$3 } from "./index-Ct3qDCb_.js";
+import { index_d_exports as index_d_exports$6 } from "./types-Bg9fFOmx.js";
+import { index_d_exports as index_d_exports$7, utils_d_exports } from "./utils-CkliyEwG.js";
+import { index_d_exports as index_d_exports$1 } from "./index-vWf-d48s.js";
+import { index_d_exports as index_d_exports$5 } from "./index-BakKIsu4.js";
+import { index_d_exports as index_d_exports$8 } from "./index-lEQipRyq.js";
+import { index_d_exports } from "./index-Ct3qDCb_.js";
 import { constants_d_exports } from "./constants-NMvHIMl8.js";
-import { index_d_exports as index_d_exports$4 } from "./index-D6TSyeB7.js";
-import { index_d_exports as index_d_exports$5 } from "./index-C1hfqro-.js";
-import { index_d_exports as index_d_exports$6 } from "./index-CL-hz3xa.js";
+import { index_d_exports as index_d_exports$2 } from "./index-DGNlbFhP.js";
+import { index_d_exports as index_d_exports$3 } from "./index-CLGhORKx.js";
+import { index_d_exports as index_d_exports$4 } from "./index-CL-hz3xa.js";
 import { FunctionComponent } from "react";
 
+//#region lib/modules/src/native/fs.d.ts
+declare namespace fs_d_exports {
+  export { deleteFileSync, exists, readFile, readFileSync, rm, rmSync, writeFile, writeFileSync };
+}
+declare function readFile(path: string): Promise<string>;
+declare function writeFile(path: string, data: string): Promise<void>;
+declare function exists(path: string): Promise<boolean>;
+declare function rm(path: string): Promise<boolean>;
+declare function readFileSync(path: string): string;
+declare function writeFileSync(path: string, data: string): void;
+declare function rmSync(path: string): boolean;
+declare function deleteFileSync(path: string): boolean;
+declare module '@revenge-mod/modules/native' {
+  interface Methods {
+    'revenge.fs.read': [[path: string], string];
+    'revenge.fs.write': [[path: string, data: string], void];
+    'revenge.fs.exists': [[path: string], boolean];
+    'revenge.fs.delete': [[path: string], boolean];
+  }
+}
+//#endregion
 //#region lib/plugins/src/apis/modules.d.ts
 interface PluginApiModules {
   finders: PluginApiModulesFinders;
   metro: PluginApiModulesMetro;
   native: PluginApiModulesNative;
 }
-type PluginApiModulesNative = typeof native_d_exports;
-type PluginApiModulesMetro = typeof utils_d_exports & typeof index_d_exports;
-type PluginApiModulesFinders = typeof index_d_exports$2 & {
-  filters: typeof filters_d_exports;
+type PluginApiModulesNative = typeof index_d_exports$8 & {
+  fs: typeof fs_d_exports;
+};
+type PluginApiModulesMetro = typeof utils_d_exports & typeof index_d_exports$7;
+type PluginApiModulesFinders = typeof index_d_exports$5 & {
+  filters: typeof index_d_exports$6;
 };
 //#endregion
 //#region lib/plugins/src/apis/plugins.d.ts
@@ -28,9 +51,9 @@ interface PluginApiPlugins {
 }
 //#endregion
 //#region lib/plugins/src/apis/react.d.ts
-type PluginApiReact = typeof index_d_exports$4 & {
-  jsxRuntime: typeof index_d_exports$5;
-  native: typeof index_d_exports$6;
+type PluginApiReact = typeof index_d_exports$2 & {
+  jsxRuntime: typeof index_d_exports$3;
+  native: typeof index_d_exports$4;
 };
 //#endregion
 //#region lib/plugins/src/types.d.ts
@@ -41,7 +64,7 @@ interface PluginApiExtensionsOptions {}
  */
 interface UnscopedPreInitPluginApi<O extends PluginApiExtensionsOptions = PluginApiExtensionsOptions> {
   modules: PluginApiModules;
-  patcher: typeof index_d_exports$3;
+  patcher: typeof index_d_exports;
   plugins: PluginApiPlugins;
   react: PluginApiReact;
 }

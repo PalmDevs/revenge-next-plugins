@@ -1,4 +1,4 @@
-import { AnyObject, DeepPartial } from "./types-UvuTPXDD.js";
+import { AnyObject, DeepPartial } from "./types-Bg9fFOmx.js";
 
 //#region lib/storage/src/index.d.ts
 declare namespace index_d_exports {

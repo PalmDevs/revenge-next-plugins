@@ -96,7 +96,7 @@ declare function proxify<T>(signal: () => T, options?: ProxifyOptions): T;
  */
 declare function unproxify<T extends object>(proxified: T): T;
 type DestructureOptions<T extends object> = { [K in keyof T]?: ProxifyOptions };
-type DestructureResult<T extends object, O extends DestructureOptions<T>> = { [K in keyof T]: O[K] extends ProxifyOptions ? T[K] : never };
+type DestructureResult<T extends object> = { [K in keyof T]: T[K] };
 /**
  * Destructure a proxified value.
  *
@@ -112,7 +112,8 @@ type DestructureResult<T extends object, O extends DestructureOptions<T>> = { [K
  * // cache is not turned on, so each access will call the signal again
  * const { x, y } = destructure(
  *   proxify(() => ({ x: Math.random(), y: [Math.random()], z: null })),
- *   { hint: {} }
+ *   // Optional: Specify ProxifyOptions for each property
+ *   { y: { hint: [] } }
  * )
  *
  * // Non-nullish primitives are not proxifiable
@@ -124,6 +125,6 @@ type DestructureResult<T extends object, O extends DestructureOptions<T>> = { [K
  * z // TypeError: Cannot destructure and proxify null (reading 'z')
  * ```
  */
-declare function destructure<T extends object, const O extends DestructureOptions<T>>(proxified: T, options?: O): DestructureResult<T, O>;
+declare function destructure<T extends object, O extends DestructureOptions<T>>(proxified: T, options?: O): DestructureResult<T>;
 //#endregion
 export { DestructureOptions, DestructureResult, ProxifyOptions, destructure, getProxyTarget, isProxified, isProxy, proxify, proxy_d_exports, unproxify };

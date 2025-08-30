@@ -1,5 +1,8 @@
-import { getModule, lookupModule } from '@revenge-mod/modules/finders'
-import { createFilterGenerator } from '@revenge-mod/modules/finders/filters'
+import { getModules, lookupModule } from '@revenge-mod/modules/finders'
+import {
+    createFilterGenerator,
+    FilterFlag,
+} from '@revenge-mod/modules/finders/filters'
 import { after, before } from '@revenge-mod/patcher'
 import { registerPlugin } from '@revenge-mod/plugins/_'
 import { PluginFlags } from '@revenge-mod/plugins/constants'
@@ -56,7 +59,7 @@ registerPlugin<{ storage: Settings }>(
         },
         async start({ cleanup, storage }) {
             cleanup(
-                getModule(
+                getModules(
                     byMemoizedNamedExoticComponent<
                         SendButtonRef,
                         {
@@ -192,6 +195,7 @@ const byMemoizedNamedExoticComponent = createFilterGenerator(
     ([name], _, exports) =>
         exports.type?.render?.length === 2 && exports.type.displayName === name,
     ([name]) => `byMemoizedNamedExoticComponent(${name})`,
+    FilterFlag.RequiresExports,
 ) as ByMemoizedNamedExoticComponent
 
 interface ActionsRef {

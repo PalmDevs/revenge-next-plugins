@@ -1,2 +1,2 @@
-import { DestructureOptions, DestructureResult, ProxifyOptions, destructure, getProxyTarget, isProxified, isProxy, proxify, unproxify } from "../../proxy-DDf0OBup.js";
+import { DestructureOptions, DestructureResult, ProxifyOptions, destructure, getProxyTarget, isProxified, isProxy, proxify, unproxify } from "../../proxy-BpNB6oQJ.js";
 export { DestructureOptions, DestructureResult, ProxifyOptions, destructure, getProxyTarget, isProxified, isProxy, proxify, unproxify };

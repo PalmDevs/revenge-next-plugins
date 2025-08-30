@@ -1,7 +1,7 @@
 import "../../callback-CpIFpq3_.js";
 import "../../error-D0foBB4e.js";
-import "../../types-UvuTPXDD.js";
+import "../../types-Bg9fFOmx.js";
 import "../../promise-DVfFbAlR.js";
-import "../../proxy-DDf0OBup.js";
-import { BaseWaitForModulesOptions, GetModuleCallback, GetModuleOptions, GetModuleResult, GetModuleUnsubscribeFunction, LookupModulesOptions, LookupModulesResult, WaitForModulesCallback, WaitForModulesOptions, WaitForModulesResult, WaitForModulesUnsubscribeFunction, getModule, getModuleByImportedPath, lookupModule, lookupModuleByImportedPath, lookupModules, waitForModuleByImportedPath, waitForModules } from "../../index-BxDOIHsu.js";
-export { BaseWaitForModulesOptions, GetModuleCallback, GetModuleOptions, GetModuleResult, GetModuleUnsubscribeFunction, LookupModulesOptions, LookupModulesResult, WaitForModulesCallback, WaitForModulesOptions, WaitForModulesResult, WaitForModulesUnsubscribeFunction, getModule, getModuleByImportedPath, lookupModule, lookupModuleByImportedPath, lookupModules, waitForModuleByImportedPath, waitForModules };
+import "../../proxy-BpNB6oQJ.js";
+import { BaseWaitForModulesOptions, GetModulesCallback, GetModulesOptions, GetModulesResult, GetModulesUnsubscribeFunction, LookupModulesOptions, LookupModulesResult, WaitForModulesCallback, WaitForModulesOptions, WaitForModulesResult, WaitForModulesUnsubscribeFunction, getModuleWithImportedPath, getModules, lookupModule, lookupModuleWithImportedPath, lookupModules, waitForModuleWithImportedPath, waitForModules } from "../../index-BakKIsu4.js";
+export { BaseWaitForModulesOptions, GetModulesCallback, GetModulesOptions, GetModulesResult, GetModulesUnsubscribeFunction, LookupModulesOptions, LookupModulesResult, WaitForModulesCallback, WaitForModulesOptions, WaitForModulesResult, WaitForModulesUnsubscribeFunction, getModuleWithImportedPath, getModules, lookupModule, lookupModuleWithImportedPath, lookupModules, waitForModuleWithImportedPath, waitForModules };

@@ -1,9 +1,9 @@
 import "../../callback-CpIFpq3_.js";
 import "../../error-D0foBB4e.js";
-import { AnyObject } from "../../types-UvuTPXDD.js";
+import { AnyObject } from "../../types-Bg9fFOmx.js";
 import "../../promise-DVfFbAlR.js";
-import "../../proxy-DDf0OBup.js";
-import { Storage, StorageOptions, index_d_exports } from "../../index-BnaK0P5k.js";
+import "../../proxy-BpNB6oQJ.js";
+import { Storage, StorageOptions, index_d_exports } from "../../index-CaB0y8Xp.js";
 
 //#region lib/storage/src/types.d.ts
 declare module '@revenge-mod/plugins/types' {

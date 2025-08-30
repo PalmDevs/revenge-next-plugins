@@ -1,6 +1,6 @@
 import { Stores } from '@revenge-mod/discord/flux'
-import { getModule } from '@revenge-mod/modules/finders'
-import { byName } from '@revenge-mod/modules/finders/filters'
+import { getModules } from '@revenge-mod/modules/finders'
+import { withName } from '@revenge-mod/modules/finders/filters'
 import { instead } from '@revenge-mod/patcher'
 import { registerPlugin } from '@revenge-mod/plugins/_'
 import { PluginFlags } from '@revenge-mod/plugins/constants'
@@ -153,7 +153,10 @@ registerPlugin<{ storage: Settings }>(
             }
 
             cleanup(
-                getModule(byName<ChatManager>('ChatManager'), patchChatManager),
+                getModules(
+                    withName<ChatManager>('ChatManager'),
+                    patchChatManager,
+                ),
                 // If settings change, mark plugin as needing reload to apply changes
                 // We can potentially try to regenerate the rows, but that would be more complex, and probably not worth it
                 storage.subscribe(() => {

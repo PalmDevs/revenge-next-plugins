@@ -1,10 +1,10 @@
 import "../../callback-CpIFpq3_.js";
 import "../../error-D0foBB4e.js";
-import "../../types-UvuTPXDD.js";
+import "../../types-Bg9fFOmx.js";
 import "../../promise-DVfFbAlR.js";
-import "../../proxy-DDf0OBup.js";
+import "../../proxy-BpNB6oQJ.js";
 import "../../react-navigation-yw7PEll6.js";
 import "../../native-CIlY-M-l.js";
-import { Design, FormSwitch } from "../../index-C7nrTgKF.js";
+import { Design, FormSwitch } from "../../index-DE2r-wBx.js";
 import "../../main_tabs_v2-5n8vsUP3.js";
 export { Design, FormSwitch };

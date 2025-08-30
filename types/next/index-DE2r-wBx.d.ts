@@ -1,4 +1,4 @@
-import { Filter, FilterGenerator, Metro } from "./types-UvuTPXDD.js";
+import { Filter, FilterGenerator, Metro } from "./types-Bg9fFOmx.js";
 import { ReactNavigationParamList } from "./react-navigation-yw7PEll6.js";
 import { native_d_exports } from "./native-CIlY-M-l.js";
 import { main_tabs_v2_d_exports } from "./main_tabs_v2-5n8vsUP3.js";
@@ -144,18 +144,18 @@ declare const Stores: Record<string, DiscordModules.Flux.Store<object>>;
  * @returns A function that can be used to cancel the wait for the store.
  */
 declare function getStore<T>(name: string, callback: (store: DiscordModules.Flux.Store<T>) => void): () => void;
-type ByStore = FilterGenerator<(<T>() => Filter<DiscordModules.Flux.Store<T>, boolean>)>;
+type WithStore = FilterGenerator<(<T>() => Filter<DiscordModules.Flux.Store<T>, boolean>)>;
 /**
  * A dynamic filter that matches all Flux stores.
  */
-declare const byStore: ByStore;
-type ByStoreName = FilterGenerator<(<T>(name: string) => Filter<DiscordModules.Flux.Store<T>, true>)>;
+declare const withStore: WithStore;
+type WithStoreName = FilterGenerator<(<T>(name: string) => Filter<DiscordModules.Flux.Store<T>, true>)>;
 /**
  * A with-exports filter that matches a Flux store by its name.
  */
-declare const byStoreName: ByStoreName;
+declare const withStoreName: WithStoreName;
 declare namespace index_d_exports$1 {
-  export { ByStore, ByStoreName, FluxEventDispatchPatch, Stores, byStore, byStoreName, getStore, onAnyFluxEventDispatched, onFluxEventDispatched };
+  export { FluxEventDispatchPatch, Stores, WithStore, WithStoreName, getStore, onAnyFluxEventDispatched, onFluxEventDispatched, withStore, withStoreName };
 }
 declare namespace index_d_exports$2 {
   export { SettingsItem, SettingsModulesLoadedSubscription, SettingsSection, addSettingsItemToSection, isSettingsModulesLoaded, onSettingsModulesLoaded, refreshSettingsNavigator, refreshSettingsOverviewScreen, registerSettingsItem, registerSettingsItems, registerSettingsSection };
@@ -686,4 +686,4 @@ declare namespace DiscordModules {
   }
 }
 //#endregion
-export { ActionSheetActionCreators, AlertActionCreators, AppStartPerformance$1 as AppStartPerformance, ByStore, ByStoreName, Constants$1 as Constants, ConstantsModuleId, Design, DiscordModules, Dispatcher, DispatcherModuleId, FluxEventDispatchPatch, FormSwitch, Logger$1 as Logger, LoggerModuleId, PluginApiDiscord, SettingListRenderer, SettingsItem, SettingsModulesLoadedSubscription, SettingsSection, Stores, ToastActionCreators, Tokens, TokensModuleId, TypedEventEmitter$1 as TypedEventEmitter, addSettingsItemToSection, byStore, byStoreName, flux_d_exports, getStore, isSettingsModulesLoaded, onAnyFluxEventDispatched, onFluxEventDispatched, onSettingsModulesLoaded, refreshSettingsNavigator, refreshSettingsOverviewScreen, registerSettingsItem, registerSettingsItems, registerSettingsSection, utils_d_exports };
+export { ActionSheetActionCreators, AlertActionCreators, AppStartPerformance$1 as AppStartPerformance, Constants$1 as Constants, ConstantsModuleId, Design, DiscordModules, Dispatcher, DispatcherModuleId, FluxEventDispatchPatch, FormSwitch, Logger$1 as Logger, LoggerModuleId, PluginApiDiscord, SettingListRenderer, SettingsItem, SettingsModulesLoadedSubscription, SettingsSection, Stores, ToastActionCreators, Tokens, TokensModuleId, TypedEventEmitter$1 as TypedEventEmitter, WithStore, WithStoreName, addSettingsItemToSection, flux_d_exports, getStore, isSettingsModulesLoaded, onAnyFluxEventDispatched, onFluxEventDispatched, onSettingsModulesLoaded, refreshSettingsNavigator, refreshSettingsOverviewScreen, registerSettingsItem, registerSettingsItems, registerSettingsSection, utils_d_exports, withStore, withStoreName };
