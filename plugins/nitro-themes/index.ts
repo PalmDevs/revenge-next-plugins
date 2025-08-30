@@ -36,44 +36,51 @@ registerPlugin<{
                                 UserSettingsActionCreators,
                                 'setShouldSyncAppearanceSettings',
                                 function (args, orig) {
-                                    if (storage.cache!.theme) return false
+                                    if (storage.cache!.theme) args[0] = false
                                     return Reflect.apply(orig, this, args)
                                 },
                             ),
                         )
+                        // modules/client_themes/ClientThemesBackgroundActionCreators.tsx
+                        const unsub = getModules(
+                            withProps<{
+                                updateMobilePendingThemeIndex(
+                                    index: number,
+                                ): void
+                                updateBackgroundGradientPreset(
+                                    preset: number,
+                                ): void
+                            }>('updateBackgroundGradientPreset'),
+                            ClientThemesBackgroundActionCreators => {
+                                cleanup(
+                                    before(
+                                        ClientThemesBackgroundActionCreators,
+                                        'updateMobilePendingThemeIndex',
+                                        args => {
+                                            if (
+                                                isNonGradientThemeIndex(args[0])
+                                            )
+                                                storage.set({ theme: false })
+                                            return args
+                                        },
+                                    ),
+                                    before(
+                                        ClientThemesBackgroundActionCreators,
+                                        'updateBackgroundGradientPreset',
+                                        args => {
+                                            UserSettingsActionCreators.setShouldSyncAppearanceSettings(
+                                                false,
+                                            )
 
-                        UserSettingsActionCreators.setShouldSyncAppearanceSettings(
-                            false,
+                                            storage.set({ theme: args[0] })
+                                            return args
+                                        },
+                                    ),
+                                )
+                            },
                         )
-                    },
-                ),
 
-                // modules/client_themes/ClientThemesBackgroundActionCreators.tsx
-                getModules(
-                    withProps<{
-                        updateMobilePendingThemeIndex(index: number): void
-                        updateBackgroundGradientPreset(preset: number): void
-                    }>('updateBackgroundGradientPreset'),
-                    ClientThemesBackgroundActionCreators => {
-                        cleanup(
-                            before(
-                                ClientThemesBackgroundActionCreators,
-                                'updateMobilePendingThemeIndex',
-                                args => {
-                                    if (isNonGradientThemeIndex(args[0]))
-                                        storage.set({ theme: false })
-                                    return args
-                                },
-                            ),
-                            before(
-                                ClientThemesBackgroundActionCreators,
-                                'updateBackgroundGradientPreset',
-                                args => {
-                                    storage.set({ theme: args[0] })
-                                    return args
-                                },
-                            ),
-                        )
+                        cleanup(unsub)
                     },
                 ),
             )
