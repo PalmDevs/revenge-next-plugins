@@ -18,7 +18,10 @@
     "noPropertyAccessFromIndexSignature": false,
 		"paths": {
 			"@revenge-mod/plugins/_": ["./types/next-plugins-internal"],
-			"@revenge-mod/*": ["./types/next/lib/*"]
+			"@revenge-mod/*": ["./types/next/lib/*"],
+      "~plugins/preinit/*": ["./plugins/*"],
+      "~plugins/init/*": ["./plugins/*"],
+      "~plugins/start/*": ["./plugins/*"]
 		},
 		"types": ["./types/next/globals", "./node_modules/react-native/types/index"]
 	},
