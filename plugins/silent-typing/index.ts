@@ -13,7 +13,7 @@ registerPlugin(
     },
     {
         start({ cleanup }) {
-            cleanup(onFluxEventDispatched('TYPING_START', noop))
+            cleanup(onFluxEventDispatched('TYPING_START_LOCAL', noop))
         },
     },
     PluginFlags.Enabled,
