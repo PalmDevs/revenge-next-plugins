@@ -1,2 +1,2 @@
-import { FlashList } from "../../shopify-h8yVjAyt.js";
+import { FlashList } from "../../shopify-jZDPwvM6.js";
 export { FlashList };

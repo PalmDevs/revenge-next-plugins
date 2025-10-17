@@ -1,2 +1,2 @@
-import { RootNavigationRef } from "../../../main_tabs_v2-5n8vsUP3.js";
+import { RootNavigationRef } from "../../../main_tabs_v2-DkAXyEc0.js";
 export { RootNavigationRef };

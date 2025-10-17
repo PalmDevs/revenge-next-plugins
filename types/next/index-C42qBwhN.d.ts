@@ -1,4 +1,4 @@
-import { Filter, FilterResult, If, MaybeDefaultExportMatched, Metro, Nullish } from "./types-Bg9fFOmx.js";
+import { Filter, FilterResult, If, MaybeDefaultExportMatched, Metro, Nullish } from "./types-BPYGQFpF.js";
 
 //#region lib/modules/src/finders/_internal.d.ts
 interface RunFilterOptions {
@@ -209,7 +209,7 @@ type GetModulesOptions<ReturnNamespace extends boolean = boolean, Uninitialized 
    */
   max?: number;
 };
-type GetModulesResult<F extends Filter, O extends GetModulesOptions> = O extends RunFilterReturnExportsOptions<true> ? MaybeDefaultExportMatched<FilterResult<F>> : FilterResult<F>;
+type GetModulesResult<F extends Filter, O extends GetModulesOptions> = WaitForModulesResult<F, O>;
 type GetModulesCallback<T> = (exports: T, id: Metro.ModuleID) => any;
 type GetModulesUnsubscribeFunction = () => void;
 /**
@@ -238,7 +238,7 @@ type GetModulesUnsubscribeFunction = () => void;
  * ```
  */
 declare function getModules<F extends Filter>(filter: F, callback: GetModulesCallback<FilterResult<F>>): GetModulesUnsubscribeFunction;
-declare function getModules<F extends Filter, const O extends (F extends Filter<any, infer RE> ? If<RE, GetModulesOptions<boolean, boolean, false>, GetModulesOptions> : never)>(filter: F, callback: GetModulesCallback<FilterResult<F>>, options: O): GetModulesUnsubscribeFunction;
+declare function getModules<F extends Filter, const O extends (F extends Filter<any, infer RE> ? If<RE, GetModulesOptions<boolean, boolean, false>, GetModulesOptions> : never)>(filter: F, callback: GetModulesCallback<GetModulesResult<F, O>>, options: O): GetModulesUnsubscribeFunction;
 /**
  * Get a single module by its imported path.
  * Once a module is found, unsubscription happens automatically, since imported paths are unique.

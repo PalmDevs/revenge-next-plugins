@@ -1,4 +1,4 @@
-import { ReactJSXRuntime } from "./index-DGNlbFhP.js";
+import { ReactJSXRuntime } from "./index-D2dmE_qD.js";
 import { ElementType, JSX, Key, ReactElement } from "react";
 
 //#region lib/react/src/jsx-runtime/index.d.ts
@@ -8,7 +8,7 @@ declare namespace index_d_exports {
 type AnyJSXFactoryFunction = (typeof ReactJSXRuntime)['jsx' | 'jsxs'];
 type BeforeJSXCallback<E extends ElementType> = (args: [element: E, props: ElementTypeProps<E>, key?: Key | undefined]) => Parameters<AnyJSXFactoryFunction>;
 type InsteadJSXCallback<E extends ElementType> = (args: [element: E, props: ElementTypeProps<E>, key?: Key | undefined], jsx: AnyJSXFactoryFunction) => ReturnType<AnyJSXFactoryFunction> | null;
-type AfterJSXCallback<E extends ElementType> = (fiber: ReactElement<ElementTypeProps<E>, E>) => ReturnType<AnyJSXFactoryFunction> | null;
+type AfterJSXCallback<E extends ElementType> = (element: ReactElement<ElementTypeProps<E>, E>) => ReturnType<AnyJSXFactoryFunction> | null;
 type ElementTypeProps<E extends ElementType> = E extends ElementType<infer Props> ? Props : E extends keyof JSX.IntrinsicElements ? JSX.IntrinsicElements[E] : never;
 /**
  * Registers a hook to be called after a JSX element with the specified type is created.

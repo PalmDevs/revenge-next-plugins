@@ -1,2 +1,2 @@
-import { BridgeInfo, MethodArgs, MethodName, MethodResult, Methods, callBridgeMethod, callBridgeMethodSync, getBridgeInfo, getNativeModule } from "../../index-lEQipRyq.js";
+import { BridgeInfo, MethodArgs, MethodName, MethodResult, Methods, callBridgeMethod, callBridgeMethodSync, getBridgeInfo, getNativeModule } from "../../index-B3FKa5tZ.js";
 export { BridgeInfo, MethodArgs, MethodName, MethodResult, Methods, callBridgeMethod, callBridgeMethodSync, getBridgeInfo, getNativeModule };

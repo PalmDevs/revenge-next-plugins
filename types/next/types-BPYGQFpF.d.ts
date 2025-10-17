@@ -2,8 +2,8 @@ import { callback_d_exports } from "./callback-CpIFpq3_.js";
 import { error_d_exports } from "./error-D0foBB4e.js";
 import { promise_d_exports } from "./promise-DVfFbAlR.js";
 import { proxy_d_exports } from "./proxy-BpNB6oQJ.js";
-import * as react4 from "react";
-import { FC, ReactNode } from "react";
+import * as react3 from "react";
+import { FC, ReactElement } from "react";
 
 //#region lib/utils/src/object.d.ts
 declare namespace object_d_exports {
@@ -67,8 +67,8 @@ declare namespace react_d_exports {
   export { findInReactFiber, useIsFirstRender, useReRender };
 }
 declare function useIsFirstRender(): boolean;
-declare function useReRender(): react4.ActionDispatch<[]>;
-declare function findInReactFiber<F extends SearchFilter>(fiber: Extract<ReactNode, object>, filter: F): ExtractPredicate<F> | undefined;
+declare function useReRender(): react3.ActionDispatch<[]>;
+declare function findInReactFiber<F extends SearchFilter>(fiber: ReactElement, filter: F): ExtractPredicate<F> | undefined;
 //#endregion
 //#region lib/modules/src/finders/filters/constants.d.ts
 declare const FilterFlag: {

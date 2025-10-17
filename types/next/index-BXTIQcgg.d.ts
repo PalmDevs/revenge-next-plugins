@@ -1,10 +1,24 @@
-import { AnyObject, DeepPartial } from "./types-Bg9fFOmx.js";
+import { AnyObject, DeepPartial, If } from "./types-BPYGQFpF.js";
 
 //#region lib/storage/src/index.d.ts
 declare namespace index_d_exports {
-  export { Storage, StorageDirectory, StorageOptions, StorageSubscription, UseStorageFilter, getStorage };
+  export { Storage, StorageDirectory, StorageOptions, StorageSubscription, StorageUpdateMode, UseStorageFilter, getStorage };
 }
-type StorageSubscription<T extends AnyObject = AnyObject> = (v: DeepPartial<T>) => void;
+type StorageSubscription<T extends AnyObject = AnyObject> = (update: DeepPartial<T>, mode: (typeof StorageUpdateMode)[keyof typeof StorageUpdateMode]) => void;
+declare const StorageUpdateMode: {
+  /**
+   * The update will be merged into the existing storage.
+   */
+  readonly Merge: 0;
+  /**
+   * The update will replace the existing storage.
+   */
+  readonly Replace: 1;
+  /**
+   * Same behavior as {@link StorageUpdateMode.Replace}, but for the intial load of the storage.
+   */
+  readonly Load: 2;
+};
 declare function Storage<T extends AnyObject>(this: Storage<T>, path: string, options?: StorageOptions<T>): void;
 /**
  * Get a storage object for a given path and directory.
@@ -27,7 +41,7 @@ interface StorageOptions<T extends AnyObject = AnyObject> {
    */
   load?: boolean;
 }
-type UseStorageFilter<T extends AnyObject> = (newValue: DeepPartial<T>) => any;
+type UseStorageFilter<T extends AnyObject = AnyObject> = (...params: Parameters<StorageSubscription<T>>) => any;
 interface Storage<T extends AnyObject> {
   /**
    * Whether the storage has been loaded. If the storage is not loaded, `storage.cache` may be `undefined`.
@@ -68,7 +82,8 @@ interface Storage<T extends AnyObject> {
    */
   use(filter?: UseStorageFilter<T>): T | undefined;
   /**
-   * Subscribe to storage updates. The callback will be called with what was called in `Storage#set`.
+   * Subscribe to storage updates.
+   *
    * @param callback The callback to call when the storage is updated.
    * @returns A function to unsubscribe.
    */
@@ -81,8 +96,10 @@ interface Storage<T extends AnyObject> {
    * Set the storage.
    *
    * @param value The value to merge into the storage.
+   * @param replace If true, replaces the entire storage instead of merging.
    */
   set(value: DeepPartial<T>): Promise<void>;
+  set<Replace extends boolean>(value: If<Replace, T, DeepPartial<T>>, replace: Replace): Promise<void>;
   /**
    * Whether the storage is exists.
    */
@@ -94,4 +111,4 @@ interface Storage<T extends AnyObject> {
 }
 type StorageDirectory = 'cache' | 'documents';
 //#endregion
-export { Storage, StorageDirectory, StorageOptions, StorageSubscription, UseStorageFilter, getStorage, index_d_exports };
+export { Storage, StorageDirectory, StorageOptions, StorageSubscription, StorageUpdateMode, UseStorageFilter, getStorage, index_d_exports };

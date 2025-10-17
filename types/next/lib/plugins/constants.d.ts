@@ -1,2 +1,2 @@
-import { PluginFlags, PluginStatus, PluginsStorageDirectory } from "../../constants-NMvHIMl8.js";
-export { PluginFlags, PluginStatus, PluginsStorageDirectory };
+import { PersistentPluginFlags, PluginFlags, PluginStatus, PluginsStorageDirectory } from "../../constants-BMcedDsI.js";
+export { PersistentPluginFlags, PluginFlags, PluginStatus, PluginsStorageDirectory };

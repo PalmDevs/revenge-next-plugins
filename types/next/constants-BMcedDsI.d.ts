@@ -1,5 +1,5 @@
 declare namespace constants_d_exports {
-  export { PluginFlags, PluginStatus, PluginsStorageDirectory };
+  export { PersistentPluginFlags, PluginFlags, PluginStatus, PluginsStorageDirectory };
 }
 /**
  * The plugin flags.
@@ -24,6 +24,10 @@ declare const PluginFlags: {
   EnabledLate: number;
 };
 /**
+ * A bitmask of {@link PluginFlags} that are persisted to storage.
+ */
+declare const PersistentPluginFlags: number;
+/**
  * The plugin status.
  */
 declare const PluginStatus: {
@@ -37,4 +41,4 @@ declare const PluginStatus: {
 };
 declare const PluginsStorageDirectory = "revenge/plugins/storage";
 //#endregion
-export { PluginFlags, PluginStatus, PluginsStorageDirectory, constants_d_exports };
+export { PersistentPluginFlags, PluginFlags, PluginStatus, PluginsStorageDirectory, constants_d_exports };

@@ -1,2 +1,2 @@
-import { BundleUpdaterManager, CacheModule, ClientInfoModule, DeviceModule, FileModule, ThemeModule } from "../../native-CIlY-M-l.js";
+import { BundleUpdaterManager, CacheModule, ClientInfoModule, DeviceModule, FileModule, ThemeModule } from "../../native-DxwPf9li.js";
 export { BundleUpdaterManager, CacheModule, ClientInfoModule, DeviceModule, FileModule, ThemeModule };

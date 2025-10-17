@@ -1,29 +1,40 @@
-import { index_d_exports as index_d_exports$6 } from "./types-Bg9fFOmx.js";
-import { index_d_exports as index_d_exports$7, utils_d_exports } from "./utils-CkliyEwG.js";
-import { index_d_exports as index_d_exports$1 } from "./index-vWf-d48s.js";
-import { index_d_exports as index_d_exports$5 } from "./index-BakKIsu4.js";
-import { index_d_exports as index_d_exports$8 } from "./index-lEQipRyq.js";
-import { index_d_exports } from "./index-Ct3qDCb_.js";
-import { constants_d_exports } from "./constants-NMvHIMl8.js";
-import { index_d_exports as index_d_exports$2 } from "./index-DGNlbFhP.js";
-import { index_d_exports as index_d_exports$3 } from "./index-CLGhORKx.js";
-import { index_d_exports as index_d_exports$4 } from "./index-CL-hz3xa.js";
+import { index_d_exports as index_d_exports$3 } from "./types-BPYGQFpF.js";
+import { index_d_exports as index_d_exports$4, utils_d_exports } from "./utils-C8zJu4kS.js";
+import { index_d_exports as index_d_exports$2 } from "./index-C42qBwhN.js";
+import { index_d_exports as index_d_exports$5 } from "./index-B3FKa5tZ.js";
+import { constants_d_exports } from "./constants-BMcedDsI.js";
+import { index_d_exports } from "./index-BdTm-UuD.js";
+import { index_d_exports as index_d_exports$1 } from "./index-K3yeezob.js";
 import { FunctionComponent } from "react";
+import * as _revenge_mod_patcher0 from "@revenge-mod/patcher";
+import * as _revenge_mod_assets0 from "@revenge-mod/assets";
+import * as PluginApiReact_ from "@revenge-mod/react";
 
 //#region lib/modules/src/native/fs.d.ts
 declare namespace fs_d_exports {
-  export { deleteFileSync, exists, readFile, readFileSync, rm, rmSync, writeFile, writeFileSync };
+  export { deleteFileSync, exists, existsSync, getConstants, readFile, readFileSync, rm, rmSync, writeFile, writeFileSync };
 }
 declare function readFile(path: string): Promise<string>;
 declare function writeFile(path: string, data: string): Promise<void>;
 declare function exists(path: string): Promise<boolean>;
 declare function rm(path: string): Promise<boolean>;
+declare function existsSync(path: string): boolean;
 declare function readFileSync(path: string): string;
 declare function writeFileSync(path: string, data: string): void;
 declare function rmSync(path: string): boolean;
 declare function deleteFileSync(path: string): boolean;
+declare function getConstants(): {
+  data: string;
+  files: string;
+  cache: string;
+};
 declare module '@revenge-mod/modules/native' {
   interface Methods {
+    'revenge.fs.getConstants': [[], {
+      data: string;
+      files: string;
+      cache: string;
+    }];
     'revenge.fs.read': [[path: string], string];
     'revenge.fs.write': [[path: string, data: string], void];
     'revenge.fs.exists': [[path: string], boolean];
@@ -37,12 +48,12 @@ interface PluginApiModules {
   metro: PluginApiModulesMetro;
   native: PluginApiModulesNative;
 }
-type PluginApiModulesNative = typeof index_d_exports$8 & {
+type PluginApiModulesNative = typeof index_d_exports$5 & {
   fs: typeof fs_d_exports;
 };
-type PluginApiModulesMetro = typeof utils_d_exports & typeof index_d_exports$7;
-type PluginApiModulesFinders = typeof index_d_exports$5 & {
-  filters: typeof index_d_exports$6;
+type PluginApiModulesMetro = typeof utils_d_exports & typeof index_d_exports$4;
+type PluginApiModulesFinders = typeof index_d_exports$2 & {
+  filters: typeof index_d_exports$3;
 };
 //#endregion
 //#region lib/plugins/src/apis/plugins.d.ts
@@ -51,9 +62,9 @@ interface PluginApiPlugins {
 }
 //#endregion
 //#region lib/plugins/src/apis/react.d.ts
-type PluginApiReact = typeof index_d_exports$2 & {
-  jsxRuntime: typeof index_d_exports$3;
-  native: typeof index_d_exports$4;
+type PluginApiReact = typeof PluginApiReact_ & {
+  jsxRuntime: typeof index_d_exports;
+  native: typeof index_d_exports$1;
 };
 //#endregion
 //#region lib/plugins/src/types.d.ts
@@ -64,7 +75,7 @@ interface PluginApiExtensionsOptions {}
  */
 interface UnscopedPreInitPluginApi<O extends PluginApiExtensionsOptions = PluginApiExtensionsOptions> {
   modules: PluginApiModules;
-  patcher: typeof index_d_exports;
+  patcher: typeof _revenge_mod_patcher0;
   plugins: PluginApiPlugins;
   react: PluginApiReact;
 }
@@ -73,7 +84,7 @@ interface UnscopedPreInitPluginApi<O extends PluginApiExtensionsOptions = Plugin
  * Available in the `init` phase.
  */
 interface UnscopedInitPluginApi<O extends PluginApiExtensionsOptions = PluginApiExtensionsOptions> extends UnscopedPreInitPluginApi<O> {
-  assets: typeof index_d_exports$1;
+  assets: typeof _revenge_mod_assets0;
 }
 /**
  * The unscoped plugin API. This API is available as a global for plugins.

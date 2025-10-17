@@ -1,4 +1,4 @@
-import { Metro } from "./types-Bg9fFOmx.js";
+import { Metro } from "./types-BPYGQFpF.js";
 
 //#region lib/modules/src/metro/subscriptions/index.d.ts
 declare namespace index_d_exports {

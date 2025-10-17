@@ -1,2 +1,2 @@
-import { nodeUtil } from "../../browserify-CPNBQXPq.js";
+import { nodeUtil } from "../../browserify-BxcihDgV.js";
 export { nodeUtil };

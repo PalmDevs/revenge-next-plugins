@@ -1,4 +1,4 @@
-import { Metro } from "./types-Bg9fFOmx.js";
+import { Metro } from "./types-BPYGQFpF.js";
 import { ReactNative } from "./types-gnIxC4_N.js";
 
 //#region lib/assets/src/types.d.ts
