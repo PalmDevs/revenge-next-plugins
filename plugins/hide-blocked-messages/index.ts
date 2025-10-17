@@ -164,6 +164,9 @@ registerPlugin<{ storage: Settings }>(
                 }),
             )
         },
+        stop({ plugin }) {
+            plugin.flags |= PluginFlags.ReloadRequired
+        },
         SettingsComponent,
     },
     PluginFlags.Enabled,
