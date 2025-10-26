@@ -1,3 +1,6 @@
+import { t as __export } from "./chunk-Bp6m_JJh.js";
+
+//#region lib/modules/src/native/index.d.ts
 declare namespace index_d_exports {
   export { BridgeInfo, MethodArgs, MethodName, MethodResult, Methods, callBridgeMethod, callBridgeMethodSync, getBridgeInfo, getNativeModule };
 }
@@ -44,4 +47,4 @@ interface Methods {
   'revenge.info': [[], BridgeInfo];
 }
 //#endregion
-export { BridgeInfo, MethodArgs, MethodName, MethodResult, Methods, callBridgeMethod, callBridgeMethodSync, getBridgeInfo, getNativeModule, index_d_exports };
+export { Methods as a, getBridgeInfo as c, MethodResult as i, getNativeModule as l, MethodArgs as n, callBridgeMethod as o, MethodName as r, callBridgeMethodSync as s, BridgeInfo as t, index_d_exports as u };

@@ -1,3 +1,6 @@
+import { t as __export } from "./chunk-Bp6m_JJh.js";
+
+//#region lib/utils/src/proxy.d.ts
 declare namespace proxy_d_exports {
   export { DestructureOptions, DestructureResult, ProxifyOptions, destructure, getProxyTarget, isProxified, isProxy, proxify, unproxify };
 }
@@ -127,4 +130,4 @@ type DestructureResult<T extends object> = { [K in keyof T]: T[K] };
  */
 declare function destructure<T extends object, O extends DestructureOptions<T>>(proxified: T, options?: O): DestructureResult<T>;
 //#endregion
-export { DestructureOptions, DestructureResult, ProxifyOptions, destructure, getProxyTarget, isProxified, isProxy, proxify, proxy_d_exports, unproxify };
+export { getProxyTarget as a, proxify as c, destructure as i, proxy_d_exports as l, DestructureResult as n, isProxified as o, ProxifyOptions as r, isProxy as s, DestructureOptions as t, unproxify as u };

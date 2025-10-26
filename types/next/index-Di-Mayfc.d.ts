@@ -1,4 +1,5 @@
-import { RunApplicationCallback } from "./types-gnIxC4_N.js";
+import { t as __export } from "./chunk-Bp6m_JJh.js";
+import { n as RunApplicationCallback } from "./types-B3fMYLLv.js";
 
 //#region lib/react/src/native/index.d.ts
 declare namespace index_d_exports {
@@ -19,4 +20,4 @@ declare function onRunApplication(callback: RunApplicationCallback): () => void;
  */
 declare function onRunApplicationFinished(callback: RunApplicationCallback): () => void;
 //#endregion
-export { index_d_exports, onRunApplication, onRunApplicationFinished };
+export { onRunApplication as n, onRunApplicationFinished as r, index_d_exports as t };

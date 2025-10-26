@@ -1,13 +1,14 @@
-import { callback_d_exports } from "./callback-CpIFpq3_.js";
-import { error_d_exports } from "./error-D0foBB4e.js";
-import { promise_d_exports } from "./promise-DVfFbAlR.js";
-import { proxy_d_exports } from "./proxy-BpNB6oQJ.js";
-import * as react3 from "react";
+import { t as __export } from "./chunk-Bp6m_JJh.js";
+import { n as callback_d_exports } from "./callback-DNr1bYVq.js";
+import { t as error_d_exports } from "./error-DWG2BlZz.js";
+import { n as promise_d_exports } from "./promise-Du5Pcai3.js";
+import { l as proxy_d_exports } from "./proxy-KNbRcH7H.js";
+import * as react2 from "react";
 import { FC, ReactElement } from "react";
 
 //#region lib/utils/src/object.d.ts
 declare namespace object_d_exports {
-  export { defineLazyProperties, defineLazyProperty, isObject, mergeDeep };
+  export { cloneDeep, defineLazyProperties, defineLazyProperty, isObject, mergeDeep };
 }
 /**
  * Simple check if to see if value is an object.
@@ -15,6 +16,12 @@ declare namespace object_d_exports {
  * @param val The value to check.
  */
 declare function isObject(val: any): val is AnyObject;
+/**
+ * Clone an object deeply.
+ *
+ * @param source The source object to clone.
+ */
+declare function cloneDeep<T$1>(source: T$1, cache?: WeakMap<WeakKey, any>): T$1;
 /**
  * Deep merge two objects.
  *
@@ -32,7 +39,7 @@ declare function mergeDeep(target: AnyObject, source: AnyObject): AnyObject;
  * @param loader The function that will be called to load the property value when accessed.
  * @return The target object with the lazy property defined.
  */
-declare function defineLazyProperty<T extends object, K extends keyof T>(target: T, property: K, loader: () => T[K]): T;
+declare function defineLazyProperty<T$1 extends object, K$1 extends keyof T$1>(target: T$1, property: K$1, loader: () => T$1[K$1]): T$1;
 /**
  * Define multiple lazy properties on an object that will be loaded when accessed.
  *
@@ -40,7 +47,7 @@ declare function defineLazyProperty<T extends object, K extends keyof T>(target:
  * @param loaders An object where each key is a property name and the value is a function that returns the property value when accessed.
  * @returns The target object with the lazy properties defined.
  */
-declare function defineLazyProperties<T extends object>(target: T, loaders: Partial<Record<keyof T, () => T[keyof T]>>): T;
+declare function defineLazyProperties<T$1 extends object>(target: T$1, loaders: Partial<Record<keyof T$1, () => T$1[keyof T$1]>>): T$1;
 declare namespace tree_d_exports {
   export { FindInTreeOptions, SearchFilter, SearchTree, findInTree };
 }
@@ -62,13 +69,13 @@ interface FindInTreeOptions {
    */
   maxDepth?: number;
 }
-declare function findInTree<F extends SearchFilter>(tree: SearchTree, filter: F, opts?: FindInTreeOptions): ExtractPredicate<F> | undefined;
+declare function findInTree<F$1 extends SearchFilter>(tree: SearchTree, filter: F$1, opts?: FindInTreeOptions): ExtractPredicate<F$1> | undefined;
 declare namespace react_d_exports {
   export { findInReactFiber, useIsFirstRender, useReRender };
 }
 declare function useIsFirstRender(): boolean;
-declare function useReRender(): react3.ActionDispatch<[]>;
-declare function findInReactFiber<F extends SearchFilter>(fiber: ReactElement, filter: F): ExtractPredicate<F> | undefined;
+declare function useReRender(): react2.ActionDispatch<[]>;
+declare function findInReactFiber<F$1 extends SearchFilter>(fiber: ReactElement, filter: F$1): ExtractPredicate<F$1> | undefined;
 //#endregion
 //#region lib/modules/src/finders/filters/constants.d.ts
 declare const FilterFlag: {
@@ -89,8 +96,8 @@ declare const FilterFlag: {
 type FilterFlag = number;
 //#endregion
 //#region lib/modules/src/finders/filters/utils.d.ts
-type FilterResult<F> = F extends Filter<infer R, boolean> ? R : F extends FilterBase<infer R> ? R : never;
-type FilterRequiresExports<F> = F extends Filter<any, infer RE> ? RE : F extends FilterBase<any, infer RE> ? RE : never;
+type FilterResult<F$1> = F$1 extends Filter<infer R, boolean> ? R : F$1 extends FilterBase<infer R> ? R : never;
+type FilterRequiresExports<F$1> = F$1 extends Filter<any, infer RE> ? RE : F$1 extends FilterBase<any, infer RE> ? RE : never;
 interface FilterBase<_Result = any, RequiresExports extends boolean = boolean> {
   (...args: If<RequiresExports, [id: Metro.ModuleID, exports: Metro.ModuleExports], [id: Metro.ModuleID, exports?: never]>): boolean;
   key: string;
@@ -401,16 +408,16 @@ declare const withGeneratedIconComponent: WithGeneratedIconComponent;
  * @param names The component name, then the asset names if the component has multiple assets.
  * @returns The icon component, or `undefined` if it could not be found.
  */
-declare function lookupGeneratedIconComponent<N extends string>(...names: [N, ...string[]]): FC<any> | undefined;
+declare function lookupGeneratedIconComponent<N$1 extends string>(...names: [N$1, ...string[]]): FC<any> | undefined;
 //#endregion
 //#region lib/utils/src/types.d.ts
 type Nullish = null | undefined;
-type If<T, Then, Else> = T extends true ? Then : Else;
+type If<T$1, Then, Else> = T$1 extends true ? Then : Else;
 type AnyObject = Record<any, any>;
 type LogicalOr<T1, T2> = T1 extends true ? true : T2 extends true ? true : false;
 type LogicalAnd<T1, T2> = T1 extends true ? T2 extends true ? true : false : false;
-type DeepPartial<T> = { [K in keyof T]?: T[K] extends AnyObject ? DeepPartial<T[K]> : T[K] };
-type ExtractPredicate<T> = T extends ((arg: any) => arg is infer R) ? R : never;
+type DeepPartial<T$1> = { [K in keyof T$1]?: T$1[K] extends AnyObject ? DeepPartial<T$1[K]> : T$1[K] };
+type ExtractPredicate<T$1> = T$1 extends ((arg: any) => arg is infer R) ? R : never;
 interface PreInitPluginApiUtils {
   callback: typeof callback_d_exports;
   error: typeof error_d_exports;
@@ -499,8 +506,8 @@ declare namespace RevengeMetro {
 /**
  * Maybe the default export matched instead of the namespace, because you're using `options.returnNamespace`.
  */
-type MaybeDefaultExportMatched<T> = T | {
-  default: T;
+type MaybeDefaultExportMatched<T$1> = T$1 | {
+  default: T$1;
 };
 //#endregion
-export { And, AnyObject, ComparableDependencyMap, DeepPartial, ExtractPredicate, Filter, FilterBase, FilterFlag, FilterGenerator, FilterHelpers, FilterRequiresExports, FilterResult, FindInTreeOptions, If, LogicalAnd, LogicalOr, MaybeDefaultExportMatched, Metro, Nullish, Or, PluginApiUtils, PreInitPluginApiUtils, RevengeMetro, SearchFilter, SearchTree, WithGeneratedIconComponent, WithName, WithProps, WithSingleProp, WithoutProps, and, createFilterGenerator, defineLazyProperties, defineLazyProperty, findInReactFiber, findInTree, index_d_exports, isObject, lookupGeneratedIconComponent, mergeDeep, or, useIsFirstRender, useReRender, withDependencies, withGeneratedIconComponent, withName, withProps, withSingleProp, withoutProps };
+export { or as A, useIsFirstRender as B, withSingleProp as C, And as D, withDependencies as E, FilterRequiresExports as F, findInTree as G, FindInTreeOptions as H, FilterResult as I, defineLazyProperty as J, cloneDeep as K, createFilterGenerator as L, FilterBase as M, FilterGenerator as N, Or as O, FilterHelpers as P, FilterFlag as R, withProps as S, ComparableDependencyMap as T, SearchFilter as U, useReRender as V, SearchTree as W, mergeDeep as X, isObject as Y, WithProps as _, DeepPartial as a, index_d_exports as b, LogicalAnd as c, PluginApiUtils as d, PreInitPluginApiUtils as f, WithName as g, withGeneratedIconComponent as h, AnyObject as i, Filter as j, and as k, LogicalOr as l, lookupGeneratedIconComponent as m, Metro as n, ExtractPredicate as o, WithGeneratedIconComponent as p, defineLazyProperties as q, RevengeMetro as r, If as s, MaybeDefaultExportMatched as t, Nullish as u, WithSingleProp as v, withoutProps as w, withName as x, WithoutProps as y, findInReactFiber as z };

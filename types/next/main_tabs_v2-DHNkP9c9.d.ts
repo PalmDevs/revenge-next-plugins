@@ -1,3 +1,4 @@
+import { t as __export } from "./chunk-Bp6m_JJh.js";
 import { NavigationContainerRef } from "@react-navigation/core";
 
 //#region lib/discord/src/modules/main_tabs_v2.d.ts
@@ -9,4 +10,4 @@ interface RootNavigationRef {
 }
 declare let RootNavigationRef: RootNavigationRef;
 //#endregion
-export { RootNavigationRef, main_tabs_v2_d_exports };
+export { main_tabs_v2_d_exports as n, RootNavigationRef as t };

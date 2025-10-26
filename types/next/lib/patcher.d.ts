@@ -1,4 +1,4 @@
-import { AfterHook, BeforeHook, InsteadHook, UnknownFunction, UnpatchFunction } from "../types-BnCJU-MC.js";
+import { b as UnpatchFunction, c as HookPriority, l as InsteadHook, n as AfterHook, r as BeforeHook, s as HookOptions, y as UnknownFunction } from "../types-Dc6--BwR.js";
 
 //#region lib/patcher/src/hooks/after.d.ts
 
@@ -27,10 +27,11 @@ import { AfterHook, BeforeHook, InsteadHook, UnknownFunction, UnpatchFunction } 
  * @param parent The parent object containing the method to patch.
  * @param key The key of the method to patch.
  * @param hook The hook function to execute after the original method.
+ * @param options Optional configuration including priority.
  *
  * @returns A function to unpatch.
  */
-declare function after<Parent extends Record<Key, UnknownFunction>, Key extends keyof Parent>(parent: Parent, key: Key, hook: AfterHook<Parent[Key]>): UnpatchFunction;
+declare function after<Parent extends Record<Key, UnknownFunction>, Key extends keyof Parent>(parent: Parent, key: Key, hook: AfterHook<Parent[Key]>, options?: HookOptions): UnpatchFunction;
 //#endregion
 //#region lib/patcher/src/hooks/before.d.ts
 /**
@@ -58,10 +59,11 @@ declare function after<Parent extends Record<Key, UnknownFunction>, Key extends 
  * @param parent The parent object containing the method to patch.
  * @param key The key of the method to patch.
  * @param hook The hook function to execute before the original method.
+ * @param options Optional configuration including priority.
  *
  * @returns A function to unpatch.
  */
-declare function before<Parent extends Record<Key, UnknownFunction>, Key extends keyof Parent>(parent: Parent, key: Key, hook: BeforeHook<Parent[Key]>): UnpatchFunction;
+declare function before<Parent extends Record<Key, UnknownFunction>, Key extends keyof Parent>(parent: Parent, key: Key, hook: BeforeHook<Parent[Key]>, options?: HookOptions): UnpatchFunction;
 //#endregion
 //#region lib/patcher/src/hooks/instead.d.ts
 /**
@@ -98,9 +100,10 @@ declare function before<Parent extends Record<Key, UnknownFunction>, Key extends
  * @param parent The parent object containing the method to patch.
  * @param key The key of the method to patch.
  * @param hook The hook function to execute instead of the original method.
+ * @param options Optional configuration including priority.
  *
  * @return A function to unpatch.
  */
-declare function instead<Parent extends Record<Key, UnknownFunction>, Key extends keyof Parent>(parent: Parent, key: Key, hook: InsteadHook<Parent[Key]>): UnpatchFunction;
+declare function instead<Parent extends Record<Key, UnknownFunction>, Key extends keyof Parent>(parent: Parent, key: Key, hook: InsteadHook<Parent[Key]>, options?: HookOptions): UnpatchFunction;
 //#endregion
-export { after, before, instead };
+export { type HookOptions, HookPriority, after, before, instead };

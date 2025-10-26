@@ -1,3 +1,5 @@
+import { t as __export } from "./chunk-Bp6m_JJh.js";
+
 //#region lib/discord/src/types/native.d.ts
 declare namespace DiscordNativeModules {
   /**
@@ -251,4 +253,4 @@ declare let DeviceModule: DiscordNativeModules.DeviceModule;
 declare let ThemeModule: DiscordNativeModules.ThemeModule;
 declare let BundleUpdaterManager: DiscordNativeModules.BundleUpdaterManager;
 //#endregion
-export { BundleUpdaterManager, CacheModule, ClientInfoModule, DeviceModule, DiscordNativeModules, FileModule, ThemeModule, native_d_exports };
+export { FileModule as a, DiscordNativeModules as c, DeviceModule as i, CacheModule as n, ThemeModule as o, ClientInfoModule as r, native_d_exports as s, BundleUpdaterManager as t };

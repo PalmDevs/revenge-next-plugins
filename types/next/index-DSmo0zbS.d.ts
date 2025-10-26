@@ -1,9 +1,6 @@
-import { AnyObject, DeepPartial, If } from "./types-BPYGQFpF.js";
+import { a as DeepPartial, i as AnyObject, s as If } from "./types-DW6-O3QH.js";
 
 //#region lib/storage/src/index.d.ts
-declare namespace index_d_exports {
-  export { Storage, StorageDirectory, StorageOptions, StorageSubscription, StorageUpdateMode, UseStorageFilter, getStorage };
-}
 type StorageSubscription<T extends AnyObject = AnyObject> = (update: DeepPartial<T>, mode: (typeof StorageUpdateMode)[keyof typeof StorageUpdateMode]) => void;
 declare const StorageUpdateMode: {
   /**
@@ -30,14 +27,20 @@ declare function getStorage<T extends AnyObject = AnyObject>(path: string, optio
 interface StorageOptions<T extends AnyObject = AnyObject> {
   /**
    * The directory of the storage file.
+   *
+   * @default 'documents'
    */
   directory?: StorageDirectory;
   /**
    * The default value to use for the storage. This will also be used for cache.
+   *
+   * @default {}
    */
   default?: T;
   /**
    * Automatically load the storage after creating the instance.
+   *
+   * @default false
    */
   load?: boolean;
 }
@@ -49,7 +52,7 @@ interface Storage<T extends AnyObject> {
    */
   loaded: boolean;
   /**
-   * The cached storage object. Set once `get()` is called, or `options.default` is set, and updated on `set()`.
+   * The cached storage object. Set once `get()` is called, and updated on `set()`.
    * You should not modify this directly.
    */
   cache?: T | AnyObject;
@@ -111,4 +114,4 @@ interface Storage<T extends AnyObject> {
 }
 type StorageDirectory = 'cache' | 'documents';
 //#endregion
-export { Storage, StorageDirectory, StorageOptions, StorageSubscription, StorageUpdateMode, UseStorageFilter, getStorage, index_d_exports };
+export { StorageUpdateMode as a, StorageSubscription as i, StorageDirectory as n, UseStorageFilter as o, StorageOptions as r, getStorage as s, Storage as t };

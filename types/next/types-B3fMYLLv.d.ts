@@ -22,4 +22,4 @@ declare namespace ReactNative {
 }
 type RunApplicationCallback = () => any;
 //#endregion
-export { ReactNative, RunApplicationCallback };
+export { RunApplicationCallback as n, ReactNative as t };

@@ -1,4 +1,5 @@
-import { ReactJSXRuntime } from "./index-D2dmE_qD.js";
+import { t as __export } from "./chunk-Bp6m_JJh.js";
+import { n as ReactJSXRuntime } from "./index-CaMxvy6S.js";
 import { ElementType, JSX, Key, ReactElement } from "react";
 
 //#region lib/react/src/jsx-runtime/index.d.ts
@@ -35,4 +36,4 @@ declare function beforeJSX<E extends ElementType>(type: E, patch: BeforeJSXCallb
  */
 declare function insteadJSX<E extends ElementType>(type: E, patch: InsteadJSXCallback<E>): () => boolean;
 //#endregion
-export { AfterJSXCallback, AnyJSXFactoryFunction, BeforeJSXCallback, InsteadJSXCallback, afterJSX, beforeJSX, index_d_exports, insteadJSX };
+export { afterJSX as a, insteadJSX as c, InsteadJSXCallback as i, AnyJSXFactoryFunction as n, beforeJSX as o, BeforeJSXCallback as r, index_d_exports as s, AfterJSXCallback as t };

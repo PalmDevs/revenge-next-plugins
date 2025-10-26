@@ -1,2 +1,2 @@
-import { Clipboard, useClipboard } from "../../react-native-clipboard-fHNosp5j.js";
+import { r as useClipboard, t as Clipboard } from "../../react-native-clipboard-CrPpTkCh.js";
 export { Clipboard, useClipboard };

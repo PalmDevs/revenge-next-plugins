@@ -1,3 +1,4 @@
+import { t as __export } from "./chunk-Bp6m_JJh.js";
 import * as react_native0 from "react-native";
 
 //#region lib/externals/src/react-native-clipboard.d.ts
@@ -22,4 +23,4 @@ declare let Clipboard: {
     removeAllListeners(): void;
   }, useClipboard: () => [string, (content: string) => void];
 //#endregion
-export { Clipboard, react_native_clipboard_d_exports, useClipboard };
+export { react_native_clipboard_d_exports as n, useClipboard as r, Clipboard as t };

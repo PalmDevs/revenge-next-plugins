@@ -1,7 +1,7 @@
-import { react_navigation_d_exports } from "../../react-navigation-DfGB4RR1.js";
-import { browserify_d_exports } from "../../browserify-BxcihDgV.js";
-import { react_native_clipboard_d_exports } from "../../react-native-clipboard-fHNosp5j.js";
-import { shopify_d_exports } from "../../shopify-jZDPwvM6.js";
+import { i as react_navigation_d_exports } from "../../react-navigation-BsoHQk3U.js";
+import { t as browserify_d_exports } from "../../browserify-CGsvxXZL.js";
+import { n as react_native_clipboard_d_exports } from "../../react-native-clipboard-CrPpTkCh.js";
+import { n as shopify_d_exports } from "../../shopify-D-OLaWXP.js";
 
 //#region lib/externals/src/types.d.ts
 interface PluginApiExternals {

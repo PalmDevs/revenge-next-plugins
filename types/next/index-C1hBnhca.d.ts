@@ -1,7 +1,8 @@
-import { Filter, FilterGenerator, Metro } from "./types-BPYGQFpF.js";
-import { ReactNavigationParamList } from "./react-navigation-DfGB4RR1.js";
-import { native_d_exports } from "./native-DxwPf9li.js";
-import { main_tabs_v2_d_exports } from "./main_tabs_v2-DkAXyEc0.js";
+import { t as __export } from "./chunk-Bp6m_JJh.js";
+import { N as FilterGenerator, j as Filter, n as Metro } from "./types-DW6-O3QH.js";
+import { n as ReactNavigationParamList } from "./react-navigation-BsoHQk3U.js";
+import { s as native_d_exports } from "./native-BXtyFZ8I.js";
+import { n as main_tabs_v2_d_exports } from "./main_tabs_v2-DHNkP9c9.js";
 import { ComponentProps, ComponentType, FC, ReactElement, ReactNode, RefAttributes, RefObject } from "react";
 import { EventEmitter } from "node:events";
 import { StackScreenProps } from "@react-navigation/stack";
@@ -16,7 +17,7 @@ declare let AlertActionCreators: DiscordModules.Actions.AlertActionCreators;
 declare let ToastActionCreators: DiscordModules.Actions.ToastActionCreators;
 //#endregion
 //#region lib/discord/src/flux/dispatcher.d.ts
-type FluxEventDispatchPatch<T extends object = object> = (payload: DiscordModules.Flux.DispatcherPayload & T) => (DiscordModules.Flux.DispatcherPayload & T) | undefined | void;
+type FluxEventDispatchPatch<T$1 extends object = object> = (payload: DiscordModules.Flux.DispatcherPayload & T$1) => (DiscordModules.Flux.DispatcherPayload & T$1) | undefined | void;
 /**
  * Registers a patch for all Flux events.
  *
@@ -57,7 +58,7 @@ declare function onAnyFluxEventDispatched(patch: FluxEventDispatchPatch): () => 
  * })
  * ```
  */
-declare function onFluxEventDispatched<T extends object = object>(type: DiscordModules.Flux.DispatcherPayload['type'], patch: FluxEventDispatchPatch<T>): () => void;
+declare function onFluxEventDispatched<T$1 extends object = object>(type: DiscordModules.Flux.DispatcherPayload['type'], patch: FluxEventDispatchPatch<T$1>): () => void;
 //#endregion
 //#region lib/discord/src/preinit.d.ts
 declare const AppStartPerformance$1: DiscordModules.AppStartPerformance;
@@ -119,7 +120,6 @@ interface Design {
   TableRadioRow: typeof DiscordModules.Components.TableRadioRow;
   TableRow: DiscordModules.Components.TableRow;
   TableRowGroup: DiscordModules.Components.TableRowGroup;
-  TableRowTrailingText: DiscordModules.Components.TableRowTrailingText;
   TableSwitchRow: DiscordModules.Components.TableSwitchRow;
   Text: DiscordModules.Components.Text;
   TextArea: DiscordModules.Components.TextArea;
@@ -143,7 +143,7 @@ declare const Stores: Record<string, DiscordModules.Flux.Store<object>>;
  * @param callback A callback that will be called with the store once it is found.
  * @returns A function that can be used to cancel the wait for the store.
  */
-declare function getStore<T>(name: string, callback: (store: DiscordModules.Flux.Store<T>) => void): () => void;
+declare function getStore<T$1>(name: string, callback: (store: DiscordModules.Flux.Store<T$1>) => void): () => void;
 type WithStore = FilterGenerator<(<T>() => Filter<DiscordModules.Flux.Store<T>, boolean>)>;
 /**
  * A dynamic filter that matches all Flux stores.
@@ -424,6 +424,8 @@ declare namespace DiscordModules {
     type ImageButton = FC<ImageButtonProps>;
     interface StackProps extends ViewProps {
       spacing?: number;
+      align?: ViewStyle['alignItems'];
+      justify?: ViewStyle['justifyContent'];
       direction?: 'vertical' | 'horizontal';
     }
     type Stack = FC<StackProps>;
@@ -515,7 +517,7 @@ declare namespace DiscordModules {
     function TableRadioRow<T>(props: TableRadioRowProps<T>): ReactElement;
     interface TableRowProps {
       label: string;
-      subLabel?: string;
+      subLabel?: ReactNode;
       icon?: ReactNode;
       trailing?: ReactNode;
       arrow?: boolean;
@@ -533,6 +535,7 @@ declare namespace DiscordModules {
       Arrow: FC;
       Icon: TableRowIcon;
       Group: TableRowGroup;
+      TrailingText: TableRowTrailingText;
     }
     interface TableSwitchRowProps extends Omit<TableRowProps, 'trailing'> {
       accessibilityHint?: string;
@@ -630,7 +633,10 @@ declare namespace DiscordModules {
         SettingsList: SettingsList;
       }
       export interface SettingsListProps {
+        containerStyle?: StyleProp<ViewStyle>;
+        initialSetting?: string;
         ListHeaderComponent?: ComponentType;
+        ListFooterComponent?: ComponentType;
         sections: Array<{
           label?: string | ReactNode;
           settings: string[];
@@ -686,4 +692,4 @@ declare namespace DiscordModules {
   }
 }
 //#endregion
-export { ActionSheetActionCreators, AlertActionCreators, AppStartPerformance$1 as AppStartPerformance, Constants$1 as Constants, ConstantsModuleId, Design, DiscordModules, Dispatcher, DispatcherModuleId, FluxEventDispatchPatch, FormSwitch, Logger$1 as Logger, LoggerModuleId, PluginApiDiscord, SettingListRenderer, SettingsItem, SettingsModulesLoadedSubscription, SettingsSection, Stores, ToastActionCreators, Tokens, TokensModuleId, TypedEventEmitter$1 as TypedEventEmitter, WithStore, WithStoreName, addSettingsItemToSection, flux_d_exports, getStore, isSettingsModulesLoaded, onAnyFluxEventDispatched, onFluxEventDispatched, onSettingsModulesLoaded, refreshSettingsNavigator, refreshSettingsOverviewScreen, registerSettingsItem, registerSettingsItems, registerSettingsSection, utils_d_exports, withStore, withStoreName };
+export { utils_d_exports as A, ToastActionCreators as B, Constants$1 as C, Tokens as D, LoggerModuleId as E, FluxEventDispatchPatch as F, onAnyFluxEventDispatched as I, onFluxEventDispatched as L, DispatcherModuleId as M, flux_d_exports as N, TokensModuleId as O, AppStartPerformance$1 as P, ActionSheetActionCreators as R, FormSwitch as S, Logger$1 as T, WithStoreName as _, SettingsModulesLoadedSubscription as a, withStoreName as b, isSettingsModulesLoaded as c, refreshSettingsOverviewScreen as d, registerSettingsItem as f, WithStore as g, Stores as h, SettingsItem as i, Dispatcher as j, TypedEventEmitter$1 as k, onSettingsModulesLoaded as l, registerSettingsSection as m, PluginApiDiscord as n, SettingsSection as o, registerSettingsItems as p, SettingListRenderer as r, addSettingsItemToSection as s, DiscordModules as t, refreshSettingsNavigator as u, getStore as v, ConstantsModuleId as w, Design as x, withStore as y, AlertActionCreators as z };

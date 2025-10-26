@@ -1,4 +1,4 @@
-import { DiscordModules } from "./index-DNiry_Zd.js";
+import { t as DiscordModules } from "./index-C1hBnhca.js";
 import * as react0 from "react";
 
 //#region lib/components/src/TableRowAssetIcon.d.ts
@@ -11,4 +11,4 @@ type TableRowAssetIconProps = Omit<DiscordModules.Components.TableRowIconProps, 
   id: number;
 });
 //#endregion
-export { TableRowAssetIcon, TableRowAssetIconProps };
+export { TableRowAssetIconProps as n, TableRowAssetIcon as t };
