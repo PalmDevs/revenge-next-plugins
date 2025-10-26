@@ -19,7 +19,11 @@ registerPlugin(
         icon: 'SuperReactionIcon',
     },
     {
-        start({ cleanup }) {
+        start({ cleanup, plugin }) {
+            // Discord caches rendered components, so we need to reload to apply the patch properly.
+            if (plugin.flags & PluginFlags.EnabledLate)
+                plugin.flags |= PluginFlags.ReloadRequired
+
             const [AvatarUtils] = lookupModule(
                 withProps<AvatarUtils>('getUserAvatarURL'),
             )
@@ -39,6 +43,11 @@ registerPlugin(
                     { returnNamespace: true },
                 ),
             )
+        },
+        stop({ plugin }) {
+            // We could force a re-render, but you aren't going to be constantly enabling and disabling this plugin anyways.
+            if (plugin.flags & PluginFlags.EnabledLate)
+                plugin.flags |= PluginFlags.ReloadRequired
         },
     },
     PluginFlags.Enabled,
