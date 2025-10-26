@@ -3,7 +3,7 @@
     // Features
     "lib": ["ESNext"],
     "module": "ESNext",
-    "target": "ES2015",
+    "target": "ES2020",
     // Bundler
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
