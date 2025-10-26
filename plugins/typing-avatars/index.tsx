@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
     avatar: {
         width: 16,
         height: 16,
-        marginRight: 4,
         alignSelf: 'center',
+        borderRadius: 8,
     },
 })
 
@@ -116,6 +116,9 @@ function injectAvatars(
 
         const user = UserStore.getUser(userId, false, 16)
         const uri = AvatarUtils.getUserAvatarURL(user)
+
+        // Add some spacing (because margin didn't work)
+        node.props.children[0] = ` ${node.props.children[0]}`
 
         node.props.children.unshift(
             <Image source={{ uri }} style={styles.avatar} />,
