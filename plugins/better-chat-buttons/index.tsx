@@ -16,6 +16,7 @@ import type {
     ForwardRefRenderFunction,
     MemoExoticComponent,
     NamedExoticComponent,
+    ReactElement,
     RefObject,
 } from 'react'
 
@@ -84,7 +85,7 @@ registerPlugin<{ storage: Settings }>(
                         cleanup(
                             after(ChatInputSendButton.type, 'render', tree => {
                                 const node = findInReactFiber(
-                                    tree as Extract<typeof tree, object>,
+                                    tree as ReactElement,
                                     (
                                         tree,
                                     ): tree is {
