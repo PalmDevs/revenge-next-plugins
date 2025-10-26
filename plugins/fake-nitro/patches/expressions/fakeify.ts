@@ -69,7 +69,6 @@ function patchEmojiPicker({
 
             const ALLOWED_INTENTIONS = new Set([
                 EmojiConstants.EmojiIntention.CHAT,
-                EmojiConstants.EmojiIntention.POLLS,
                 EmojiConstants.EmojiIntention.AUTO_SUGGESTION,
             ])
 
