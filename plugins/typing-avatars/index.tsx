@@ -1,12 +1,16 @@
 import { Design } from '@revenge-mod/discord/design'
 import { Stores } from '@revenge-mod/discord/flux'
 import { getModules, lookupModule } from '@revenge-mod/modules/finders'
-import { withName, withProps } from '@revenge-mod/modules/finders/filters'
+import {
+    withDependencies,
+    withName,
+    withProps,
+} from '@revenge-mod/modules/finders/filters'
 import { after } from '@revenge-mod/patcher'
 import { registerPlugin } from '@revenge-mod/plugins/_'
 import { PluginFlags } from '@revenge-mod/plugins/constants'
 import { findInReactFiber } from '@revenge-mod/utils/react'
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, Pressable, StyleSheet, View } from 'react-native'
 import type { DiscordModules } from '@revenge-mod/discord/types'
 import type { ComponentProps, FC, ReactElement, ReactNode } from 'react'
 
@@ -159,7 +163,7 @@ function patchTypingView(
                 }
 
                 const uid = typingUserIds[userIndex]
-                if (!uid) return <StyledText>{node}</StyledText>
+                if (!uid) return <StyledText key={uid}>{node}</StyledText>
 
                 const user = UserStore.getUser(uid, false, 16)
                 const uri = AvatarUtils.getUserAvatarURL(user)
@@ -167,16 +171,53 @@ function patchTypingView(
                 userIndex++
 
                 return (
-                    <View style={styles.container} key={uid}>
-                        <Image source={{ uri }} style={styles.avatar} />
-                        <StyledText>{node}</StyledText>
-                    </View>
+                    <Pressable
+                        key={uid}
+                        onPress={() => {
+                            openUserProfile(uid)
+                        }}
+                    >
+                        <View style={styles.container}>
+                            <Image source={{ uri }} style={styles.avatar} />
+                            <StyledText>{node}</StyledText>
+                        </View>
+                    </Pressable>
                 )
             })}
         </View>
     )
 
     return tree
+}
+
+function openUserProfile(uid: string) {
+    const [, _asyncToGeneratorId] = lookupModule(withName('_asyncToGenerator'))
+    const [, asyncRequireId] = lookupModule(withName('asyncRequire'))
+
+    // modules/user_profile/native/showUserProfileActionSheet.tsx
+    const [showUserProfileActionSheet] = lookupModule(
+        withName<
+            (opts: { ignoreBlockedSpeedBump?: boolean; userId: string }) => void
+        >('showUserProfileActionSheet').and(
+            withDependencies([
+                _asyncToGeneratorId,
+                null,
+                null,
+                null,
+                asyncRequireId,
+                null,
+                null,
+                null,
+                null,
+                2,
+            ]),
+        ),
+        { uninitialized: true },
+    )
+
+    showUserProfileActionSheet?.({
+        userId: uid,
+    })
 }
 
 interface RenderTypingIndicatorProps {
