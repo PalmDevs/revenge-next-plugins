@@ -1,3 +1,4 @@
+import { Design } from '@revenge-mod/discord/design'
 import { Stores } from '@revenge-mod/discord/flux'
 import { getModules, lookupModule } from '@revenge-mod/modules/finders'
 import { withName, withProps } from '@revenge-mod/modules/finders/filters'
@@ -5,7 +6,7 @@ import { after } from '@revenge-mod/patcher'
 import { registerPlugin } from '@revenge-mod/plugins/_'
 import { PluginFlags } from '@revenge-mod/plugins/constants'
 import { findInReactFiber } from '@revenge-mod/utils/react'
-import { Image, StyleSheet } from 'react-native'
+import { Image, StyleSheet, View } from 'react-native'
 import type { DiscordModules } from '@revenge-mod/discord/types'
 import type { ComponentProps, FC, ReactElement, ReactNode } from 'react'
 
@@ -19,16 +20,15 @@ registerPlugin(
     },
     {
         start({ cleanup }) {
+            const [AvatarUtils] = lookupModule(
+                withProps<AvatarUtils>('getUserAvatarURL'),
+            )
+            if (!AvatarUtils) throw new Error('AvatarUtils not found')
+
             cleanup(
                 getModules(
                     withName<FC>('TypingIndicator'),
                     TypingIndicatorModule => {
-                        const [AvatarUtils] = lookupModule(
-                            withProps<AvatarUtils>('getUserAvatarURL'),
-                        )
-                        if (!AvatarUtils)
-                            throw new Error('AvatarUtils not found')
-
                         cleanup(
                             patchTypingIndicator(
                                 TypingIndicatorModule as { default: FC },
@@ -51,6 +51,10 @@ const styles = StyleSheet.create({
         height: 16,
         alignSelf: 'center',
         borderRadius: 8,
+        marginRight: 4,
+    },
+    container: {
+        flexDirection: 'row',
     },
 })
 
@@ -58,6 +62,10 @@ function patchTypingIndicator(
     TypingIndicatorModule: { default: FC },
     AvatarUtils: AvatarUtils,
 ) {
+    const UserStore = Stores.UserStore as DiscordModules.Flux.Store<{
+        getUser(userId: string, _: boolean, size: number): unknown
+    }>
+
     return after(TypingIndicatorModule, 'default', result => {
         const tree = result as ReactElement<TypingIndicatorTreeProps>
 
@@ -67,26 +75,16 @@ function patchTypingIndicator(
                 FC<RenderTypingIndicatorProps>
             >
 
-            after(renderItemTree, 'type', result => {
-                const textNode = findInReactFiber(
-                    result as ReactElement,
-                    (
-                        tree,
-                    ): tree is ReactElement<
-                        ComponentProps<DiscordModules.Components.Text>
-                    > => tree.props?.variant !== undefined,
+            if (renderItemTree.props.typingUserIds.length) {
+                after(renderItemTree, 'type', result =>
+                    patchTypingView(
+                        result as ReactElement,
+                        renderItemTree.props.typingUserIds,
+                        UserStore,
+                        AvatarUtils,
+                    ),
                 )
-
-                if (!textNode) return result
-
-                injectAvatars(
-                    textNode,
-                    renderItemTree.props.typingUserIds,
-                    AvatarUtils,
-                )
-
-                return result
-            })
+            }
 
             return renderItemTree
         })
@@ -95,37 +93,81 @@ function patchTypingIndicator(
     })
 }
 
-function injectAvatars(
-    textNode: ReactElement<ComponentProps<DiscordModules.Components.Text>>,
+function patchTypingView(
+    tree: ReactElement,
     typingUserIds: string[],
+    UserStore: DiscordModules.Flux.Store<{
+        getUser(userId: string, _: boolean, size: number): unknown
+    }>,
     AvatarUtils: AvatarUtils,
 ) {
-    const UserStore = Stores.UserStore as DiscordModules.Flux.Store<{
-        getUser(userId: string, _: boolean, size: number): unknown
-    }>
+    /**
+     * <View> (Parent is Stack?)
+     *   <Ellipsis />
+     *   <Text>
+     *     <Text>User</Text>
+     *     {' '}and
+     *     <Text>Other user</Text>
+     *     {' '}are typing...
+     *   </Text>
+     * </View>
+     */
+    const viewNode = findInReactFiber(
+        tree,
+        (
+            node,
+        ): node is ReactElement<ComponentProps<typeof View>> & {
+            props: { children: ReactNode[] }
+        } =>
+            node.type === View &&
+            node.props?.children?.find(
+                (subnode: ReactNode) =>
+                    (subnode as ReactElement)?.type === Design.Text,
+            ),
+    )
+
+    if (!viewNode) return tree
+
+    const textNode = viewNode.props.children![1] as ReactElement<
+        ComponentProps<DiscordModules.Components.Text>
+    > & { props: { children: ReactNode[] } }
+
+    function StyledText({ children }: { children: ReactNode }) {
+        return (
+            <Design.Text {...textNode.props} style={undefined}>
+                {children}
+            </Design.Text>
+        )
+    }
 
     let userIndex = 0
 
-    for (const node_ of textNode.props.children as ReactNode[]) {
-        if (!node_ || typeof node_ !== 'object') continue
+    viewNode.props.children[1] = (
+        <View style={styles.container}>
+            {textNode.props.children.map(node => {
+                if (typeof node !== 'object') {
+                    return <StyledText>{node}</StyledText>
+                }
 
-        const userId = typingUserIds[userIndex]
-        if (!userId) break
+                const uid = typingUserIds[userIndex]
+                if (!uid) return <StyledText>{node}</StyledText>
 
-        const node = node_ as ReactElement<{ children: ReactNode[] }>
+                const user = UserStore.getUser(uid, false, 16)
+                const uri = AvatarUtils.getUserAvatarURL(user)
 
-        const user = UserStore.getUser(userId, false, 16)
-        const uri = AvatarUtils.getUserAvatarURL(user)
+                userIndex++
 
-        // Add some spacing (because margin didn't work)
-        node.props.children[0] = ` ${node.props.children[0]}`
+                return (
+                    <View style={styles.container} key={uid}>
+                        <Image source={{ uri }} style={styles.avatar} />
+                        <StyledText>{node}</StyledText>
+                    </View>
+                )
+            })}
+        </View>
+    )
 
-        node.props.children.unshift(
-            <Image source={{ uri }} style={styles.avatar} />,
-        )
-
-        userIndex++
-    }
+    return tree
 }
 
 interface RenderTypingIndicatorProps {
