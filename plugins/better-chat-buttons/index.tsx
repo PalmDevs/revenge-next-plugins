@@ -11,6 +11,7 @@ import { SettingsComponent } from './settings'
 import type {
     Filter,
     FilterGenerator,
+    FilterScopes,
 } from '@revenge-mod/modules/finders/filters'
 import type {
     ForwardRefRenderFunction,
@@ -189,7 +190,11 @@ interface ForwardRefExoticComponent<T, P = object>
 type ByMemoizedNamedExoticComponent = FilterGenerator<
     <T, P = object>(
         name: string,
-    ) => Filter<MemoExoticComponent<ForwardRefExoticComponent<T, P>>, true>
+    ) => Filter<{
+        Result: MemoExoticComponent<ForwardRefExoticComponent<T, P>>
+        RequiresExports: true
+        Scopes: [typeof FilterScopes.Initialized]
+    }>
 >
 
 const byMemoizedNamedExoticComponent = createFilterGenerator(

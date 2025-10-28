@@ -109,7 +109,6 @@ function forceLightTheme() {
                 2,
             ]),
         ),
-        { uninitialized: true },
     )
 
     const [ThemeActionCreators] = lookupModule(

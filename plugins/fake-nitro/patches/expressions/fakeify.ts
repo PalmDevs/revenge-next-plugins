@@ -13,6 +13,7 @@ import type { DiscordModules } from '@revenge-mod/discord/types'
 import type {
     Filter,
     FilterGenerator,
+    FilterScopes,
 } from '@revenge-mod/modules/finders/filters'
 import type { FC, MemoExoticComponent } from 'react'
 import type { FakeNitroPluginContext } from '../..'
@@ -382,7 +383,13 @@ function linkWithConfig(
 }
 
 type WithMemoizedNamedFunctionComponent = FilterGenerator<
-    <T extends FC<any>>(name: string) => Filter<MemoExoticComponent<T>, true>
+    <T extends FC<any>>(
+        name: string,
+    ) => Filter<{
+        Result: MemoExoticComponent<T>
+        RequiresExports: true
+        Scopes: [typeof FilterScopes.Initialized]
+    }>
 >
 
 const withMemoizedNamedFunctionComponent = createFilterGenerator(
