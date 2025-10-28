@@ -1,5 +1,5 @@
-import { n as Metro } from "./types-DW6-O3QH.js";
-import * as react1 from "react";
+import { n as Metro } from "./types-Q9nY_LVo.js";
+import * as react3 from "react";
 import * as react_native0 from "react-native";
 import * as react_jsx_runtime0 from "react/jsx-runtime";
 
@@ -7,7 +7,7 @@ import * as react_jsx_runtime0 from "react/jsx-runtime";
 declare let ReactModuleId: Metro.ModuleID;
 declare let ReactNativeModuleId: Metro.ModuleID;
 declare let ReactJSXRuntimeModuleId: Metro.ModuleID;
-declare let React: typeof react1;
+declare let React: typeof react3;
 declare let ReactNative: typeof react_native0;
 declare let ReactJSXRuntime: typeof react_jsx_runtime0;
 //#endregion

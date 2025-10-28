@@ -1,5 +1,5 @@
 import { t as __export } from "./chunk-Bp6m_JJh.js";
-import { N as FilterGenerator, j as Filter, n as Metro } from "./types-DW6-O3QH.js";
+import { M as Filter, P as FilterGenerator, n as Metro, q as FilterScopes } from "./types-Q9nY_LVo.js";
 import { n as ReactNavigationParamList } from "./react-navigation-BsoHQk3U.js";
 import { s as native_d_exports } from "./native-BXtyFZ8I.js";
 import { n as main_tabs_v2_d_exports } from "./main_tabs_v2-DHNkP9c9.js";
@@ -144,12 +144,20 @@ declare const Stores: Record<string, DiscordModules.Flux.Store<object>>;
  * @returns A function that can be used to cancel the wait for the store.
  */
 declare function getStore<T$1>(name: string, callback: (store: DiscordModules.Flux.Store<T$1>) => void): () => void;
-type WithStore = FilterGenerator<(<T>() => Filter<DiscordModules.Flux.Store<T>, boolean>)>;
+type WithStore = FilterGenerator<(<T>() => Filter<{
+  Result: DiscordModules.Flux.Store<T>;
+  RequiresExports: boolean;
+  Scopes: [typeof FilterScopes.Uninitialized, typeof FilterScopes.Initialized];
+}>)>;
 /**
  * A dynamic filter that matches all Flux stores.
  */
 declare const withStore: WithStore;
-type WithStoreName = FilterGenerator<(<T>(name: string) => Filter<DiscordModules.Flux.Store<T>, true>)>;
+type WithStoreName = FilterGenerator<(<T>(name: string) => Filter<{
+  Result: DiscordModules.Flux.Store<T>;
+  RequiresExports: true;
+  Scopes: [typeof FilterScopes.Uninitialized, typeof FilterScopes.Initialized];
+}>)>;
 /**
  * A with-exports filter that matches a Flux store by its name.
  */

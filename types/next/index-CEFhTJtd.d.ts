@@ -1,5 +1,5 @@
 import { t as __export } from "./chunk-Bp6m_JJh.js";
-import { I as FilterResult, j as Filter, n as Metro, s as If, t as MaybeDefaultExportMatched, u as Nullish } from "./types-DW6-O3QH.js";
+import { M as Filter, R as FilterResult, n as Metro, s as If, t as MaybeDefaultExportMatched, u as Not } from "./types-Q9nY_LVo.js";
 
 //#region lib/modules/src/finders/_internal.d.ts
 interface RunFilterOptions {
@@ -10,7 +10,7 @@ interface RunFilterOptions {
    */
   skipDefault?: boolean;
   /**
-   * Whether to allow initializing modules to check their exports.
+   * Whether to allow initializing modules to confirm their exports.
    *
    * @default true
    */
@@ -28,64 +28,28 @@ type RunFilterReturnExportsOptions<ReturnNamespace extends boolean = boolean> = 
 }>;
 //#endregion
 //#region lib/modules/src/finders/lookup.d.ts
-type LookupModulesOptionsWithAll<A extends boolean> = If<A, {
-  /**
-   * Whether to include all modules in the lookup, including blacklisted ones.
-   *
-   * **This overrides {@link BaseLookupModulesOptions.initialized} and {@link BaseLookupModulesOptions.uninitialized}.**
-   */
-  all: A;
-}, {
-  /**
-   * You can only use `all` with exportsless filters!
-   */
-  all?: false;
-}>;
-type LookupModulesOptionsWithInitializedUninitialized<U extends boolean> = {
-  /**
-   * Whether to include initialized modules in the lookup.
-   *
-   * @default true
-   */
-  initialized?: boolean;
-} & If<U, {
-  /**
-   * Whether to include uninitialized modules in the lookup.
-   *
-   * Set {@link BaseLookupModulesOptions.initialize} `true` to initialize uninitialized modules.
-   *
-   * @default false
-   */
-  uninitialized: U;
-}, {
-  /**
-   * You can only use `uninitialized` with exportsless filters!
-   */
-  uninitialized?: false;
-}>;
-type LookupModulesOptions<ReturnNamespace extends boolean = boolean, Uninitialized extends boolean = boolean, All extends boolean = boolean, Initialize extends boolean = boolean> = RunFilterReturnExportsOptions<ReturnNamespace> & {
+type LookupModulesOptions<ReturnNamespace extends boolean = boolean, Initialize extends boolean = boolean> = RunFilterReturnExportsOptions<ReturnNamespace> & {
   /**
    * Whether to use cached lookup results.
    */
   cached?: boolean;
-} & If<Initialize, {
+} & If<Not<Initialize>, {
   /**
    * Whether to initialize matching uninitialized modules.
    *
    * **This will initialize any modules that match the exportsless filter and may cause unintended side effects.**
    */
-  initialize?: Initialize;
-}, {
   initialize: false;
-}> & If<All, LookupModulesOptionsWithAll<All> & { [K in keyof LookupModulesOptionsWithInitializedUninitialized<Uninitialized>]?: never }, LookupModulesOptionsWithInitializedUninitialized<Uninitialized> & { [K in keyof LookupModulesOptionsWithAll<All>]?: never }>;
-type LookupModulesResult<F extends Filter, O extends LookupModulesOptions> = [exports: O extends LookupModulesOptions<boolean, boolean, boolean, false> ? LookupFilterResult<F, O> | Nullish : LookupFilterResult<F, O>, id: Metro.ModuleID];
-type LookupFilterResult<F extends Filter, O extends LookupModulesOptions> = O extends RunFilterReturnExportsOptions<true> ? MaybeDefaultExportMatched<FilterResult<F>> : FilterResult<F>;
+}, {
+  initialize?: true;
+}>;
+type LookupModulesResult<F extends Filter, O extends LookupModulesOptions> = [exports: LookupFilterResult<F, O>, id: Metro.ModuleID];
+type LookupFilterResult<F extends Filter, O extends LookupModulesOptions> = O extends LookupModulesOptions<any, false> ? InitializedLookupFilterResult<F, O> | undefined : InitializedLookupFilterResult<F, O>;
+type InitializedLookupFilterResult<F extends Filter, O extends LookupModulesOptions> = O extends RunFilterReturnExportsOptions<true> ? MaybeDefaultExportMatched<FilterResult<F>> : FilterResult<F>;
 declare const NotFoundResult: readonly [];
 type LookupNotFoundResult = typeof NotFoundResult;
 /**
  * Lookup modules.
- *
- * You can lookup uninitialized modules by passing `options.uninitialized` when filtering via exportsless filters (eg. `withDependencies`).
  *
  * @param filter The filter to use.
  * @param options The options to use for the lookup.
@@ -99,7 +63,7 @@ type LookupNotFoundResult = typeof NotFoundResult;
  * ```
  */
 declare function lookupModules<F extends Filter>(filter: F): Generator<LookupModulesResult<F, object>, undefined>;
-declare function lookupModules<F extends Filter, const O extends (F extends Filter<any, infer RE> ? If<RE, LookupModulesOptions<boolean, false, false>, LookupModulesOptions> : never)>(filter: F, options: O): Generator<LookupModulesResult<F, O>, undefined>;
+declare function lookupModules<F extends Filter, const O extends LookupModulesOptions>(filter: F, options: O): Generator<LookupModulesResult<F, O>, undefined>;
 /**
  * Lookup a module. Skipping creating a `Generator`.
  *
@@ -115,7 +79,7 @@ declare function lookupModules<F extends Filter, const O extends (F extends Filt
  * ```
  */
 declare function lookupModule<F extends Filter>(filter: F): LookupModulesResult<F, object> | LookupNotFoundResult;
-declare function lookupModule<F extends Filter, const O extends (F extends Filter<any, infer RE> ? If<RE, LookupModulesOptions<boolean, false, false>, LookupModulesOptions> : never)>(filter: F, options: O): LookupModulesResult<F, O> | LookupNotFoundResult;
+declare function lookupModule<F extends Filter, const O extends LookupModulesOptions>(filter: F, options: O): LookupModulesResult<F, O> | LookupNotFoundResult;
 /**
  * Lookup an initialized module by its imported path.
  *
@@ -132,17 +96,9 @@ declare function lookupModule<F extends Filter, const O extends (F extends Filte
 declare function lookupModuleWithImportedPath<T = any>(path: string): [exports: T, id: Metro.ModuleID] | LookupNotFoundResult;
 //#endregion
 //#region lib/modules/src/finders/wait.d.ts
-interface BaseWaitForModulesOptions<All extends boolean = boolean> {
-  /**
-   * Whether to include all modules, including blacklisted ones.
-   *
-   * @default false
-   */
-  all?: All;
-}
 type WaitForModulesUnsubscribeFunction = () => void;
 type WaitForModulesCallback<T> = (exports: T, id: Metro.ModuleID) => any;
-type WaitForModulesOptions<ReturnNamespace extends boolean = boolean, All extends boolean = boolean> = RunFilterReturnExportsOptions<ReturnNamespace> & BaseWaitForModulesOptions<All> & {
+type WaitForModulesOptions<ReturnNamespace extends boolean = boolean> = RunFilterReturnExportsOptions<ReturnNamespace> & {
   /**
    * Use cached results **only** (if possible).
    * If there is no cache result, this works as if you did not pass this option at all.
@@ -176,7 +132,7 @@ type WaitForModulesResult<F extends Filter, O extends WaitForModulesOptions> = O
  * ```
  */
 declare function waitForModules<F extends Filter>(filter: F, callback: WaitForModulesCallback<WaitForModulesResult<F, object>>): WaitForModulesUnsubscribeFunction;
-declare function waitForModules<F extends (O extends WaitForModulesOptions<boolean, true> ? Filter<any, false> : Filter), O extends WaitForModulesOptions>(filter: F, callback: WaitForModulesCallback<WaitForModulesResult<F, O>>, options: O): WaitForModulesUnsubscribeFunction;
+declare function waitForModules<F extends Filter, O extends WaitForModulesOptions>(filter: F, callback: WaitForModulesCallback<WaitForModulesResult<F, O>>, options: O): WaitForModulesUnsubscribeFunction;
 /**
  * Wait for a module to initialize by its imported path. **Callback won't be called if the module is already initialized!**
  *
@@ -186,7 +142,6 @@ declare function waitForModules<F extends (O extends WaitForModulesOptions<boole
  *
  * @param path The path to wait for.
  * @param callback The callback to call once the module is initialized.
- * @param options The options to use for the wait.
  * @returns A function to unsubscribe.
  *
  * @example
@@ -199,10 +154,10 @@ declare function waitForModules<F extends (O extends WaitForModulesOptions<boole
  * )
  * ```
  */
-declare function waitForModuleWithImportedPath<T = any>(path: string, callback: WaitForModulesCallback<T>, options?: BaseWaitForModulesOptions): WaitForModulesUnsubscribeFunction;
+declare function waitForModuleWithImportedPath<T = any>(path: string, callback: WaitForModulesCallback<T>): WaitForModulesUnsubscribeFunction;
 //#endregion
 //#region lib/modules/src/finders/get.d.ts
-type GetModulesOptions<ReturnNamespace extends boolean = boolean, Uninitialized extends boolean = boolean, All extends boolean = boolean> = WaitForModulesOptions<ReturnNamespace> & LookupModulesOptions<ReturnNamespace, Uninitialized, All, true> & {
+type GetModulesOptions<ReturnNamespace extends boolean = boolean> = WaitForModulesOptions<ReturnNamespace> & LookupModulesOptions<ReturnNamespace, true> & {
   /**
    * The maximum number of modules to get.
    *
@@ -239,7 +194,7 @@ type GetModulesUnsubscribeFunction = () => void;
  * ```
  */
 declare function getModules<F extends Filter>(filter: F, callback: GetModulesCallback<FilterResult<F>>): GetModulesUnsubscribeFunction;
-declare function getModules<F extends Filter, const O extends (F extends Filter<any, infer RE> ? If<RE, GetModulesOptions<boolean, boolean, false>, GetModulesOptions> : never)>(filter: F, callback: GetModulesCallback<GetModulesResult<F, O>>, options: O): GetModulesUnsubscribeFunction;
+declare function getModules<F extends Filter, const O extends GetModulesOptions>(filter: F, callback: GetModulesCallback<GetModulesResult<F, O>>, options: O): GetModulesUnsubscribeFunction;
 /**
  * Get a single module by its imported path.
  * Once a module is found, unsubscription happens automatically, since imported paths are unique.
@@ -257,7 +212,7 @@ declare function getModules<F extends Filter, const O extends (F extends Filter<
  */
 declare function getModuleWithImportedPath<T>(path: string, callback: GetModulesCallback<T>): GetModulesUnsubscribeFunction;
 declare namespace index_d_exports {
-  export { BaseWaitForModulesOptions, GetModulesCallback, GetModulesOptions, GetModulesResult, GetModulesUnsubscribeFunction, LookupModulesOptions, LookupModulesResult, WaitForModulesCallback, WaitForModulesOptions, WaitForModulesResult, WaitForModulesUnsubscribeFunction, getModuleWithImportedPath, getModules, lookupModule, lookupModuleWithImportedPath, lookupModules, waitForModuleWithImportedPath, waitForModules };
+  export { GetModulesCallback, GetModulesOptions, GetModulesResult, GetModulesUnsubscribeFunction, LookupModulesOptions, LookupModulesResult, WaitForModulesCallback, WaitForModulesOptions, WaitForModulesResult, WaitForModulesUnsubscribeFunction, getModuleWithImportedPath, getModules, lookupModule, lookupModuleWithImportedPath, lookupModules, waitForModuleWithImportedPath, waitForModules };
 }
 //#endregion
-export { lookupModule as _, GetModulesUnsubscribeFunction as a, BaseWaitForModulesOptions as c, WaitForModulesResult as d, WaitForModulesUnsubscribeFunction as f, LookupModulesResult as g, LookupModulesOptions as h, GetModulesResult as i, WaitForModulesCallback as l, waitForModules as m, GetModulesCallback as n, getModuleWithImportedPath as o, waitForModuleWithImportedPath as p, GetModulesOptions as r, getModules as s, index_d_exports as t, WaitForModulesOptions as u, lookupModuleWithImportedPath as v, lookupModules as y };
+export { lookupModuleWithImportedPath as _, GetModulesUnsubscribeFunction as a, WaitForModulesCallback as c, WaitForModulesUnsubscribeFunction as d, waitForModuleWithImportedPath as f, lookupModule as g, LookupModulesResult as h, GetModulesResult as i, WaitForModulesOptions as l, LookupModulesOptions as m, GetModulesCallback as n, getModuleWithImportedPath as o, waitForModules as p, GetModulesOptions as r, getModules as s, index_d_exports as t, WaitForModulesResult as u, lookupModules as v };

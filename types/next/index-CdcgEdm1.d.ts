@@ -1,6 +1,10 @@
-import { a as DeepPartial, i as AnyObject, s as If } from "./types-DW6-O3QH.js";
+import { t as __export } from "./chunk-Bp6m_JJh.js";
+import { a as DeepPartial, i as AnyObject, s as If } from "./types-Q9nY_LVo.js";
 
 //#region lib/storage/src/index.d.ts
+declare namespace index_d_exports {
+  export { Storage, StorageDirectory, StorageOptions, StorageSubscription, StorageUpdateMode, UseStorageFilter, getStorage };
+}
 type StorageSubscription<T extends AnyObject = AnyObject> = (update: DeepPartial<T>, mode: (typeof StorageUpdateMode)[keyof typeof StorageUpdateMode]) => void;
 declare const StorageUpdateMode: {
   /**
@@ -114,4 +118,4 @@ interface Storage<T extends AnyObject> {
 }
 type StorageDirectory = 'cache' | 'documents';
 //#endregion
-export { StorageUpdateMode as a, StorageSubscription as i, StorageDirectory as n, UseStorageFilter as o, StorageOptions as r, getStorage as s, Storage as t };
+export { StorageUpdateMode as a, index_d_exports as c, StorageSubscription as i, StorageDirectory as n, UseStorageFilter as o, StorageOptions as r, getStorage as s, Storage as t };

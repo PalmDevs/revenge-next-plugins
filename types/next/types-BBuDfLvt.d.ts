@@ -1,10 +1,10 @@
 import { t as __export } from "./chunk-Bp6m_JJh.js";
-import { b as index_d_exports$3 } from "./types-DW6-O3QH.js";
-import { a as utils_d_exports, l as index_d_exports$4 } from "./utils-CrrdZoS3.js";
-import { t as index_d_exports$2 } from "./index-f-lJ1t9D.js";
+import { x as index_d_exports$3 } from "./types-Q9nY_LVo.js";
+import { a as utils_d_exports, l as index_d_exports$4 } from "./utils-DVo51UEA.js";
+import { t as index_d_exports$2 } from "./index-CEFhTJtd.js";
 import { u as index_d_exports$5 } from "./index-8QuIENve.js";
 import { a as constants_d_exports } from "./constants-Du6Y7hwa.js";
-import { s as index_d_exports } from "./index-Bxhv5itw.js";
+import { s as index_d_exports } from "./index-s2zcKmcl.js";
 import { t as index_d_exports$1 } from "./index-Di-Mayfc.js";
 import { FunctionComponent } from "react";
 import * as _revenge_mod_patcher0 from "@revenge-mod/patcher";
@@ -145,7 +145,7 @@ interface PreInitPluginApi<O extends PluginApiExtensionsOptions = PluginApiExten
   decorate: PluginDecorateApi<O, 'PreInit'>;
   unscoped: UnscopedPreInitPluginApi;
   cleanup: PluginCleanupApi;
-  plugin: Plugin;
+  plugin: Plugin<O, 'PreInit'>;
 }
 /**
  * The plugin API (limited).
@@ -154,6 +154,7 @@ interface PreInitPluginApi<O extends PluginApiExtensionsOptions = PluginApiExten
 interface InitPluginApi<O extends PluginApiExtensionsOptions = PluginApiExtensionsOptions> extends PreInitPluginApi<O> {
   decorate: PluginDecorateApi<O, 'Init'>;
   unscoped: UnscopedInitPluginApi;
+  plugin: Plugin<O, 'Init'>;
 }
 /**
  * The plugin API.
@@ -162,6 +163,7 @@ interface InitPluginApi<O extends PluginApiExtensionsOptions = PluginApiExtensio
 interface PluginApi<O extends PluginApiExtensionsOptions = PluginApiExtensionsOptions> extends InitPluginApi<O> {
   decorate: PluginDecorateApi<O, 'Start'>;
   unscoped: UnscopedPluginApi;
+  plugin: Plugin<O, 'Start'>;
 }
 /**
  * The plugin manifest.
@@ -211,26 +213,26 @@ interface PluginLifecycles<O extends PluginApiExtensionsOptions = PluginApiExten
    *
    * @param api Plugin API (very limited).
    */
-  preInit?: (api: PreInitPluginApi<O>) => any;
+  preInit?: (this: Plugin<O, 'PreInit'>, api: PreInitPluginApi<O>) => any;
   /**
    * Runs as soon as all important modules are initialized.
    * After the index module (module 0)'s factory is run.
    *
    * @param api Plugin API (limited).
    */
-  init?: (api: InitPluginApi<O>) => any;
+  init?: (this: Plugin<O, 'Init'>, api: InitPluginApi<O>) => any;
   /**
    * Runs when the plugin can be started with all APIs available.
    *
    * @param api Plugin API.
    */
-  start?: (api: PluginApi<O>) => any;
+  start?: (this: Plugin<O, 'Start'>, api: PluginApi<O>) => any;
   /**
    * Runs when the plugin is stopped.
    *
    * @param api Plugin API.
    */
-  stop?: (api: PluginApi<O>) => any;
+  stop?: (this: Plugin<O, 'Start'>, api: PluginApi<O>) => any;
 }
 interface Plugin<O extends PluginApiExtensionsOptions = PluginApiExtensionsOptions, S extends keyof PluginApiInLifecycleMap<O> = keyof PluginApiInLifecycleMap<O>> {
   manifest: PluginManifest;
@@ -252,11 +254,11 @@ interface Plugin<O extends PluginApiExtensionsOptions = PluginApiExtensionsOptio
    * Disable the plugin.
    * This will also stop the plugin if it is running.
    */
-  disable(): Promise<void>;
+  disable(this: Plugin<O, S>): Promise<void>;
   /**
    * Stop the plugin.
    */
-  stop(): Promise<void>;
+  stop(this: Plugin<O, S>): Promise<void>;
   /**
    * The plugin API.
    *
