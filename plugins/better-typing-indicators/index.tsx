@@ -12,26 +12,49 @@ import { PluginFlags } from '@revenge-mod/plugins/constants'
 import { findInReactFiber } from '@revenge-mod/utils/react'
 import { Image, Pressable, StyleSheet, View } from 'react-native'
 import type { DiscordModules } from '@revenge-mod/discord/types'
+import type { Storage } from '@revenge-mod/storage'
 import type { ComponentProps, FC, ReactElement, ReactNode } from 'react'
 
-registerPlugin(
+enum DataSource {
+    Global,
+    Guild,
+    /**
+     * For names only
+     */
+    Username,
+}
+
+const ChannelListAppearance = {
+    Ellipsis: 1,
+    Avatars: 2,
+    IncludeMuted: 4,
+} as const
+
+interface Settings {
+    avatar: DataSource | false
+    name: DataSource
+    channel: {
+        appearance: number
+        maxAvatars?: number
+    }
+}
+
+registerPlugin<{
+    storage: Settings
+}>(
     {
-        id: 'palmdevs.typing-avatars',
-        name: 'Typing Avatars',
-        description: 'See avatars of users typing.',
+        id: 'palmdevs.better-typing-indicators',
+        name: 'Better Typing Indicators',
+        description:
+            'Typing indicator in channels, with user avatars, tap to open profile, and more.',
         author: 'Palm',
         icon: 'SuperReactionIcon',
     },
     {
-        start({ cleanup, plugin }) {
+        start({ cleanup, plugin, storage }) {
             // Discord caches rendered components, so we need to reload to apply the patch properly.
             if (plugin.flags & PluginFlags.EnabledLate)
                 plugin.flags |= PluginFlags.ReloadRequired
-
-            const [AvatarUtils] = lookupModule(
-                withProps<AvatarUtils>('getUserAvatarURL'),
-            )
-            if (!AvatarUtils) throw new Error('AvatarUtils not found')
 
             cleanup(
                 getModules(
@@ -40,7 +63,7 @@ registerPlugin(
                         cleanup(
                             patchTypingIndicator(
                                 TypingIndicatorModule as { default: FC },
-                                AvatarUtils,
+                                storage,
                             ),
                         )
                     },
@@ -52,6 +75,19 @@ registerPlugin(
             // We could force a re-render, but you aren't going to be constantly enabling and disabling this plugin anyways.
             if (plugin.flags & PluginFlags.EnabledLate)
                 plugin.flags |= PluginFlags.ReloadRequired
+        },
+        storage: {
+            default: {
+                avatar: DataSource.Guild,
+                name: DataSource.Guild,
+                channel: {
+                    appearance:
+                        ChannelListAppearance.Ellipsis |
+                        ChannelListAppearance.Avatars,
+                    maxAvatars: 3,
+                },
+            },
+            load: true,
         },
     },
     PluginFlags.Enabled,
@@ -73,12 +109,8 @@ const styles = StyleSheet.create({
 
 function patchTypingIndicator(
     TypingIndicatorModule: { default: FC },
-    AvatarUtils: AvatarUtils,
+    storage: Storage<Settings>,
 ) {
-    const UserStore = Stores.UserStore as DiscordModules.Flux.Store<{
-        getUser(userId: string, _: boolean, size: number): unknown
-    }>
-
     return after(TypingIndicatorModule, 'default', result => {
         const tree = result as ReactElement<TypingIndicatorTreeProps>
 
@@ -92,9 +124,8 @@ function patchTypingIndicator(
                 after(renderItemTree, 'type', result =>
                     patchTypingView(
                         result as ReactElement,
-                        renderItemTree.props.typingUserIds,
-                        UserStore,
-                        AvatarUtils,
+                        renderItemTree.props,
+                        storage,
                     ),
                 )
             }
@@ -108,12 +139,15 @@ function patchTypingIndicator(
 
 function patchTypingView(
     tree: ReactElement,
-    typingUserIds: string[],
-    UserStore: DiscordModules.Flux.Store<{
-        getUser(userId: string, _: boolean, size: number): unknown
-    }>,
-    AvatarUtils: AvatarUtils,
+    { typingUserIds, channel }: RenderTypingIndicatorProps,
+    storage: Storage<Settings>,
 ) {
+    const { id: channelId, guild_id: guildId } = channel
+
+    const UserStore = Stores.UserStore as DiscordModules.Flux.Store<{
+        getUser(userId: string): BasicUser
+    }>
+
     /**
      * <View> (Parent is Stack?)
      *   <Ellipsis />
@@ -133,7 +167,7 @@ function patchTypingView(
             props: { children: ReactNode[] }
         } =>
             node.type === View &&
-            node.props?.children?.find(
+            node.props?.children?.find?.(
                 (subnode: ReactNode) =>
                     (subnode as ReactElement)?.type === Design.Text,
             ),
@@ -157,7 +191,11 @@ function patchTypingView(
 
     viewNode.props.children[1] = (
         <View style={styles.container}>
-            {textNode.props.children.map(node => {
+            {textNode.props.children.map(node_ => {
+                const node = node_ as ReactElement<{
+                    children: ReactNode
+                }>
+
                 if (typeof node !== 'object') {
                     return <StyledText>{node}</StyledText>
                 }
@@ -165,16 +203,27 @@ function patchTypingView(
                 const uid = typingUserIds[userIndex]
                 if (!uid) return <StyledText key={uid}>{node}</StyledText>
 
-                const user = UserStore.getUser(uid, false, 16)
-                const uri = AvatarUtils.getUserAvatarURL(user)
-
                 userIndex++
+
+                const user = UserStore.getUser(uid)
+                const uri = user.getAvatarURL(
+                    storage.cache!.avatar === DataSource.Guild
+                        ? guildId
+                        : undefined,
+                    16,
+                )
+
+                node.props.children = getName(
+                    user,
+                    guildId,
+                    storage.cache!.name,
+                )
 
                 return (
                     <Pressable
                         key={uid}
                         onPress={() => {
-                            openUserProfile(uid)
+                            openUserProfile(uid, channelId)
                         }}
                     >
                         <View style={styles.container}>
@@ -190,20 +239,24 @@ function patchTypingView(
     return tree
 }
 
-function openUserProfile(uid: string) {
+function openUserProfile(uid: string, channelId?: string) {
     const [, _asyncToGeneratorId] = lookupModule(withName('_asyncToGenerator'))
     const [, asyncRequireId] = lookupModule(withName('asyncRequire'))
 
     // modules/user_profile/native/showUserProfileActionSheet.tsx
     const [showUserProfileActionSheet] = lookupModule(
         withName<
-            (opts: { ignoreBlockedSpeedBump?: boolean; userId: string }) => void
+            (opts: {
+                ignoreBlockedSpeedBump?: boolean
+                userId: string
+                channelId?: string
+            }) => void
         >('showUserProfileActionSheet').and(
             withDependencies([
                 _asyncToGeneratorId,
                 null,
                 null,
-                null,
+                withProps('users'),
                 asyncRequireId,
                 null,
                 null,
@@ -212,25 +265,30 @@ function openUserProfile(uid: string) {
                 2,
             ]),
         ),
-        { uninitialized: true },
     )
 
     showUserProfileActionSheet?.({
         userId: uid,
+        channelId,
     })
 }
 
 interface RenderTypingIndicatorProps {
-    channel: unknown
+    channel: BasicChannel
     typingUserIds: string[]
     transitionState: number
     cleanUp: () => void
 }
 
+interface BasicChannel {
+    id: string
+    guild_id: string | undefined
+}
+
 interface TypingIndicatorTreeProps {
     item:
         | {
-              channel: unknown
+              channel: BasicChannel
               typingUserIds: string[]
           }
         | undefined
@@ -244,6 +302,40 @@ interface TypingIndicatorTreeProps {
     ): unknown
 }
 
-interface AvatarUtils {
-    getUserAvatarURL(user: unknown): string
+interface BasicUser {
+    id: string
+    username: string
+    globalName: string | null
+    getAvatarURL: (guildId?: string, size?: number) => string
+}
+
+function getName(user: BasicUser, guildId?: string, source?: DataSource) {
+    const GuildMemberStore =
+        Stores.GuildMemberStore as DiscordModules.Flux.Store<{
+            getNick(guildId: string, userId: string): string | null
+        }>
+
+    const RelationshipStore =
+        Stores.RelationshipStore as DiscordModules.Flux.Store<{
+            getNickname(userId: string): string | null
+        }>
+
+    switch (source) {
+        case DataSource.Username:
+            return user.username
+
+        // biome-ignore lint/suspicious/noFallthroughSwitchClause: Intentional fallback
+        case DataSource.Guild: {
+            const nick = GuildMemberStore.getNick(guildId!, user.id)
+            if (nick) return nick
+        }
+
+        case DataSource.Global: {
+            return (
+                RelationshipStore.getNickname(user.id) ||
+                user.globalName ||
+                user.username
+            )
+        }
+    }
 }
