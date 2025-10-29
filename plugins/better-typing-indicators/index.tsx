@@ -11,7 +11,7 @@ import { registerPlugin } from '@revenge-mod/plugins/_'
 import { PluginFlags } from '@revenge-mod/plugins/constants'
 import { isProxy } from '@revenge-mod/utils/proxy'
 import { findInReactFiber } from '@revenge-mod/utils/react'
-import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native'
+import { Image, Pressable, StyleSheet, View } from 'react-native'
 import { SettingsComponent } from './settings'
 import type { DiscordModules } from '@revenge-mod/discord/types'
 import type { Storage } from '@revenge-mod/storage'
@@ -34,7 +34,7 @@ export const ChannelListAppearance = {
 
 export interface Settings {
     avatar: DataSource | false
-    name: DataSource
+    name: DataSource | false
     channel: {
         appearance: number
         maxAvatars?: number
@@ -128,6 +128,9 @@ const styles = StyleSheet.create({
     },
     container: {
         flexDirection: 'row',
+    },
+    wrap: {
+        flexWrap: 'wrap',
     },
 })
 
@@ -273,7 +276,7 @@ function patchTypingView(
                 >
                     <View style={styles.container}>
                         <Image source={{ uri }} style={styles.avatar} />
-                        <StyledText>{node}</StyledText>
+                        {storage.cache!.name && <StyledText>{node}</StyledText>}
                     </View>
                 </Pressable>
             )
@@ -289,11 +292,11 @@ function patchTypingView(
         | undefined
 
     children[1] = (
-        <ScrollView style={styles.container}>
+        <View style={[styles.container, styles.wrap]}>
             {Array.isArray(children) && maybeTextNode?.type === Design.Text
                 ? renderTypingItems(maybeTextNode.props.children as ReactNode[])
                 : children}
-        </ScrollView>
+        </View>
     )
 
     return tree

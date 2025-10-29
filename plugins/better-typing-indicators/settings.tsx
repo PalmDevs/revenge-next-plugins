@@ -41,11 +41,7 @@ function AvatarSourceSetting({ api }: Props) {
         >
             <TableRadioRow label="Don't show avatars" value={false} />
             <TableRadioRow label="Show avatars" value={0} />
-            <TableRadioRow
-                label="Show server avatars"
-                subLabel="Use server avatars, if set."
-                value={1}
-            />
+            <TableRadioRow label="Prefer server avatars" value={1} />
         </TableRadioGroup>
     )
 }
@@ -57,25 +53,22 @@ function NameSourceSetting({ api }: Props) {
         <TableRadioGroup
             title="Names"
             defaultValue={setting}
-            onChange={(v: DataSource) => {
+            onChange={v => {
                 api.storage.set({
                     name: v,
                 })
             }}
         >
+            <TableRadioRow label="Don't show names" value={false} />
             <TableRadioRow
-                label="Always show usernames"
+                label="Prefer usernames"
                 value={DataSource.Username}
             />
             <TableRadioRow
-                label="Show display names"
+                label="Prefer display names"
                 value={DataSource.Global}
             />
-            <TableRadioRow
-                label="Show nicknames"
-                subLabel="Use nicknames, if set."
-                value={DataSource.Guild}
-            />
+            <TableRadioRow label="Prefer nicknames" value={DataSource.Guild} />
         </TableRadioGroup>
     )
 }
