@@ -6,17 +6,18 @@ import {
     withName,
     withProps,
 } from '@revenge-mod/modules/finders/filters'
-import { after } from '@revenge-mod/patcher'
+import { after, instead } from '@revenge-mod/patcher'
 import { registerPlugin } from '@revenge-mod/plugins/_'
 import { PluginFlags } from '@revenge-mod/plugins/constants'
 import { isProxy } from '@revenge-mod/utils/proxy'
 import { findInReactFiber } from '@revenge-mod/utils/react'
-import { Image, Pressable, StyleSheet, View } from 'react-native'
+import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native'
+import { SettingsComponent } from './settings'
 import type { DiscordModules } from '@revenge-mod/discord/types'
 import type { Storage } from '@revenge-mod/storage'
 import type { ComponentProps, FC, ReactElement, ReactNode } from 'react'
 
-enum DataSource {
+export enum DataSource {
     Global,
     Guild,
     /**
@@ -25,13 +26,13 @@ enum DataSource {
     Username,
 }
 
-const ChannelListAppearance = {
+export const ChannelListAppearance = {
     Ellipsis: 1,
     Avatars: 2,
     IncludeMuted: 4,
 } as const
 
-interface Settings {
+export interface Settings {
     avatar: DataSource | false
     name: DataSource
     channel: {
@@ -70,12 +71,33 @@ registerPlugin<{
                     },
                     { returnNamespace: true },
                 ),
+                // getModules(
+                //     withName<FC>('ChannelInfo'),
+                //     ChannelInfoModule => {
+                //         cleanup(
+                //             patchChannelInfo(
+                //                 ChannelInfoModule as { default: FC },
+                //                 storage,
+                //             ),
+                //         )
+                //     },
+                //     { returnNamespace: true },
+                // ),
+                // getModules(
+                //     withProps<{ ThreadChannel: ThreadChannelComponent }>(
+                //         'ThreadChannel',
+                //     ),
+                //     ThreadChannelModule => {
+                //         cleanup(
+                //             patchThreadChannel(ThreadChannelModule, storage),
+                //         )
+                //     },
+                // ),
             )
         },
         stop({ plugin }) {
             // We could force a re-render, but you aren't going to be constantly enabling and disabling this plugin anyways.
-            if (plugin.flags & PluginFlags.EnabledLate)
-                plugin.flags |= PluginFlags.ReloadRequired
+            plugin.flags |= PluginFlags.ReloadRequired
         },
         storage: {
             default: {
@@ -90,6 +112,7 @@ registerPlugin<{
             },
             load: true,
         },
+        SettingsComponent,
     },
     PluginFlags.Enabled,
     0,
@@ -107,6 +130,30 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
 })
+
+function patchChannelInfo(
+    ChannelInfoModule: { default: FC },
+    storage: Storage<Settings>,
+) {
+    return instead(ChannelInfoModule, 'default', function (args, orig) {
+        // console.log(args)
+        const tree = orig.apply(this, args)
+        // console.log(tree)
+        return tree
+    })
+}
+
+function patchThreadChannel(
+    module: {
+        ThreadChannel: ThreadChannelComponent
+    },
+    storage: Storage<Settings>,
+) {
+    return after(module, 'ThreadChannel', tree => {
+        // console.log(tree)
+        return tree
+    })
+}
 
 function patchTypingIndicator(
     TypingIndicatorModule: { default: FC },
@@ -234,6 +281,7 @@ function patchTypingView(
     }
 
     const children = viewNode.props.children as ReactElement[]
+    // If it is a Text node, we can assume the children are the typing items.
     const maybeTextNode = children[1] as
         | ReactElement<{
               children?: ReactNode[]
@@ -241,20 +289,17 @@ function patchTypingView(
         | undefined
 
     children[1] = (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             {Array.isArray(children) && maybeTextNode?.type === Design.Text
                 ? renderTypingItems(maybeTextNode.props.children as ReactNode[])
                 : children}
-        </View>
+        </ScrollView>
     )
 
     return tree
 }
 
 function openUserProfile(uid: string, channelId?: string) {
-    const [, _asyncToGeneratorId] = lookupModule(withName('_asyncToGenerator'))
-    const [, asyncRequireId] = lookupModule(withName('asyncRequire'))
-
     // modules/user_profile/native/showUserProfileActionSheet.tsx
     const [showUserProfileActionSheet] = lookupModule(
         withName<
@@ -265,11 +310,11 @@ function openUserProfile(uid: string, channelId?: string) {
             }) => void
         >('showUserProfileActionSheet').and(
             withDependencies([
-                _asyncToGeneratorId,
+                withName('_asyncToGenerator'),
                 null,
                 null,
                 withProps('users'),
-                asyncRequireId,
+                withName('asyncRequire'),
                 null,
                 null,
                 null,
@@ -283,6 +328,37 @@ function openUserProfile(uid: string, channelId?: string) {
         userId: uid,
         channelId,
     })
+}
+
+function getName(user: BasicUser, guildId?: string, source?: DataSource) {
+    const GuildMemberStore =
+        Stores.GuildMemberStore as DiscordModules.Flux.Store<{
+            getNick(guildId: string, userId: string): string | null
+        }>
+
+    const RelationshipStore =
+        Stores.RelationshipStore as DiscordModules.Flux.Store<{
+            getNickname(userId: string): string | null
+        }>
+
+    switch (source) {
+        case DataSource.Username:
+            return user.username
+
+        // biome-ignore lint/suspicious/noFallthroughSwitchClause: Intentional fallback
+        case DataSource.Guild: {
+            const nick = GuildMemberStore.getNick(guildId!, user.id)
+            if (nick) return nick
+        }
+
+        case DataSource.Global: {
+            return (
+                RelationshipStore.getNickname(user.id) ||
+                user.globalName ||
+                user.username
+            )
+        }
+    }
 }
 
 interface RenderTypingIndicatorProps {
@@ -321,33 +397,6 @@ interface BasicUser {
     getAvatarURL: (guildId?: string, size?: number) => string
 }
 
-function getName(user: BasicUser, guildId?: string, source?: DataSource) {
-    const GuildMemberStore =
-        Stores.GuildMemberStore as DiscordModules.Flux.Store<{
-            getNick(guildId: string, userId: string): string | null
-        }>
-
-    const RelationshipStore =
-        Stores.RelationshipStore as DiscordModules.Flux.Store<{
-            getNickname(userId: string): string | null
-        }>
-
-    switch (source) {
-        case DataSource.Username:
-            return user.username
-
-        // biome-ignore lint/suspicious/noFallthroughSwitchClause: Intentional fallback
-        case DataSource.Guild: {
-            const nick = GuildMemberStore.getNick(guildId!, user.id)
-            if (nick) return nick
-        }
-
-        case DataSource.Global: {
-            return (
-                RelationshipStore.getNickname(user.id) ||
-                user.globalName ||
-                user.username
-            )
-        }
-    }
-}
+type ThreadChannelComponent = FC<{
+    channel: BasicChannel
+}>
