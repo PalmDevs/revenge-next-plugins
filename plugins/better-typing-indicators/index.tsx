@@ -9,6 +9,7 @@ import {
 import { after } from '@revenge-mod/patcher'
 import { registerPlugin } from '@revenge-mod/plugins/_'
 import { PluginFlags } from '@revenge-mod/plugins/constants'
+import { isProxy } from '@revenge-mod/utils/proxy'
 import { findInReactFiber } from '@revenge-mod/utils/react'
 import { Image, Pressable, StyleSheet, View } from 'react-native'
 import type { DiscordModules } from '@revenge-mod/discord/types'
@@ -114,24 +115,26 @@ function patchTypingIndicator(
     return after(TypingIndicatorModule, 'default', result => {
         const tree = result as ReactElement<TypingIndicatorTreeProps>
 
-        after(tree.props, 'renderItem', result => {
-            const renderItemTree = result as ReactElement<
-                RenderTypingIndicatorProps,
-                FC<RenderTypingIndicatorProps>
-            >
+        if (!isProxy(tree.props.renderItem))
+            after(tree.props, 'renderItem', result => {
+                const renderItemTree = result as ReactElement<
+                    RenderTypingIndicatorProps,
+                    FC<RenderTypingIndicatorProps>
+                >
 
-            if (renderItemTree.props.typingUserIds.length) {
-                after(renderItemTree, 'type', result =>
-                    patchTypingView(
-                        result as ReactElement,
-                        renderItemTree.props,
-                        storage,
-                    ),
-                )
-            }
+                if (renderItemTree.props.typingUserIds.length) {
+                    if (!isProxy(renderItemTree.type))
+                        after(renderItemTree, 'type', result =>
+                            patchTypingView(
+                                result as ReactElement,
+                                renderItemTree.props,
+                                storage,
+                            ),
+                        )
+                }
 
-            return renderItemTree
-        })
+                return renderItemTree
+            })
 
         return tree
     })
@@ -187,52 +190,61 @@ function patchTypingView(
         )
     }
 
-    let userIndex = 0
+    function renderTypingItems(children: ReactNode[]) {
+        let userIndex = 0
 
-    viewNode.props.children[1] = (
+        return children.map(node_ => {
+            const node = node_ as ReactElement<{
+                children?: ReactNode
+            }>
+
+            if (typeof node !== 'object') {
+                return <StyledText>{node}</StyledText>
+            }
+
+            const uid = typingUserIds[userIndex]
+            if (!uid) return <StyledText key={uid}>{node}</StyledText>
+
+            userIndex++
+
+            const user = UserStore.getUser(uid)
+            const uri = user.getAvatarURL(
+                storage.cache!.avatar === DataSource.Guild
+                    ? guildId
+                    : undefined,
+                16,
+            )
+
+            node.props.children = getName(user, guildId, storage.cache!.name)
+
+            return (
+                <Pressable
+                    key={uid}
+                    onPress={() => {
+                        openUserProfile(uid, channelId)
+                    }}
+                >
+                    <View style={styles.container}>
+                        <Image source={{ uri }} style={styles.avatar} />
+                        <StyledText>{node}</StyledText>
+                    </View>
+                </Pressable>
+            )
+        })
+    }
+
+    const children = viewNode.props.children as ReactElement[]
+    const maybeTextNode = children[1] as
+        | ReactElement<{
+              children?: ReactNode[]
+          }>
+        | undefined
+
+    children[1] = (
         <View style={styles.container}>
-            {textNode.props.children.map(node_ => {
-                const node = node_ as ReactElement<{
-                    children: ReactNode
-                }>
-
-                if (typeof node !== 'object') {
-                    return <StyledText>{node}</StyledText>
-                }
-
-                const uid = typingUserIds[userIndex]
-                if (!uid) return <StyledText key={uid}>{node}</StyledText>
-
-                userIndex++
-
-                const user = UserStore.getUser(uid)
-                const uri = user.getAvatarURL(
-                    storage.cache!.avatar === DataSource.Guild
-                        ? guildId
-                        : undefined,
-                    16,
-                )
-
-                node.props.children = getName(
-                    user,
-                    guildId,
-                    storage.cache!.name,
-                )
-
-                return (
-                    <Pressable
-                        key={uid}
-                        onPress={() => {
-                            openUserProfile(uid, channelId)
-                        }}
-                    >
-                        <View style={styles.container}>
-                            <Image source={{ uri }} style={styles.avatar} />
-                            <StyledText>{node}</StyledText>
-                        </View>
-                    </Pressable>
-                )
-            })}
+            {Array.isArray(children) && maybeTextNode?.type === Design.Text
+                ? renderTypingItems(maybeTextNode.props.children as ReactNode[])
+                : children}
         </View>
     )
 
