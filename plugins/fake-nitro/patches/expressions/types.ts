@@ -86,6 +86,7 @@ export interface BasicMessageData {
 export interface BasicChannel {
     guild_id?: string
     id: string
+    isPrivate(): boolean
 }
 
 export interface EmojiUtils {

@@ -3,6 +3,7 @@ import { getModules } from '@revenge-mod/modules/finders'
 import {
     createFilterGenerator,
     FilterFlag,
+    FilterScopes,
     withProps,
 } from '@revenge-mod/modules/finders/filters'
 import { instead } from '@revenge-mod/patcher'
@@ -13,11 +14,11 @@ import type { DiscordModules } from '@revenge-mod/discord/types'
 import type {
     Filter,
     FilterGenerator,
-    FilterScopes,
 } from '@revenge-mod/modules/finders/filters'
 import type { FC, MemoExoticComponent } from 'react'
 import type { FakeNitroPluginContext } from '../..'
 import type {
+    BasicChannel,
     BasicEmoji,
     BasicMessageData,
     BasicSticker,
@@ -149,12 +150,12 @@ function patchSendAndEditMessages({
             MessageActionCreators => {
                 const PermissionStore =
                     Stores.PermissionStore as DiscordModules.Flux.Store<{
-                        can: (perm: bigint, channel: any) => boolean
+                        can: (perm: bigint, channel: BasicChannel) => boolean
                     }>
 
                 const ChannelStore =
                     Stores.ChannelStore as DiscordModules.Flux.Store<{
-                        getChannel: (id: string) => any
+                        getChannel: (id: string) => BasicChannel | undefined
                     }>
 
                 const StickersStore =
@@ -168,6 +169,11 @@ function patchSendAndEditMessages({
                 ) {
                     const settings = await storage.get()
                     const channel = ChannelStore.getChannel(channelId)
+
+                    const canEmbedLinks =
+                        channel &&
+                        (channel.isPrivate() ||
+                            PermissionStore.can(EMBED_LINKS, channel))
 
                     let bypassed = false
 
@@ -232,7 +238,7 @@ function patchSendAndEditMessages({
                     if (
                         bypassed &&
                         settings.expressions.checkPermission &&
-                        !PermissionStore.can(EMBED_LINKS, channel) &&
+                        !canEmbedLinks &&
                         !(await promptNoPermissionsContinueAnyway())
                     ) {
                         throw new Error('Fake Nitro: Canceled by user')
@@ -270,19 +276,29 @@ function patchSendAndEditMessages({
 
                             const [channelId, stickerIds, _, extra] = args
                             const channel = ChannelStore.getChannel(channelId)
+
+                            if (!channel) return
+
+                            const isPrivateChannel = channel.isPrivate()
+
+                            const canUseExternalStickers =
+                                canActuallyUse(
+                                    ProductCatalog.STICKERS_EVERYWHERE,
+                                ) &&
+                                (isPrivateChannel ||
+                                    PermissionStore.can(
+                                        USE_EXTERNAL_STICKERS,
+                                        channel,
+                                    ))
+
+                            const canEmbedLinks =
+                                isPrivateChannel ||
+                                PermissionStore.can(EMBED_LINKS, channel)
+
                             const stickers = stickerIds
                                 .map(id => {
                                     const sticker =
                                         StickersStore.getStickerById(id)
-
-                                    const canUseExternalStickers =
-                                        canActuallyUse(
-                                            ProductCatalog.STICKERS_EVERYWHERE,
-                                        ) &&
-                                        PermissionStore.can(
-                                            USE_EXTERNAL_STICKERS,
-                                            channel,
-                                        )
 
                                     if (
                                         !sticker ||
@@ -290,7 +306,7 @@ function patchSendAndEditMessages({
                                         (sticker.available &&
                                             (canUseExternalStickers ||
                                                 sticker.guild_id ===
-                                                    channel.guild_id))
+                                                    channel?.guild_id))
                                     )
                                         return
 
@@ -309,10 +325,7 @@ function patchSendAndEditMessages({
 
                             if (stickers.length) {
                                 if (
-                                    !PermissionStore.can(
-                                        EMBED_LINKS,
-                                        channel,
-                                    ) &&
+                                    !canEmbedLinks &&
                                     settings.expressions.checkPermission &&
                                     !(await promptNoPermissionsContinueAnyway())
                                 ) {
@@ -396,4 +409,5 @@ const withMemoizedNamedFunctionComponent = createFilterGenerator(
     ([name], _, exports) => exports.type?.name === name,
     ([name]) => `byMemoizedNamedFunctionComponent(${name})`,
     FilterFlag.RequiresExports,
+    FilterScopes.Initialized,
 ) as WithMemoizedNamedFunctionComponent
