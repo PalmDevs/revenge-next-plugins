@@ -68,8 +68,8 @@ registerPlugin<ApiOptions>(
                                 case this.CLIENT_THEMES:
                                 case this.STICKERS_EVERYWHERE:
                                 case this.APP_ICONS:
-                                // case this.EMOJIS_EVERYWHERE:
-                                case this.ANIMATED_EMOJIS:
+                                    // case this.EMOJIS_EVERYWHERE:
+                                    // case this.ANIMATED_EMOJIS:
                                     return true
                             }
 
