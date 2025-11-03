@@ -13,6 +13,7 @@ import { isProxy } from '@revenge-mod/utils/proxy'
 import { findInReactFiber } from '@revenge-mod/utils/react'
 import { Image, Pressable, StyleSheet, View } from 'react-native'
 import { SettingsComponent } from './settings'
+import type { AssetId } from '@revenge-mod/assets/types'
 import type { DiscordModules } from '@revenge-mod/discord/types'
 import type { Storage } from '@revenge-mod/storage'
 import type { ComponentProps, FC, ReactElement, ReactNode } from 'react'
@@ -258,7 +259,7 @@ function patchTypingView(
             userIndex++
 
             const user = UserStore.getUser(uid)
-            const uri = user.getAvatarURL(
+            const avatar = user.getAvatarURL(
                 storage.cache!.avatar === DataSource.Guild
                     ? guildId
                     : undefined,
@@ -275,8 +276,19 @@ function patchTypingView(
                     }}
                 >
                     <View style={styles.container}>
-                        <Image source={{ uri }} style={styles.avatar} />
-                        {storage.cache!.name && <StyledText>{node}</StyledText>}
+                        {Boolean(storage.cache!.avatar) && (
+                            <Image
+                                source={
+                                    typeof avatar === 'string'
+                                        ? { uri: avatar }
+                                        : avatar
+                                }
+                                style={styles.avatar}
+                            />
+                        )}
+                        {Boolean(storage.cache!.name) && (
+                            <StyledText>{node}</StyledText>
+                        )}
                     </View>
                 </Pressable>
             )
@@ -287,14 +299,16 @@ function patchTypingView(
     // If it is a Text node, we can assume the children are the typing items.
     const maybeTextNode = children[1] as
         | ReactElement<{
-              children?: ReactNode[]
+              children?: ReactNode
           }>
         | undefined
 
     children[1] = (
         <View style={[styles.container, styles.wrap]}>
-            {Array.isArray(children) && maybeTextNode?.type === Design.Text
-                ? renderTypingItems(maybeTextNode.props.children as ReactNode[])
+            {Array.isArray(children) &&
+            maybeTextNode?.type === Design.Text &&
+            Array.isArray(maybeTextNode.props.children)
+                ? renderTypingItems(maybeTextNode.props.children)
                 : children}
         </View>
     )
@@ -397,7 +411,7 @@ interface BasicUser {
     id: string
     username: string
     globalName: string | null
-    getAvatarURL: (guildId?: string, size?: number) => string
+    getAvatarURL: (guildId?: string, size?: number) => string | AssetId
 }
 
 type ThreadChannelComponent = FC<{
