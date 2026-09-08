@@ -1,0 +1,20 @@
+{
+	"format": 1,
+	"id": "palmdevs.hide-blocked-messages",
+	"name": "Hide Blocked Messages",
+	"description": "Hides messages from blocked or ignored users, and optionally removes replies to them.",
+	"author": "Palm",
+	"icon": "DenyIcon",
+	"version": "1.0.0",
+	"dependencies": {
+		"revenge.api": {
+			"version": ">=1 <2"
+		},
+		"discord": {
+			"version": "*"
+		}
+	},
+	"dist": {
+		"script": "index.js"
+	}
+}

@@ -1,0 +1,28 @@
+{
+	"format": 1,
+	"id": "revenge.developer-kit",
+	"name": "Developer Kit",
+	"description": "Tools assisting Revenge developers.",
+	"author": "Revenge",
+	"icon": "WrenchIcon",
+	"version": "1.1.0",
+	"dependencies": {
+		"revenge.api": {
+			"version": ">=1 <2"
+		},
+		"discord": {
+			"version": "*"
+		},
+		"revenge.settings": {
+			"version": "*",
+			"optional": true
+		},
+		"revenge.api.hidden": {
+			"version": "*",
+			"optional": true
+		}
+	},
+	"dist": {
+		"script": "build/js/index.js"
+	}
+}

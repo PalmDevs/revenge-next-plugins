@@ -1,0 +1,19 @@
+{
+	"format": 1,
+	"id": "palmdevs.freeze-test",
+	"name": "Freeze Test",
+	"description": "This freezes the app next startup! Don't use unless you know what you're doing.",
+	"author": "Palm",
+	"version": "1.0.0",
+	"dependencies": {
+		"revenge.api": {
+			"version": ">=1 <2"
+		},
+		"discord": {
+			"version": "*"
+		}
+	},
+	"dist": {
+		"script": "index.js"
+	}
+}
