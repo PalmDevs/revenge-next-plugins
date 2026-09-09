@@ -5,7 +5,7 @@
 	"description": "Hides messages from blocked or ignored users, and optionally removes replies to them.",
 	"author": "Palm",
 	"icon": "DenyIcon",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"dependencies": {
 		"revenge.api": {
 			"version": ">=1 <2"

@@ -100,7 +100,7 @@ export default plugin<{ jsonStorage: Settings }>({
 							const referenceData = MessageStore.getMessage(
 								channelId,
 								id,
-							)!.messageReference
+							)?.messageReference
 
 							if (!referenceData) break
 
