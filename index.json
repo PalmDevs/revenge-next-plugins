@@ -13,7 +13,7 @@
       },
       "versions": {
         "1.0.2": {
-          "url": "https://palmdevs.github.io/revenge-next-plugins/pool/palmdevs.better-chat-buttons@1.0.2.zip",
+          "url": "https://raw.githubusercontent.com/PalmDevs/revenge-next-plugins/refs/heads/gh-pages/pool/palmdevs.better-chat-buttons@1.0.2.zip",
           "sha256": "ebe903b17f7ee2d86d418b851ce95186de33017529ec4f057d9d0a8d54ca408d",
           "size": 1866,
           "dependencies": {
@@ -37,7 +37,7 @@
       },
       "versions": {
         "1.0.1": {
-          "url": "https://palmdevs.github.io/revenge-next-plugins/pool/palmdevs.fake-nitro@1.0.1.zip",
+          "url": "https://raw.githubusercontent.com/PalmDevs/revenge-next-plugins/refs/heads/gh-pages/pool/palmdevs.fake-nitro@1.0.1.zip",
           "sha256": "28290ff06ba474e8bd81367b0d5076ac5bda39030fb64350eaf555b7be422932",
           "size": 4570,
           "dependencies": {
@@ -60,7 +60,7 @@
       },
       "versions": {
         "1.0.0": {
-          "url": "https://palmdevs.github.io/revenge-next-plugins/pool/palmdevs.freeze-test@1.0.0.zip",
+          "url": "https://raw.githubusercontent.com/PalmDevs/revenge-next-plugins/refs/heads/gh-pages/pool/palmdevs.freeze-test@1.0.0.zip",
           "sha256": "c19ba440579ff3f7f8da851ad6792af5457f40c746193cf93f215b0e2d301541",
           "size": 688,
           "dependencies": {
@@ -84,7 +84,7 @@
       },
       "versions": {
         "1.0.0": {
-          "url": "https://palmdevs.github.io/revenge-next-plugins/pool/palmdevs.hide-blocked-messages@1.0.0.zip",
+          "url": "https://raw.githubusercontent.com/PalmDevs/revenge-next-plugins/refs/heads/gh-pages/pool/palmdevs.hide-blocked-messages@1.0.0.zip",
           "sha256": "f704cbecef188d6cb4737382cae4966bdc9c3683baa12fb5d896f95e18e6a30a",
           "size": 1318,
           "dependencies": {
@@ -108,7 +108,7 @@
       },
       "versions": {
         "1.0.0": {
-          "url": "https://palmdevs.github.io/revenge-next-plugins/pool/palmdevs.silent-typing@1.0.0.zip",
+          "url": "https://raw.githubusercontent.com/PalmDevs/revenge-next-plugins/refs/heads/gh-pages/pool/palmdevs.silent-typing@1.0.0.zip",
           "sha256": "7f0812f313892ee217d719dfad903da56c6b4faab35706e03d5ab347ed91f0e6",
           "size": 619,
           "dependencies": {
@@ -132,7 +132,7 @@
       },
       "versions": {
         "1.0.0": {
-          "url": "https://palmdevs.github.io/revenge-next-plugins/pool/palmdevs.tenor-gif-search@1.0.0.zip",
+          "url": "https://raw.githubusercontent.com/PalmDevs/revenge-next-plugins/refs/heads/gh-pages/pool/palmdevs.tenor-gif-search@1.0.0.zip",
           "sha256": "7099cbd3fa317797d0c3ba41b214079f95cffaedc657ab224a8d866d8fd0480d",
           "size": 2175,
           "dependencies": {
@@ -156,7 +156,7 @@
       },
       "versions": {
         "1.1.0": {
-          "url": "https://palmdevs.github.io/revenge-next-plugins/pool/revenge.developer-kit@1.1.0.zip",
+          "url": "https://raw.githubusercontent.com/PalmDevs/revenge-next-plugins/refs/heads/gh-pages/pool/revenge.developer-kit@1.1.0.zip",
           "sha256": "ef8dc0bfe7e739ff967b1079db7f67e9d619c740dcf63fbc4ea5bc0eada2615b",
           "size": 21654,
           "dependencies": {
