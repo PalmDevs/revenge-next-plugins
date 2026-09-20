@@ -1,0 +1,20 @@
+{
+	"format": 1,
+	"id": "palmdevs.link-alert-copy",
+	"name": "Link Alert Copy",
+	"description": "Shows a Copy Link button in the \"Leaving Discord\" alert.",
+	"author": "Palm",
+	"icon": "LinkIcon",
+	"version": "1.0.0",
+	"dependencies": {
+		"revenge.api": {
+			"version": ">=1 <2"
+		},
+		"discord": {
+			"version": "*"
+		}
+	},
+	"dist": {
+		"script": "index.js"
+	}
+}
