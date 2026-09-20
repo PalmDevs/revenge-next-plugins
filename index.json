@@ -111,6 +111,30 @@
         }
       }
     },
+    "palmdevs.link-alert-copy": {
+      "name": "Link Alert Copy",
+      "description": "Shows a Copy Link button in the \"Leaving Discord\" alert.",
+      "author": "Palm",
+      "icon": "LinkIcon",
+      "channels": {
+        "latest": "1.0.0"
+      },
+      "versions": {
+        "1.0.0": {
+          "url": "https://rvp.palmdevs.me/pool/palmdevs.link-alert-copy@1.0.0.zip",
+          "sha256": "d17189e817be61961ef3bd4cd21d29e0a7c11cfce6ebc38fedcf4974dd118698",
+          "size": 832,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        }
+      }
+    },
     "palmdevs.silent-typing": {
       "name": "Silent Typing",
       "description": "Disables the typing indicator when you type.",
