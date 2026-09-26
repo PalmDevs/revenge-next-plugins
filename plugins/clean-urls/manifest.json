@@ -1,10 +1,10 @@
 {
 	"format": 1,
-	"id": "palmdevs.tenor-gif-search",
-	"name": "Tenor GIF Search",
-	"description": "Brings back Tenor GIF search to Discord.",
-	"author": "Livie, Palm",
-	"icon": "GifIcon",
+	"id": "palmdevs.clean-urls",
+	"name": "Clean URLs",
+	"description": "Removes tracking garbage from links sent and received.",
+	"author": "nexpid",
+	"icon": "LinkIcon",
 	"version": "1.0.0",
 	"dependencies": {
 		"revenge.api": {
