@@ -64,6 +64,30 @@
         }
       }
     },
+    "palmdevs.flashbang": {
+      "name": "Flashbang",
+      "description": "🪃💥⬜",
+      "author": "Palm",
+      "icon": "EyeSlashIcon",
+      "channels": {
+        "latest": "1.0.1"
+      },
+      "versions": {
+        "1.0.1": {
+          "url": "https://rvp.palmdevs.me/pool/palmdevs.flashbang@1.0.1.zip",
+          "sha256": "5dc4fea6c97f8922ac9c9caa1046e2ce7e24446b3c5beb358033aec46887b744",
+          "size": 3146,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        }
+      }
+    },
     "palmdevs.freeze-test": {
       "name": "Freeze Test",
       "description": "This freezes the app next startup! Don't use unless you know what you're doing.",
