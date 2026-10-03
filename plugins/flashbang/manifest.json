@@ -1,0 +1,20 @@
+{
+	"format": 1,
+	"id": "palmdevs.flashbang",
+	"name": "Flashbang",
+	"description": "🪃💥⬜",
+	"author": "Palm",
+	"icon": "EyeSlashIcon",
+	"version": "1.0.1",
+	"dependencies": {
+		"revenge.api": {
+			"version": ">=1 <2"
+		},
+		"discord": {
+			"version": "*"
+		}
+	},
+	"dist": {
+		"script": "index.js"
+	}
+}
