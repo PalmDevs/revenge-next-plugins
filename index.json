@@ -189,13 +189,34 @@
       "author": "Revenge",
       "icon": "WrenchIcon",
       "channels": {
-        "latest": "1.1.0"
+        "latest": "1.1.1"
       },
       "versions": {
         "1.1.0": {
           "url": "https://rvp.palmdevs.me/pool/revenge.developer-kit@1.1.0.zip",
           "sha256": "ef8dc0bfe7e739ff967b1079db7f67e9d619c740dcf63fbc4ea5bc0eada2615b",
           "size": 21654,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            },
+            "revenge.settings": {
+              "version": "*",
+              "optional": true
+            },
+            "revenge.api.hidden": {
+              "version": "*",
+              "optional": true
+            }
+          }
+        },
+        "1.1.1": {
+          "url": "https://rvp.palmdevs.me/pool/revenge.developer-kit@1.1.1.zip",
+          "sha256": "39841430e1f3a47a15c8f39a794ec35827c90f317c67819f0db280b117b362b3",
+          "size": 21679,
           "dependencies": {
             "revenge.api": {
               "version": ">=1 <2"
