@@ -1,20 +1,13 @@
 import { Stores } from '@revenge-mod/discord/flux'
+import { getModuleWithImportedPath } from '@revenge-mod/discord/utils/modules/finders'
 import { getModules } from '@revenge-mod/modules/finders'
-import {
-	createFilterGenerator,
-	FilterScopes,
-	withProps,
-} from '@revenge-mod/modules/finders/filters'
+import { withProps } from '@revenge-mod/modules/finders/filters'
 import { instead } from '@revenge-mod/patcher'
 import { canActuallyUse, ProductCatalog } from '../..'
 import { promptNoPermissionsContinueAnyway } from '../../components/NoPermissionsAlert'
 import { promptUnsupportedStickerAlert as showUnsupportedStickerAlert } from '../../components/UnsupportedStickerAlert'
 import type { DiscordModules } from '@revenge-mod/discord/types'
-import type {
-	Filter,
-	FilterGenerator,
-} from '@revenge-mod/modules/finders/filters'
-import type { FC, MemoExoticComponent } from 'react'
+import type { MemoExoticComponent } from 'react'
 import type { FakeNitroPluginContext } from '../..'
 import type {
 	BasicChannel,
@@ -89,15 +82,15 @@ function patchEmojiPicker({
 					},
 				),
 				// modules/emoji_picker/native/components/EmojiPickerList.tsx
-				getModules(
-					withMemoizedNamedFunctionComponent<EmojiPickerList>(
-						'EmojiPickerList',
-					),
-					EmojiPickerListModule => {
+				getModuleWithImportedPath(
+					'modules/emoji_picker/native/components/EmojiPickerList.tsx',
+					(EmojiPickerListModule: {
+						default: MemoExoticComponent<EmojiPickerList>
+					}) => {
 						const emptySet = new Set<string>()
 
 						cleanup(
-							before(EmojiPickerListModule, 'type', args => {
+							before(EmojiPickerListModule.default, 'type', args => {
 								const [props] = args
 
 								const isPickingForChat = ALLOWED_INTENTIONS.has(
@@ -372,19 +365,3 @@ function linkWithConfig(
 			return link
 	}
 }
-
-type WithMemoizedNamedFunctionComponent = FilterGenerator<
-	<T extends FC<any>>(
-		name: string,
-	) => Filter<{
-		Result: MemoExoticComponent<T>
-		RequiresExports: true
-		Scopes: [typeof FilterScopes.Initialized]
-	}>
->
-
-const withMemoizedNamedFunctionComponent = createFilterGenerator(
-	([name], _, exports) => exports?.type?.name === name,
-	([name]) => `byMemoizedNamedFunctionComponent(${name})`,
-	FilterScopes.Initialized,
-) as WithMemoizedNamedFunctionComponent
