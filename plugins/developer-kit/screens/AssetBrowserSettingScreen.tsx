@@ -54,6 +54,7 @@ export default function AssetBrowserSettingScreen() {
 				data={filteredAssets}
 				contentContainerStyle={styles.listContainer}
 				fadingEdgeLength={32}
+				maintainVisibleContentPosition={{ disabled: true }}
 				keyExtractor={(asset: Asset) =>
 					asset.id ? asset.id.toString() : `${asset.name}.${asset.type}`
 				}
