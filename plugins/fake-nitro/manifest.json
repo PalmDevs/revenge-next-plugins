@@ -5,7 +5,7 @@
 	"description": "Use Nitro features without Nitro.",
 	"author": "Palm, nexpid, aeongdesu, Dziurwa",
 	"icon": "NitroWheelIcon",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"dependencies": {
 		"revenge.api": {
 			"version": ">=1 <2"

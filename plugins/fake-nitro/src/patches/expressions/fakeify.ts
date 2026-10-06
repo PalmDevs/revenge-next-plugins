@@ -7,7 +7,7 @@ import { canActuallyUse, ProductCatalog } from '../..'
 import { promptNoPermissionsContinueAnyway } from '../../components/NoPermissionsAlert'
 import { promptUnsupportedStickerAlert as showUnsupportedStickerAlert } from '../../components/UnsupportedStickerAlert'
 import type { DiscordModules } from '@revenge-mod/discord/types'
-import type { MemoExoticComponent } from 'react'
+import type { FC, MemoExoticComponent } from 'react'
 import type { FakeNitroPluginContext } from '../..'
 import type {
 	BasicChannel,
@@ -105,6 +105,25 @@ function patchEmojiPicker({
 										}
 									}
 								}
+
+								return args
+							}),
+						)
+					},
+				),
+				getModuleWithImportedPath<{
+					default: FC<{ stickers: BasicSticker[] }>
+				}>(
+					'modules/stickers/native/StickerPickerListRow.tsx',
+					StickerPickerListRowModule => {
+						cleanup(
+							before(StickerPickerListRowModule, 'default', args => {
+								const [props] = args
+
+								props.stickers = props.stickers.map(sticker => ({
+									...sticker,
+									available: true,
+								}))
 
 								return args
 							}),
