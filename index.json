@@ -33,7 +33,7 @@
       "author": "Palm, nexpid, aeongdesu, Dziurwa",
       "icon": "NitroWheelIcon",
       "channels": {
-        "latest": "1.0.2"
+        "latest": "1.0.3"
       },
       "versions": {
         "1.0.1": {
@@ -53,6 +53,19 @@
           "url": "https://rvp.palmdevs.me/pool/palmdevs.fake-nitro@1.0.2.zip",
           "sha256": "931f164cda0948174d88d5213123adeacd762066490211ffd4a3aa6583aa4984",
           "size": 4506,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        },
+        "1.0.3": {
+          "url": "https://rvp.palmdevs.me/pool/palmdevs.fake-nitro@1.0.3.zip",
+          "sha256": "495df74f4e8d682ce4c52f27b1877868bc593fc1f9403eb1f05e301a55a62d03",
+          "size": 4556,
           "dependencies": {
             "revenge.api": {
               "version": ">=1 <2"
