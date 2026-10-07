@@ -27,6 +27,30 @@
         }
       }
     },
+    "palmdevs.better-typing-indicators": {
+      "name": "Better Typing Indicators",
+      "description": "Typing indicator in channels, with user avatars, tap to open profile, and more.",
+      "author": "Palm",
+      "icon": "SuperReactionIcon",
+      "channels": {
+        "latest": "1.0.0"
+      },
+      "versions": {
+        "1.0.0": {
+          "url": "https://rvp.palmdevs.me/pool/palmdevs.better-typing-indicators@1.0.0.zip",
+          "sha256": "ac000ae41da79e8d6683124a6049257a9021b3007f348984c217728ded6491bd",
+          "size": 3873,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        }
+      }
+    },
     "palmdevs.fake-nitro": {
       "name": "Fake Nitro",
       "description": "Use Nitro features without Nitro.",
