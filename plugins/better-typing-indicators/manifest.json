@@ -1,0 +1,20 @@
+{
+	"format": 1,
+	"id": "palmdevs.better-typing-indicators",
+	"name": "Better Typing Indicators",
+	"description": "Typing indicator in channels, with user avatars, tap to open profile, and more.",
+	"author": "Palm",
+	"icon": "SuperReactionIcon",
+	"version": "1.0.0",
+	"dependencies": {
+		"revenge.api": {
+			"version": ">=1 <2"
+		},
+		"discord": {
+			"version": "*"
+		}
+	},
+	"dist": {
+		"script": "index.js"
+	}
+}
