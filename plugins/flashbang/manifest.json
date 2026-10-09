@@ -3,15 +3,15 @@
 	"id": "palmdevs.flashbang",
 	"name": "Flashbang",
 	"description": "🪃💥⬜",
-	"author": "Palm",
+	"author": "Palm <629368283354628116> (https://palmdevs.me \"Website\") (https://github.com/PalmDevs \"GitHub\")",
 	"icon": "EyeSlashIcon",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"dependencies": {
 		"revenge.api": {
 			"version": ">=1 <2"
 		},
 		"discord": {
-			"version": "*"
+			"version": "<=350.1"
 		}
 	},
 	"dist": {

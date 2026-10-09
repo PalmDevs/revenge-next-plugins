@@ -3,7 +3,7 @@
 	"id": "palmdevs.hide-blocked-messages",
 	"name": "Hide Blocked Messages",
 	"description": "Hides messages from blocked or ignored users, and optionally removes replies to them.",
-	"author": "Palm",
+	"author": "Palm <629368283354628116> (https://palmdevs.me \"Website\") (https://github.com/PalmDevs \"GitHub\")",
 	"icon": "DenyIcon",
 	"version": "1.0.1",
 	"dependencies": {

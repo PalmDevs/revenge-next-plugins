@@ -3,7 +3,7 @@
 	"id": "palmdevs.silent-typing",
 	"name": "Silent Typing",
 	"description": "Disables the typing indicator when you type.",
-	"author": "Palm",
+	"author": "Palm <629368283354628116> (https://palmdevs.me \"Website\") (https://github.com/PalmDevs \"GitHub\")",
 	"icon": "KeyboardIcon",
 	"version": "1.0.0",
 	"dependencies": {

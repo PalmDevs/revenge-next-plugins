@@ -3,7 +3,7 @@
 	"id": "palmdevs.block-youtube-ads",
 	"name": "Block YouTube Ads",
 	"description": "Blocks ads in YouTube videos played inside the app, using AdGuard's script.",
-	"author": "Palm",
+	"author": "Palm <629368283354628116> (https://palmdevs.me \"Website\") (https://github.com/PalmDevs \"GitHub\")",
 	"icon": "YoutubeNeutralIcon",
 	"version": "1.0.0",
 	"dependencies": {

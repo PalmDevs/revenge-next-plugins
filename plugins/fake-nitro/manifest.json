@@ -3,7 +3,12 @@
 	"id": "palmdevs.fake-nitro",
 	"name": "Fake Nitro",
 	"description": "Use Nitro features without Nitro.",
-	"author": "Palm, nexpid, aeongdesu, Dziurwa",
+	"author": "Palm <629368283354628116> (https://palmdevs.me \"Website\") (https://github.com/PalmDevs \"GitHub\")",
+	"contributors": [
+		"nexpid <853550207039832084> (https://github.com/nexpid \"GitHub\")",
+		"aeongdesu (https://github.com/aeongdesu \"GitHub\")",
+		"Dziurwa <1001086404203389018>"
+	],
 	"icon": "NitroWheelIcon",
 	"version": "1.0.3",
 	"dependencies": {

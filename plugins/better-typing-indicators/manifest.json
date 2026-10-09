@@ -3,7 +3,7 @@
 	"id": "palmdevs.better-typing-indicators",
 	"name": "Better Typing Indicators",
 	"description": "Typing indicator in channels, with user avatars, tap to open profile, and more.",
-	"author": "Palm",
+	"author": "Palm <629368283354628116> (https://palmdevs.me \"Website\") (https://github.com/PalmDevs \"GitHub\")",
 	"icon": "SuperReactionIcon",
 	"version": "1.0.0",
 	"dependencies": {

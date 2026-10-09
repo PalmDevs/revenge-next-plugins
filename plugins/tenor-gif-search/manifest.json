@@ -3,7 +3,8 @@
 	"id": "palmdevs.tenor-gif-search",
 	"name": "Tenor GIF Search",
 	"description": "Brings back Tenor GIF search to Discord.",
-	"author": "Livie, Palm",
+	"author": "Palm <629368283354628116> (https://palmdevs.me \"Website\") (https://github.com/PalmDevs \"GitHub\")",
+	"contributors": ["Livie <755950362342457384>"],
 	"icon": "GifIcon",
 	"version": "1.0.0",
 	"dependencies": {
