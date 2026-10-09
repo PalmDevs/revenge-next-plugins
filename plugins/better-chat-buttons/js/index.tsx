@@ -8,13 +8,7 @@ import type {
 	FilterGenerator,
 	FilterScopes,
 } from '@revenge-mod/modules/finders/filters'
-import type {
-	ForwardRefRenderFunction,
-	MemoExoticComponent,
-	NamedExoticComponent,
-	ReactElement,
-	RefObject,
-} from 'react'
+import type { FC, MemoExoticComponent, ReactElement, RefObject } from 'react'
 
 export interface Settings {
 	hide: {
@@ -55,16 +49,13 @@ export default plugin<{ jsonStorage: Settings }>({
 				reRenderActions?.()
 			}),
 			getModules(
-				withMemoizedNamedForwardRefExoticComponent<
-					SendButtonRef,
-					{
-						hasPendingAttachments: boolean
-						canSendVoiceMessage: boolean
-					}
-				>('ChatInputSendButton'),
+				withMemoizedNamedExoticComponent<{
+					hasPendingAttachments: boolean
+					canSendVoiceMessage: boolean
+				}>('ChatInputSendButton'),
 				ChatInputSendButton => {
 					cleanup(
-						after(ChatInputSendButton.type, 'render', tree => {
+						after(ChatInputSendButton, 'type', tree => {
 							const node = findInReactFiber(
 								tree as ReactElement,
 								(
@@ -105,23 +96,22 @@ export default plugin<{ jsonStorage: Settings }>({
 				},
 			),
 			getModules(
-				withMemoizedNamedForwardRefExoticComponent<
-					ActionsRef,
-					{
-						shouldShowGiftButton: boolean
-					}
-				>('ChatInputRightActions'),
+				withMemoizedNamedExoticComponent<{
+					shouldShowGiftButton: boolean
+					// When using DevTools, the ref is undefined
+					ref: RefObject<ActionsRef | null> | undefined
+				}>('ChatInputRightActions'),
 				ChatInputRightActions => {
 					cleanup(
-						before(ChatInputRightActions.type, 'render', args => {
+						before(ChatInputRightActions, 'type', args => {
 							const [props] = args
 
 							props.shouldShowGiftButton = !settings.hide.gift
 
 							return args
 						}),
-						before(ChatInputRightActions.type, 'render', args => {
-							const ref = args[1] as RefObject<ActionsRef | null> | undefined // When using DevTools, the ref is undefined
+						before(ChatInputRightActions, 'type', args => {
+							const ref = args[0].ref
 
 							if (ref) {
 								// Ref is only available after the first render
@@ -150,7 +140,7 @@ export default plugin<{ jsonStorage: Settings }>({
 					)
 
 					// No cleanup to prevent breaking rules of React hooks
-					before(ChatInputRightActions.type, 'render', args => {
+					before(ChatInputRightActions, 'type', args => {
 						reRenderActions = useReRender()
 						return args
 					})
@@ -166,31 +156,22 @@ export default plugin<{ jsonStorage: Settings }>({
 	SettingsComponent,
 })
 
-interface ForwardRefExoticComponent<T, P = object>
-	extends NamedExoticComponent<P> {
-	render: ForwardRefRenderFunction<T, P>
-}
-
-type ByMemoizedNamedForwardRefExoticComponent = FilterGenerator<
-	<T, P = object>(
+type WithMemoizedNamedExoticComponent = FilterGenerator<
+	<P = object>(
 		name: string,
 	) => Filter<{
-		Result: MemoExoticComponent<ForwardRefExoticComponent<T, P>>
+		Result: MemoExoticComponent<FC<P>>
 		Scopes: [typeof FilterScopes.Initialized]
 	}>
 >
 
-const withMemoizedNamedForwardRefExoticComponent = createFilterGenerator(
+const withMemoizedNamedExoticComponent = createFilterGenerator(
 	([name], _, exports) =>
-		exports?.type?.render?.length === 2 && exports.type.displayName === name,
-	([name]) => `memoizedNamedForwardRefExoticComponent(${name})`,
-) as ByMemoizedNamedForwardRefExoticComponent
+		exports?.type?.length === 1 && exports.type.displayName === name,
+	([name]) => `memoizedNamedExoticComponent(${name})`,
+) as WithMemoizedNamedExoticComponent
 
 interface ActionsRef {
 	onDismissActions(): void
 	onShowActions(): void
-}
-
-interface SendButtonRef {
-	setHasText(hasText: boolean): void
 }
