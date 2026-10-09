@@ -9,7 +9,7 @@
       "author": "Palm",
       "icon": "ChatCheckIcon",
       "channels": {
-        "latest": "1.0.2"
+        "latest": "1.0.3"
       },
       "versions": {
         "1.0.2": {
@@ -22,6 +22,19 @@
             },
             "discord": {
               "version": "*"
+            }
+          }
+        },
+        "1.0.3": {
+          "url": "https://rvp.palmdevs.me/pool/palmdevs.better-chat-buttons@1.0.3.zip",
+          "sha256": "d59f463f1c44d59cca597b9012e8a84c3247840a0ce99c37216a537e2dc39f13",
+          "size": 1859,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": ">=350.2"
             }
           }
         }
