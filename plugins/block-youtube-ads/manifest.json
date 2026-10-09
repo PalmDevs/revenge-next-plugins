@@ -1,0 +1,23 @@
+{
+	"format": 1,
+	"id": "palmdevs.block-youtube-ads",
+	"name": "Block YouTube Ads",
+	"description": "Blocks ads in YouTube videos played inside the app, using AdGuard's script.",
+	"author": "Palm",
+	"icon": "YoutubeNeutralIcon",
+	"version": "1.0.0",
+	"dependencies": {
+		"revenge.api": {
+			"version": ">=1 <2"
+		},
+		"discord": {
+			"version": "*"
+		}
+	},
+	"dist": {
+		"android": {
+			"path": "plugin.jar",
+			"class": "me.palmdevs.revenge.blockyoutubeads.BlockYouTubeAds"
+		}
+	}
+}
