@@ -141,10 +141,10 @@
     "palmdevs.flashbang": {
       "name": "Flashbang",
       "description": "🪃💥⬜",
-      "author": "Palm",
+      "author": "Palm <629368283354628116> (https://palmdevs.me \"Website\") (https://github.com/PalmDevs \"GitHub\")",
       "icon": "EyeSlashIcon",
       "channels": {
-        "latest": "1.0.1"
+        "latest": "1.0.2"
       },
       "versions": {
         "1.0.1": {
@@ -159,21 +159,47 @@
               "version": "*"
             }
           }
+        },
+        "1.0.2": {
+          "url": "https://rvp.palmdevs.me/pool/palmdevs.flashbang@1.0.2.zip",
+          "sha256": "2f9a376628655ed26d8dfc105a31e8e788ab53fc38aa73c5b75ec125884b76e1",
+          "size": 3222,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "<=350.1"
+            }
+          }
         }
       }
     },
     "palmdevs.freeze-test": {
       "name": "Freeze Test",
       "description": "This freezes the app next startup! Don't use unless you know what you're doing.",
-      "author": "Palm",
+      "author": "Palm <629368283354628116> (https://palmdevs.me \"Website\") (https://github.com/PalmDevs \"GitHub\")",
       "channels": {
-        "latest": "1.0.0"
+        "latest": "1.0.1"
       },
       "versions": {
         "1.0.0": {
           "url": "https://rvp.palmdevs.me/pool/palmdevs.freeze-test@1.0.0.zip",
           "sha256": "c19ba440579ff3f7f8da851ad6792af5457f40c746193cf93f215b0e2d301541",
           "size": 688,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        },
+        "1.0.1": {
+          "url": "https://rvp.palmdevs.me/pool/palmdevs.freeze-test@1.0.1.zip",
+          "sha256": "418ccf3175c1c8c01b42114304f757c308701a51df5e5aa04bb8dc8bd841b4d2",
+          "size": 684,
           "dependencies": {
             "revenge.api": {
               "version": ">=1 <2"
