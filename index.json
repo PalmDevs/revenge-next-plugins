@@ -64,6 +64,30 @@
         }
       }
     },
+    "palmdevs.block-youtube-ads": {
+      "name": "Block YouTube Ads",
+      "description": "Blocks ads in YouTube videos played inside the app, using AdGuard's script.",
+      "author": "Palm",
+      "icon": "YoutubeNeutralIcon",
+      "channels": {
+        "latest": "1.0.0"
+      },
+      "versions": {
+        "1.0.0": {
+          "url": "https://rvp.palmdevs.me/pool/palmdevs.block-youtube-ads@1.0.0.zip",
+          "sha256": "5ac9ee79d86f3a95f01dd14a966958db6d39e1796b55917a8b1dfa1e0a8961b6",
+          "size": 11649,
+          "dependencies": {
+            "revenge.api": {
+              "version": ">=1.1.0 <2"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        }
+      }
+    },
     "palmdevs.fake-nitro": {
       "name": "Fake Nitro",
       "description": "Use Nitro features without Nitro.",
